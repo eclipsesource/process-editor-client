@@ -1,8 +1,27 @@
-import { Bounds, GLSPProjectionView, GridManager, RenderingContext, SGraphImpl, Writable } from '@eclipse-glsp/client';
+import {
+  Bounds,
+  GLSPProjectionView,
+  GridManager,
+  GViewportRootElement,
+  IViewArgs,
+  RenderingContext,
+  SGraphImpl,
+  Writable
+} from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
+import { VNode } from 'snabbdom';
 
 @injectable()
 export class IvyGraphView extends GLSPProjectionView {
+  protected firstRender = false;
+
+  render(model: Readonly<GViewportRootElement>, context: RenderingContext, args?: IViewArgs): VNode {
+    if (!this.firstRender && model.id !== 'EMPTY') {
+      console.log('[DEBUG] Graph model is rendered for the first time', Date.now().toFixed(2));
+      this.firstRender = true;
+    }
+    return super.render(model, context, args);
+  }
   protected override getBackgroundBounds(
     viewport: Readonly<SGraphImpl>,
     context: RenderingContext,

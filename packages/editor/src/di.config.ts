@@ -2,10 +2,12 @@ import {
   ConsoleLogger,
   ContainerConfiguration,
   DEFAULT_ALIGNABLE_ELEMENT_FILTER,
+  DiagramLoader,
   GLSPCenterGridSnapper,
   IHelperLineOptions,
   LogLevel,
   MarqueeUtil,
+  ModelViewer,
   TYPES,
   baseViewModule,
   bindOrRebind,
@@ -45,6 +47,7 @@ import 'toastify-js/src/toastify.css';
 import './colors.css';
 import './toastify.css';
 import { IvyMarqueeUtil } from './ui-tools/tool-bar/marquee-behavior';
+import { IvyDiagramLoader, IvyModelViewer } from './d-loader';
 
 export default function createContainer(widgetId: string, ...containerConfiguration: ContainerConfiguration): Container {
   const container = initializeDiagramContainer(
@@ -96,8 +99,11 @@ export default function createContainer(widgetId: string, ...containerConfigurat
   bindOrRebind(container, TYPES.IMarqueeBehavior).toConstantValue({ entireEdge: true, entireElement: true });
   bindOrRebind(container, TYPES.ICommandStack).to(IvyGLSPCommandStack).inSingletonScope();
   bindOrRebind(container, TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
-  bindOrRebind(container, TYPES.LogLevel).toConstantValue(LogLevel.warn);
+  bindOrRebind(container, TYPES.LogLevel).toConstantValue(LogLevel.log);
   bindOrRebind(container, TYPES.ISnapper).to(GLSPCenterGridSnapper);
+
+  container.rebind(DiagramLoader).to(IvyDiagramLoader).inSingletonScope();
+  container.rebind(ModelViewer).to(IvyModelViewer).inSingletonScope();
 
   overrideViewerOptions(container, {
     baseDiv: widgetId,

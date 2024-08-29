@@ -8,6 +8,8 @@ import createContainer from './di.config';
 import './index.css';
 import { getParameters, getServerDomain, isReadonly, isSecureConnection } from './url-helper';
 
+console.time('[Debug] appStart');
+console.time('[Debug] firstDiagramRender');
 const parameters = getParameters();
 const app = parameters.get('app') ?? 'designer';
 let server = parameters.get('server');

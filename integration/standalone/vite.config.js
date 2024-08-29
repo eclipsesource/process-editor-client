@@ -2,6 +2,7 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { sourceMapsEnabled } from 'process';
 
 export default defineConfig(() => {
   const config = {
@@ -18,6 +19,10 @@ export default defineConfig(() => {
     build: {
       outDir: 'build',
       chunkSizeWarningLimit: 5000,
+      sourceMapsEnabled: true,
+      sourcemapIgnoreList(sourcePath, sourcemapPath) {
+        return sourcePath.includes('node_modules') && !sourcePath.includes('@eclipse-glsp') && !sourcePath.includes('@axonivy');
+      },
       rollupOptions: {
         output: {
           manualChunks: id => {

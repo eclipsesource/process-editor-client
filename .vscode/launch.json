@@ -18,7 +18,7 @@
     },
     {
       "name": "Launch Viewer (Chrome)",
-      "type": "chrome",
+      "type": "",
       "request": "launch",
       "url": "http://localhost:3000?server=localhost:8081&app=designer&pmv=workflow-demos&file=/processes/Humantask/ProcurementRequestParallel.p.json",
       "presentation": {
