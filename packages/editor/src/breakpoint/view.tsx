@@ -1,10 +1,9 @@
+/** @jsx svg */
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { isBoundsAware, IView, svg } from '@eclipse-glsp/client';
 
 import { SBreakpointHandle } from './model';
-
-const JSX = { createElement: svg };
 
 @injectable()
 export class SBreakpointHandleView implements IView {

@@ -1,10 +1,9 @@
+/** @jsx svg */
 import { GArgument, RectangularNodeView, RenderingContext, GLabel, GLabelView, svg, hasArgs, isBoundsAware } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode, VNodeStyle } from 'snabbdom';
 
 import { LaneNode } from '../model';
-
-const JSX = { createElement: svg };
 
 @injectable()
 export class LaneNodeView extends RectangularNodeView {

@@ -1,8 +1,7 @@
+/** @jsx svg */
 import { GIssueMarker, GIssueMarkerView, GIssueSeverity, setClass, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-
-const JSX = { createElement: svg };
 
 @injectable()
 export class IvyIssueMarkerView extends GIssueMarkerView {

@@ -30,7 +30,7 @@ export interface ToolBarButton {
   sorting: string;
   action: () => Action;
   location: ToolBarButtonLocation;
-  id?: string;
+  id: string;
   readonly?: boolean;
   switchFocus?: boolean;
   showTitle?: boolean;

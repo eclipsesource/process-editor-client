@@ -44,3 +44,4 @@ export * from './key-listener/quick-actions';
 export * from './start-action/actions';
 
 export * from './ivy-glsp-jsonrpc-client';
+export * from './utils/react-ui-extension';

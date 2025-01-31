@@ -14,6 +14,7 @@ export class OpenFormEditorButtonProvider implements ToolBarButtonProvider {
         return {
           icon: IvyIcons.File,
           title: 'Open Form Editor (F)',
+          id: 'btn_open_form_editor',
           sorting: 'F',
           action: () => OpenFormEditorAction.create(),
           location: ToolBarButtonLocation.Right,
