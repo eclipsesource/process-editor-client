@@ -1,10 +1,9 @@
 import {
   accessibilityModule,
-  AccessibleKeyShortcutTool,
   bindAsService,
   type BindingContext,
   configureActionHandler,
-  configureMoveZoom,
+  configureElementNavigationTool,
   DeselectKeyTool,
   EnableKeyboardGridAction,
   FeatureModule,
@@ -13,35 +12,32 @@ import {
   KeyboardGrid,
   KeyboardGridCellSelectedAction,
   KeyboardGridKeyboardEventAction,
-  LocalElementNavigator,
-  PositionNavigator,
   ResizeElementAction,
-  SetAccessibleKeyShortcutAction,
   ShowToastMessageAction,
-  TYPES
+  TYPES,
+  updateMessages
 } from '@eclipse-glsp/client';
-import { IvyResizeElementHandler } from './resize-key-tool/resize-key-handler';
-import { IvyZoomKeyTool } from './view-key-tool/zoom-key-tool';
+import { t } from 'i18next';
 import { FocusDomActionHandler } from './focus-dom-handler';
-import { IvyMovementKeyTool } from './view-key-tool/movement-key-tool';
 import { IvyGlobalKeyListenerTool } from './key-listener/global-keylistener-tool';
-import { QuickActionKeyListener } from './key-listener/quick-actions';
 import { JumpOutKeyListener } from './key-listener/jump-out';
-import { IvySearchAutocompletePaletteTool } from './search/search-tool';
+import { QuickActionKeyListener } from './key-listener/quick-actions';
+import { IvyResizeElementHandler } from './resize-key-tool/resize-key-handler';
 import { IvySearchAutocompletePalette } from './search/search-palette';
-import { IvyElementNavigatorTool } from './element-navigation/diagram-navigarion-tool';
-import { IvyResizeKeyTool } from './resize-key-tool/resize-key-tool';
+import { IvySearchAutocompletePaletteTool } from './search/search-tool';
 import { IvyToast } from './toast/toast-tool';
-import { IvyKeyShortcutUIExtension } from './key-shortcut/accessible-key-shortcut';
+import { IvyMovementKeyTool } from './view-key-tool/movement-key-tool';
+import { IvyZoomKeyTool } from './view-key-tool/zoom-key-tool';
+import './key-shortcut/accessible-key-shortcut.css';
 
 export const ivyAccessibilityModule = new FeatureModule(
   (bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
-    configureResizeTools(context);
+    configureResizeTools(context); // keep
     configureViewKeyTools(context);
-    configureMoveZoom(context);
+    // configureMoveZoom(context);
     configureSearchPaletteModule(context);
-    configureShortcutHelpTool(context);
+    // configureShortcutHelpTool(context);
     configureKeyboardControlTools(context);
     configureElementNavigationTool(context);
     configureToastTool(context);
@@ -53,6 +49,52 @@ export const ivyAccessibilityModule = new FeatureModule(
   }
 );
 
+updateMessages({
+  resize: {
+    resize_mode_activated: t('a11y.resize.on'),
+    resize_mode_deactivated: t('a11y.resize.off'),
+    shortcut_activate: t('a11y.hotkeyDesc.resizeActivate'),
+    shortcut_deactivate: t('a11y.hotkeyDesc.resizeDeactivate'),
+    shortcut_increase: t('a11y.hotkeyDesc.resizeIncrease'),
+    shortcut_decrease: t('a11y.hotkeyDesc.resizeDecrease'),
+    shortcut_reset: t('a11y.hotkeyDesc.resizeDefault')
+  },
+  shortcut: {
+    group_resize: t('a11y.hotkeyGroup.resize')
+  }
+});
+updateMessages({
+  navigation: {
+    default_navigation_mode_activated: t('a11y.navigation.on'),
+    default_navigation_mode_deactivated: t('a11y.navigation.off'),
+    local_navigation_mode_activated: t('a11y.navigation.onPosition'),
+    local_navigation_mode_deactivated: t('a11y.navigation.offPosition'),
+    shortcut_local_mode: t('a11y.hotkeyDesc.navigationActivatePosition'),
+    shortcut_global_mode: t('a11y.hotkeyDesc.navigationActivate')
+  },
+  shortcut: {
+    group_navigation: t('a11y.hotkeyGroup.navigation')
+  }
+});
+updateMessages({
+  shortcut: {
+    header_command: t('a11y.ui.command'),
+    header_shortcut: t('a11y.ui.keybinding'),
+    title: t('a11y.ui.title'),
+    menu_title: t('a11y.ui.menuTitle') // TODO: Shortcut Menu
+  }
+});
+updateMessages({
+  shortcut: {
+    group_move: t('a11y.hotkeyGroup.move'),
+    group_zoom: t('a11y.hotkeyGroup.viewport')
+  },
+  viewport: {
+    shortcut_move_viewport: t('a11y.hotkeyDesc.move'),
+    shortcut_zoom_viewport: t('a11y.hotkeyDesc.zoom')
+  }
+});
+
 export const ivyKeyListenerModule = new FeatureModule((bind, unbind, isBound, rebind) => {
   const context = { bind, unbind, isBound, rebind };
   configureIvyKeyListeners(context);
@@ -61,13 +103,6 @@ export const ivyKeyListenerModule = new FeatureModule((bind, unbind, isBound, re
 function configureResizeTools(context: BindingContext) {
   context.bind(IvyResizeElementHandler).toSelf().inSingletonScope();
   configureActionHandler(context, ResizeElementAction.KIND, IvyResizeElementHandler);
-  bindAsService(context, TYPES.IDefaultTool, IvyResizeKeyTool);
-}
-
-function configureShortcutHelpTool(context: BindingContext): void {
-  bindAsService(context, TYPES.IDefaultTool, AccessibleKeyShortcutTool);
-  bindAsService(context, TYPES.IUIExtension, IvyKeyShortcutUIExtension);
-  configureActionHandler(context, SetAccessibleKeyShortcutAction.KIND, IvyKeyShortcutUIExtension);
 }
 
 function configureViewKeyTools(context: BindingContext) {
@@ -92,12 +127,6 @@ function configureIvyKeyListeners({ bind }: BindingContext) {
 function configureSearchPaletteModule(context: BindingContext) {
   bindAsService(context, TYPES.IUIExtension, IvySearchAutocompletePalette);
   bindAsService(context, TYPES.IDefaultTool, IvySearchAutocompletePaletteTool);
-}
-
-function configureElementNavigationTool(context: BindingContext) {
-  bindAsService(context, TYPES.IDefaultTool, IvyElementNavigatorTool);
-  bindAsService(context, TYPES.IElementNavigator, PositionNavigator);
-  bindAsService(context, TYPES.ILocalElementNavigator, LocalElementNavigator);
 }
 
 export function configureToastTool(context: BindingContext): void {

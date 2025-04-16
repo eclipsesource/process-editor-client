@@ -15,7 +15,8 @@ import {
   initializeDiagramContainer,
   navigationModule,
   overrideViewerOptions,
-  statusModule
+  statusModule,
+  viewKeyToolsModule
 } from '@eclipse-glsp/client';
 import { Container } from 'inversify';
 import ivyAnimateModule from './animate/di.config';
@@ -53,6 +54,7 @@ export default function createContainer(widgetId: string, ...containerConfigurat
     baseViewModule,
     helperLineModule,
     gridModule,
+    viewKeyToolsModule,
 
     // replacements:
     // ensure that replacements have the same featureId as the original modules to properly handle

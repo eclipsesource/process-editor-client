@@ -9,6 +9,7 @@
       "navigationActivate": "Activate default navigation",
       "navigationActivatePosition": "Activate position based navigation",
       "resizeActivate": "Activate resize mode for selected element",
+      "resizeDeactivate": "Deactivate resize mode for selected element",
       "resizeDecrease": "Decrease size of element",
       "resizeDefault": "Set element size to default",
       "resizeIncrease": "Increase size of element",

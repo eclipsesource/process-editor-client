@@ -9,6 +9,7 @@
       "navigationActivate": "Standardnavigation aktivieren",
       "navigationActivatePosition": "Positionsbasierte Navigation aktivieren",
       "resizeActivate": "Grössenänderungsmodus für ausgewähltes Element aktivieren",
+      "resizeDeactivate": "Grössenänderungsmodus für ausgewähltes Element deaktivieren",
       "resizeDecrease": "Element verkleinern",
       "resizeDefault": "Elementgrösse auf Standard setzen",
       "resizeIncrease": "Element vergrößern",
