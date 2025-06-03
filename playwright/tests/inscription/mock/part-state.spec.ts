@@ -4,22 +4,20 @@ import { openMockInscription } from '../../page-objects/inscription/inscription-
 test.describe('Part states', () => {
   test('different states on different parts', async ({ page }) => {
     const inscriptionView = await openMockInscription(page);
-    const casePart = inscriptionView.accordion('Case');
-    const dialogPart = inscriptionView.accordion('Dialog');
+    const casePart = inscriptionView.inscriptionTab('Case');
+    const dialogPart = inscriptionView.inscriptionTab('Dialog');
 
     await casePart.expectState('configured');
     await dialogPart.expectState('warning');
 
     await casePart.open();
     await casePart.macroInput('Name').clear();
-    await casePart.close();
     await casePart.expectState('error');
     await dialogPart.expectState('warning');
 
     await dialogPart.open();
     await dialogPart.section('Dialog').open();
     await dialogPart.combobox().choose('AcceptRequest');
-    await dialogPart.close();
     await casePart.expectState('error');
     await dialogPart.expectState('configured');
   });

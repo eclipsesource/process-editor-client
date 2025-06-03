@@ -1,6 +1,6 @@
 import { customRenderHook } from 'test-utils';
 import type { PartProps, PartStateFlag } from './usePart';
-import { useAccordionState, usePartState } from './usePart';
+import { useInscriptionTabState, usePartState } from './usePart';
 import type { ValidationResult } from '@axonivy/process-editor-inscription-protocol';
 import { describe, test, expect } from 'vitest';
 
@@ -26,32 +26,32 @@ describe('usePartState', () => {
   });
 });
 
-describe('useAccordionState', () => {
-  const ACCORDION_STORAGE_KEY = 'process-inscription-accordion';
-  const parts = [{ name: 'General' }, { name: 'Dialog' }] as Array<PartProps>;
+describe('useInscriptionTabState', () => {
+  const INSCRIPTIONTAB_STORAGE_KEY = 'process-inscription-tab';
+  const parts = [{ id: 'General' }, { id: 'Dialog' }] as Array<PartProps>;
 
   test('empty storage', () => {
-    const { result } = customRenderHook(() => useAccordionState(parts));
-    expect(result.current.value).toEqual('');
+    const { result } = customRenderHook(() => useInscriptionTabState(parts));
+    expect(result.current.value).toEqual('General');
   });
 
   test('wrong storage', () => {
-    sessionStorage.setItem(ACCORDION_STORAGE_KEY, 'wrong');
-    const { result } = customRenderHook(() => useAccordionState(parts));
+    sessionStorage.setItem(INSCRIPTIONTAB_STORAGE_KEY, 'wrong');
+    const { result } = customRenderHook(() => useInscriptionTabState(parts));
     expect(result.current.value).toEqual('');
   });
 
   test('other storage', () => {
-    sessionStorage.setItem(ACCORDION_STORAGE_KEY, `["Result"]`);
-    const { result } = customRenderHook(() => useAccordionState(parts));
-    expect(result.current.value).toEqual('');
+    sessionStorage.setItem(INSCRIPTIONTAB_STORAGE_KEY, `["Result"]`);
+    const { result } = customRenderHook(() => useInscriptionTabState(parts));
+    expect(result.current.value).toEqual('General');
   });
 
   test('matching storage', () => {
-    sessionStorage.setItem(ACCORDION_STORAGE_KEY, `["Result", "Dialog"]`);
-    const { result } = customRenderHook(() => useAccordionState(parts));
+    sessionStorage.setItem(INSCRIPTIONTAB_STORAGE_KEY, `["Result", "Dialog"]`);
+    const { result } = customRenderHook(() => useInscriptionTabState(parts));
     expect(result.current.value).toEqual('Dialog');
     result.current.updateValue('');
-    expect(sessionStorage.getItem(ACCORDION_STORAGE_KEY)).toEqual(`["Result"]`);
+    expect(sessionStorage.getItem(INSCRIPTIONTAB_STORAGE_KEY)).toEqual(`["Result"]`);
   });
 });

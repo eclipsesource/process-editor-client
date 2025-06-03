@@ -33,7 +33,7 @@ test('toggle and focus inscription shortcut', async ({ page }) => {
 test('do not change focus if input is focused', async ({ page }) => {
   const editor = await ProcessEditor.openProcess(page);
   const inscription = await editor.startElement.inscribe();
-  await inscription.accordion('General').open();
+  await inscription.inscriptionTab('General').open();
   const input = inscription.view.getByLabel('Display name');
   await input.focus();
   await expect(input).toBeFocused();

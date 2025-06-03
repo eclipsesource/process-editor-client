@@ -14,6 +14,7 @@ import { PathCollapsible } from '../common/path/PathCollapsible';
 import { ValidationFieldset } from '../common/path/validation/ValidationFieldset';
 import { ScriptArea } from '../../widgets/code-editor/ScriptArea';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useResultPart(props?: { hideParamDesc?: boolean }): PartProps {
   const { t } = useTranslation();
@@ -23,10 +24,12 @@ export function useResultPart(props?: { hideParamDesc?: boolean }): PartProps {
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'Result',
     name: t('part.result.title'),
     state,
     reset: { dirty, action: () => resetData() },
-    content: <ResultPart {...props} />
+    content: <ResultPart {...props} />,
+    icon: IvyIcons.SubEnd
   };
 }
 

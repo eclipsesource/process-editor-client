@@ -37,7 +37,7 @@ test('undo', async ({ page }) => {
 test('ivyscript lsp', async ({ page }) => {
   const processEditor = await ProcessEditor.openProcess(page);
   const view = await processEditor.startElement.inscribe();
-  const part = view.accordion('Start');
+  const part = view.inscriptionTab('Start');
   await part.open();
   const section = part.section('Code');
   await section.open();
@@ -56,13 +56,11 @@ test('process', async ({ page }) => {
   await view.expectClosed();
 });
 
-test('hold accordion state', async ({ page }) => {
+test('hold inscriptionTab state', async ({ page }) => {
   const processEditor = await ProcessEditor.openProcess(page);
   const view = await processEditor.endElement.inscribe();
-  const general = view.accordion('General');
-  const task = view.accordion('Task');
-  await general.expectClosed();
-  await general.open();
+  const general = view.inscriptionTab('General');
+  const task = view.inscriptionTab('Task');
   await general.expectOpen();
 
   await processEditor.startElement.select();
@@ -70,10 +68,9 @@ test('hold accordion state', async ({ page }) => {
   await task.expectClosed();
   await task.open();
   await general.expectClosed();
-  await task.expectOpen();
 
   await processEditor.endElement.select();
-  await general.expectClosed();
+  await general.expectOpen();
 
   await processEditor.startElement.select();
   await general.expectClosed();
@@ -84,7 +81,7 @@ test('web service auth link', async ({ page }) => {
   const editor = await ProcessEditor.openProcess(page, { file: '/processes/screenshot/ws.p.json', waitFor: '.sprotty-graph' });
   const wsStart = editor.element('start:webserviceStart');
   const view = await wsStart.inscribe();
-  const wsPart = view.accordion('Web Service');
+  const wsPart = view.inscriptionTab('Web Service');
   await wsPart.open();
   await expect(wsPart.currentLocator().getByText('Web service authentication on the')).toBeVisible();
   const link = wsPart.currentLocator().locator('a', { hasText: 'process' });
@@ -95,7 +92,7 @@ test('web service auth link', async ({ page }) => {
 });
 
 async function changeName(view: Inscription, oldValue: string, value: string) {
-  const part = view.accordion('General');
+  const part = view.inscriptionTab('General');
   await part.open();
   const section = part.section('Name / Description');
   await section.open();

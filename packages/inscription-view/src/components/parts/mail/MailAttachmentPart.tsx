@@ -12,6 +12,7 @@ import { ScriptCell } from '../../widgets/table/cell/ScriptCell';
 import { ValidationCollapsible } from '../common/path/validation/ValidationCollapsible';
 import { ValidationRow } from '../common/path/validation/ValidationRow';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useMailAttachmentPart(): PartProps {
   const { t } = useTranslation();
@@ -21,10 +22,12 @@ export function useMailAttachmentPart(): PartProps {
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'Attachments',
     name: t('part.mail.attachments.title'),
     state,
     reset: { dirty, action: () => resetAttachments() },
-    content: <MailAttachmentsPart />
+    content: <MailAttachmentsPart />,
+    icon: IvyIcons.Attachment
   };
 }
 

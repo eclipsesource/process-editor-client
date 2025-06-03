@@ -9,6 +9,7 @@ import { Input } from '../../widgets/input/Input';
 import Radio, { type RadioItemProps } from '../../widgets/radio/Radio';
 import { useTranslation } from 'react-i18next';
 import { useMemo } from 'react';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useWebServiceProcessPart(): PartProps {
   const { t } = useTranslation();
@@ -17,7 +18,14 @@ export function useWebServiceProcessPart(): PartProps {
   const validation = [...useValidations(['wsAuth']), ...useValidations(['wsTypeName'])];
   const state = usePartState(compareData(defaultConfig), compareData(config), validation);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('part.wsprocess.title'), state, reset: { dirty, action: () => reset() }, content: <WebServiceProcessPart /> };
+  return {
+    id: 'Web Service Process',
+    name: t('part.wsprocess.title'),
+    state,
+    reset: { dirty, action: () => reset() },
+    content: <WebServiceProcessPart />,
+    icon: IvyIcons.WebServiceProcess
+  };
 }
 
 const useAuthTypes = () => {

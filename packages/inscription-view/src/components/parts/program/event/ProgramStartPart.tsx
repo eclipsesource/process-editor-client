@@ -5,6 +5,7 @@ import { Permission } from '../../common/permission/Permission';
 import JavaClassSelector from '../JavaClassSelector';
 import { useValidations } from '../../../../context/useValidation';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useProgramStartPart(options?: { thirdParty?: boolean }): PartProps {
   const { t } = useTranslation();
@@ -14,10 +15,12 @@ export function useProgramStartPart(options?: { thirdParty?: boolean }): PartPro
   const state = usePartState(compareData(defaultConfig), compareData(config), validation);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'Java Bean',
     name: t('part.program.start.title'),
     state,
     reset: { dirty, action: () => reset() },
-    content: <ProgramStartPart thirdParty={options?.thirdParty} />
+    content: <ProgramStartPart thirdParty={options?.thirdParty} />,
+    icon: IvyIcons.StartProgram
   };
 }
 

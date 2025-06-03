@@ -13,6 +13,7 @@ import ParameterTable from '../common/parameter/ParameterTable';
 import MappingPart from '../common/mapping-tree/MappingPart';
 import { ScriptArea } from '../../widgets/code-editor/ScriptArea';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 type StartPartProps = { hideParamDesc?: boolean; synchParams?: boolean };
 
@@ -30,10 +31,12 @@ export function useStartPart(props?: StartPartProps): PartProps {
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'Start',
     name: t('part.start.title'),
     state,
     reset: { dirty, action: () => resetData() },
-    content: <StartPart {...props} />
+    content: <StartPart {...props} />,
+    icon: IvyIcons.Play
   };
 }
 

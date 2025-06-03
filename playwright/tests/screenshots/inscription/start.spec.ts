@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { screenshotAccordion } from './screenshot-util';
+import { screenshotInscriptionTab } from './screenshot-util';
 
 const START_PID = {
   START: '1562D1CBAC49CCF8-f0',
@@ -11,46 +11,46 @@ const START_PID = {
 
 test.describe('Request Start', () => {
   test('Request Tab', async ({ page }) => {
-    await screenshotAccordion(page, START_PID.START, 'Request', 'request-start-tab-request.png');
+    await screenshotInscriptionTab(page, START_PID.START, 'Request', 'request-start-tab-request.png');
   });
 
   test('Trigger Tab', async ({ page }) => {
-    await screenshotAccordion(page, START_PID.START, 'Trigger', 'request-start-tab-trigger.png');
+    await screenshotInscriptionTab(page, START_PID.START, 'Trigger', 'request-start-tab-trigger.png');
   });
 
   test('Task Tab', async ({ page }) => {
-    await screenshotAccordion(page, START_PID.START, 'Task', 'request-start-tab-task.png');
+    await screenshotInscriptionTab(page, START_PID.START, 'Task', 'request-start-tab-task.png');
   });
 });
 
 test.describe('Signal Start', () => {
   test('Signal Tab', async ({ page }) => {
-    await screenshotAccordion(page, START_PID.SIGNAL, 'Signal', 'signal-start-event-tab-signal.png');
+    await screenshotInscriptionTab(page, START_PID.SIGNAL, 'Signal', 'signal-start-event-tab-signal.png');
   });
 });
 
 test.describe('Program Start', () => {
   test('Start Tab', async ({ page }) => {
-    await screenshotAccordion(page, START_PID.PROGRAM, 'Java Bean', 'program-start-tab-start.png');
+    await screenshotInscriptionTab(page, START_PID.PROGRAM, 'Java Bean', 'program-start-tab-start.png');
   });
 
   test('Editor Tab', async ({ page }) => {
-    await screenshotAccordion(page, START_PID.PROGRAM, 'Configuration', 'program-start-tab-configuration.png');
+    await screenshotInscriptionTab(page, START_PID.PROGRAM, 'Configuration', 'program-start-tab-configuration.png');
   });
 });
 
 test.describe('Error Start', () => {
   test('Error Tab', async ({ page }) => {
-    await screenshotAccordion(page, START_PID.ERROR, 'Error', 'error-start-event-tab-error.png');
+    await screenshotInscriptionTab(page, START_PID.ERROR, 'Error', 'error-start-event-tab-error.png');
   });
 });
 
 test.describe('Web Service Process Start', () => {
   test('Web Service Tab', async ({ page }) => {
-    await screenshotAccordion(page, START_PID.WS, 'Web Service', 'web-service-process-start-tab-webservice.png');
+    await screenshotInscriptionTab(page, START_PID.WS, 'Web Service', 'web-service-process-start-tab-webservice.png');
   });
 
   test('Task Tab', async ({ page }) => {
-    await screenshotAccordion(page, START_PID.WS, 'Task', 'web-service-process-start-tab-task.png');
+    await screenshotInscriptionTab(page, START_PID.WS, 'Task', 'web-service-process-start-tab-task.png');
   });
 });

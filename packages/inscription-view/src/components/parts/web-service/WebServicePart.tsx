@@ -8,6 +8,7 @@ import { Message } from '@axonivy/ui-components';
 import { useValidations } from '../../../context/useValidation';
 import { useEditorContext } from '../../../context/useEditorContext';
 import { Trans, useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useWebServicePart(): PartProps {
   const { t } = useTranslation();
@@ -16,7 +17,14 @@ export function useWebServicePart(): PartProps {
   const validation = [...useValidations(['permission']), ...useValidations(['exception'])];
   const state = usePartState(compareData(defaultConfig), compareData(config), validation);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('part.ws.title'), state, reset: { dirty, action: () => reset() }, content: <WebServicePart /> };
+  return {
+    id: 'Web Service',
+    name: t('part.ws.title'),
+    state,
+    reset: { dirty, action: () => reset() },
+    content: <WebServicePart />,
+    icon: IvyIcons.WsStart
+  };
 }
 
 const WebServicePart = () => {

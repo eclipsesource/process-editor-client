@@ -10,6 +10,7 @@ import ExceptionSelect from '../../common/exception-handler/ExceptionSelect';
 import { PathFieldset } from '../../common/path/PathFieldset';
 import { ScriptInput } from '../../../widgets/code-editor/ScriptInput';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useProgramInterfaceErrorPart(): PartProps {
   const { t } = useTranslation();
@@ -19,10 +20,12 @@ export function useProgramInterfaceErrorPart(): PartProps {
   const state = usePartState(compareData(defaultConfig), compareData(config), validation);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'Error',
     name: t('part.program.error.title'),
     state,
     reset: { dirty, action: () => resetError() },
-    content: <ProgramInterfaceErrorPart />
+    content: <ProgramInterfaceErrorPart />,
+    icon: IvyIcons.Error
   };
 }
 

@@ -20,10 +20,12 @@ export function useErrorCatchPart(): PartProps {
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'Error',
     name: t('part.error.title'),
     state,
     reset: { dirty, action: () => updateError(initConfig.errorCode) },
-    content: <ErrorCatchPart />
+    content: <ErrorCatchPart />,
+    icon: IvyIcons.Error
   };
 }
 

@@ -13,6 +13,7 @@ import { ValidationFieldset } from '../common/path/validation/ValidationFieldset
 import { ScriptArea } from '../../widgets/code-editor/ScriptArea';
 import Checkbox from '../../widgets/checkbox/Checkbox';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useOutputPart(options?: { showSudo?: boolean; additionalBrowsers?: BrowserType[] }): PartProps {
   const { t } = useTranslation();
@@ -22,10 +23,12 @@ export function useOutputPart(options?: { showSudo?: boolean; additionalBrowsers
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'Output',
     name: t('part.output.title'),
     state,
     reset: { dirty, action: () => resetOutput(options?.showSudo) },
-    content: <OutputPart showSudo={options?.showSudo} additionalBrowsers={options?.additionalBrowsers} />
+    content: <OutputPart showSudo={options?.showSudo} additionalBrowsers={options?.additionalBrowsers} />,
+    icon: IvyIcons.Output
   };
 }
 

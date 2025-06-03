@@ -8,6 +8,7 @@ import { ValidationCollapsible } from '../common/path/validation/ValidationColla
 import { useMailData } from './useMailData';
 import type { MailData } from '@axonivy/process-editor-inscription-protocol';
 import { IVY_EXCEPTIONS } from '@axonivy/process-editor-inscription-protocol';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useMailErrorPart(): PartProps {
   const { t } = useTranslation();
@@ -16,7 +17,14 @@ export function useMailErrorPart(): PartProps {
   const exceptionValidations = useValidations(['exceptionHandler']);
   const state = usePartState(compareData(defaultConfig), compareData(config), exceptionValidations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('part.error.title'), state, reset: { dirty, action: () => resetError() }, content: <MailErrorPart /> };
+  return {
+    id: 'Error',
+    name: t('part.error.title'),
+    state,
+    reset: { dirty, action: () => resetError() },
+    content: <MailErrorPart />,
+    icon: IvyIcons.Error
+  };
 }
 
 const MailErrorPart = () => {

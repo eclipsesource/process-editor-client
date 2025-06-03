@@ -5,7 +5,7 @@ import { browserBtn, code } from './browser-mock-utils';
 
 test('browser add table column with all fields', async ({ page }) => {
   const inscriptionView = await openMockInscription(page, { type: 'Database' });
-  const query = inscriptionView.accordion('Query');
+  const query = inscriptionView.inscriptionTab('Query');
   await query.open();
   const allFieldsCheckbox = query.checkbox('Select all fields');
   await allFieldsCheckbox.expectUnchecked();
@@ -22,7 +22,7 @@ test('browser add table column with all fields', async ({ page }) => {
 
 test('browser add table column with one field', async ({ page }) => {
   const inscriptionView = await openMockInscription(page, { type: 'Database' });
-  const query = inscriptionView.accordion('Query');
+  const query = inscriptionView.inscriptionTab('Query');
   await query.open();
   const allFieldsCheckbox = query.checkbox('Select all fields');
   await allFieldsCheckbox.expectUnchecked();
@@ -39,7 +39,7 @@ test('browser add table column with one field', async ({ page }) => {
 
 test('browser add table column doubleclick', async ({ page }) => {
   const inscriptionView = await openMockInscription(page, { type: 'Database' });
-  const query = inscriptionView.accordion('Query');
+  const query = inscriptionView.inscriptionTab('Query');
   await query.open();
   const allFieldsCheckbox = query.checkbox('Select all fields');
   await allFieldsCheckbox.expectUnchecked();

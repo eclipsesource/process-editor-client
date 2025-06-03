@@ -11,6 +11,7 @@ import { ScriptInput } from '../../../widgets/code-editor/ScriptInput';
 import { Input } from '../../../widgets/input/Input';
 import { PathCollapsible } from '../../common/path/PathCollapsible';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useConfigurationPart(): PartProps {
   const { t } = useTranslation();
@@ -20,10 +21,12 @@ export function useConfigurationPart(): PartProps {
   const state = usePartState(compareData(defaultConfig), compareData(config), validation);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'Configuration',
     name: t('part.program.configuration.title'),
     state,
     reset: { dirty, action: () => reset() },
-    content: <ConfigurationPart />
+    content: <ConfigurationPart />,
+    icon: IvyIcons.Configuration
   };
 }
 

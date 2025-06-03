@@ -2,6 +2,7 @@ import type { ValidationResult } from '@axonivy/process-editor-inscription-proto
 import type { ReactNode } from 'react';
 import { useMemo, useState } from 'react';
 import { deepEqual } from '../../../utils/equals';
+import type { IvyIcons } from '@axonivy/ui-icons';
 
 export type PartStateFlag = 'configured' | 'warning' | 'error' | undefined;
 
@@ -11,10 +12,12 @@ export type PartState = {
 };
 
 export type PartProps = {
+  id: string;
   name: string;
   state: PartState;
   reset: { dirty: boolean; action: () => void };
   content: ReactNode;
+  icon: IvyIcons;
   control?: ReactNode;
 };
 
@@ -37,14 +40,14 @@ export function usePartDirty(initData: unknown, data: unknown): boolean {
   }, [data, initData]);
 }
 
-const ACCORDION_STORAGE_KEY = 'process-inscription-accordion';
+const INSCRIPTIONTAB_STORAGE_KEY = 'process-inscription-tab';
 
-export const useAccordionState = (parts: Array<PartProps>) => {
+export const useInscriptionTabState = (parts: Array<PartProps>) => {
   const [value, setValue] = useState(() => {
     try {
-      const storage = sessionStorage.getItem(ACCORDION_STORAGE_KEY) ?? '[]';
+      const storage = sessionStorage.getItem(INSCRIPTIONTAB_STORAGE_KEY) ?? '[]';
       const states = JSON.parse(storage) as Array<string>;
-      return parts.find(part => states.includes(part.name))?.name ?? '';
+      return parts.find(part => states.includes(part.id))?.id ?? 'General';
     } catch {
       console.error('Error reading from sessionStorage');
       return '';
@@ -53,7 +56,7 @@ export const useAccordionState = (parts: Array<PartProps>) => {
   const updateValue = (value: string) => {
     setValue(old => {
       try {
-        const storage = sessionStorage.getItem(ACCORDION_STORAGE_KEY) ?? '[]';
+        const storage = sessionStorage.getItem(INSCRIPTIONTAB_STORAGE_KEY) ?? '[]';
         let states = JSON.parse(storage) as Array<string>;
         if (states.includes(old)) {
           states.splice(states.indexOf(old), 1);
@@ -61,7 +64,7 @@ export const useAccordionState = (parts: Array<PartProps>) => {
         if (value) {
           states = [value, ...states];
         }
-        sessionStorage.setItem(ACCORDION_STORAGE_KEY, JSON.stringify(states));
+        sessionStorage.setItem(INSCRIPTIONTAB_STORAGE_KEY, JSON.stringify(states));
       } catch {
         console.error('Error store to sessionStorage');
       }

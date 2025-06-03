@@ -8,6 +8,7 @@ import DocumentTable from './document/DocumentTable';
 import { useEditorContext } from '../../../context/useEditorContext';
 import { useMeta } from '../../../context/useMeta';
 import { useGeneralData } from './useGeneralData';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useGeneralPart(options?: { hideTags?: boolean; disableName?: boolean }): PartProps {
   const { t } = useTranslation();
@@ -16,10 +17,12 @@ export function useGeneralPart(options?: { hideTags?: boolean; disableName?: boo
   const state = usePartState(['', '', [], []], currentData, []);
   const dirty = usePartDirty([initData.name, initData.description, initData.docs, initData.tags], currentData);
   return {
+    id: 'General',
     name: t('part.general.title'),
     state,
     reset: { dirty, action: () => resetData() },
-    content: <GeneralPart hideTags={options?.hideTags} disableName={options?.disableName} />
+    content: <GeneralPart hideTags={options?.hideTags} disableName={options?.disableName} />,
+    icon: IvyIcons.InfoCircle
   };
 }
 

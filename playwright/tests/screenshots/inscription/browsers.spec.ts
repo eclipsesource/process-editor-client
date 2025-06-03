@@ -67,12 +67,12 @@ test.describe('Browsers', () => {
   });
 });
 
-async function openSection(page: Page, pid: string, accordionName: string, sectionName: string): Promise<Section> {
+async function openSection(page: Page, pid: string, inscriptionTabName: string, sectionName: string): Promise<Section> {
   const view = await openElementInscription(page, pid, 'inscription-test-project');
   await page.addStyleTag({ content: 'body { overflow: hidden; }' });
-  const accordion = view.accordion(accordionName);
-  await accordion.open();
-  const section = accordion.section(sectionName);
+  const tab = view.inscriptionTab(inscriptionTabName);
+  await tab.open();
+  const section = tab.section(sectionName);
   await section.open();
   await page.setViewportSize({ width: 500, height: 500 });
   return section;

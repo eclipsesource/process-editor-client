@@ -43,7 +43,7 @@ test.describe('StartRequest', () => {
   });
 
   test('Task', async () => {
-    const request = view.accordion('Request');
+    const request = view.inscriptionTab('Request');
     await request.open();
     const permissions = request.section('Permission');
     await permissions.toggle();

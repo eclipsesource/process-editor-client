@@ -21,10 +21,12 @@ export function useSignalCatchPart(options?: { makroSupport?: boolean; withBrows
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'Signal',
     name: t('part.signal.title'),
     state,
     reset: { dirty, action: () => resetData() },
-    content: <SignalCatchPart makroSupport={options?.makroSupport} withBrowser={options?.withBrowser} />
+    content: <SignalCatchPart makroSupport={options?.makroSupport} withBrowser={options?.withBrowser} />,
+    icon: IvyIcons.StartSignal
   };
 }
 

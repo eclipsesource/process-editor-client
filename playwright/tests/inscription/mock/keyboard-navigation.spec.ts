@@ -4,9 +4,11 @@ import { openMockInscription } from '../../page-objects/inscription/inscription-
 test.describe('Keyboard Navigation', () => {
   test('navigate through script-input/areas', async ({ page }) => {
     const inscriptionView = await openMockInscription(page);
-    const taskPart = inscriptionView.accordion('Task');
+    const taskPart = inscriptionView.inscriptionTab('Task');
     await taskPart.open();
     const detailsSection = taskPart.section('Details');
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
     await detailsSection.macroInput('Name').expectCodeFocused();
@@ -28,7 +30,7 @@ test.describe('Keyboard Navigation', () => {
 
   test('navigate through code-block', async ({ page }) => {
     const inscriptionView = await openMockInscription(page);
-    const taskPart = inscriptionView.accordion('Output');
+    const taskPart = inscriptionView.inscriptionTab('Output');
     await taskPart.open();
     const codeSection = taskPart.section('Code');
     await codeSection.toggle();

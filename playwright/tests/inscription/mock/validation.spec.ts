@@ -8,7 +8,7 @@ test.describe('Validations', () => {
 
   test('case', async ({ page }) => {
     const inscriptionView = await openMockInscription(page);
-    const part = inscriptionView.accordion('Case');
+    const part = inscriptionView.inscriptionTab('Case');
     const section = part.section('Details');
     const name = section.macroInput('Name');
     const desc = section.macroArea('Description');
@@ -26,7 +26,7 @@ test.describe('Validations', () => {
 
   test('dialog', async ({ page }) => {
     const inscriptionView = await openMockInscription(page);
-    const part = inscriptionView.accordion('Dialog');
+    const part = inscriptionView.inscriptionTab('Dialog');
     const dialogSection = part.section('Dialog');
     const mappingSection = part.section('Mapping');
     const dialog = dialogSection.combobox();

@@ -5,7 +5,7 @@ import { browserBtn } from './browser-mock-utils';
 
 test('Add Condition', async ({ page }) => {
   const inscriptionView = await openMockInscription(page, { type: 'Alternative' });
-  const condition = inscriptionView.accordion('Condition');
+  const condition = inscriptionView.inscriptionTab('Condition');
   await condition.open();
   const conditionSection = condition.section('Condition');
   await conditionSection.expectIsOpen();

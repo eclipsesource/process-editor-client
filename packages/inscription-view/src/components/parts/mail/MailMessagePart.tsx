@@ -11,6 +11,7 @@ import { MacroArea } from '../../widgets/code-editor/MacroArea';
 import Fieldset from '../../widgets/fieldset/Fieldset';
 import Select from '../../widgets/select/Select';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useMailMessagePart(): PartProps {
   const { t } = useTranslation();
@@ -19,7 +20,14 @@ export function useMailMessagePart(): PartProps {
   const validations = useValidations(['message']);
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('part.mail.content.title'), state, reset: { dirty, action: () => resetMessage() }, content: <MailMessagePart /> };
+  return {
+    id: 'Content',
+    name: t('part.mail.content.title'),
+    state,
+    reset: { dirty, action: () => resetMessage() },
+    content: <MailMessagePart />,
+    icon: IvyIcons.Note
+  };
 }
 
 const MailMessagePart = () => {

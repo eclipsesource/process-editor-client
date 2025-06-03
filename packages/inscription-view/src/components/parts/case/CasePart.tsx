@@ -6,6 +6,7 @@ import CustomFieldTable from '../common/customfield/CustomFieldTable';
 import { useValidations } from '../../../context/useValidation';
 import { PathContext } from '../../../context/usePath';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useCasePart(): PartProps {
   const { t } = useTranslation();
@@ -14,7 +15,14 @@ export function useCasePart(): PartProps {
   const compareData = (data: CaseData) => [data.case];
   const state = usePartState(compareData(defaultConfig), compareData(config), validaitons);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('part.case.title'), state: state, reset: { dirty, action: () => resetData() }, content: <CasePart /> };
+  return {
+    id: 'Case',
+    name: t('part.case.title'),
+    state: state,
+    reset: { dirty, action: () => resetData() },
+    content: <CasePart />,
+    icon: IvyIcons.List
+  };
 }
 
 const CasePart = () => {

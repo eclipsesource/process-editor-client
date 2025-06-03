@@ -6,6 +6,7 @@ import { PathCollapsible } from '../../common/path/PathCollapsible';
 import { ValidationFieldset } from '../../common/path/validation/ValidationFieldset';
 import ExceptionSelect from '../../common/exception-handler/ExceptionSelect';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useDbErrorPart(): PartProps {
   const { t } = useTranslation();
@@ -14,7 +15,14 @@ export function useDbErrorPart(): PartProps {
   const compareData = (data: DbErrorData) => [data];
   const state = usePartState(compareData(defaultConfig), compareData(config), exceptionVal);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('label.error'), state: state, reset: { dirty, action: () => reset() }, content: <QueryPart /> };
+  return {
+    id: 'Error',
+    name: t('label.error'),
+    state: state,
+    reset: { dirty, action: () => reset() },
+    content: <QueryPart />,
+    icon: IvyIcons.Error
+  };
 }
 
 const QueryPart = () => {

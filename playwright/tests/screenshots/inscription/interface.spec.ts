@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { screenshotAccordion, screenshotSection } from './screenshot-util';
+import { screenshotInscriptionTab, screenshotSection } from './screenshot-util';
 
 const INTERFACE_PID = {
   DATABASE: '18141E75C9CEDD35-f3',
@@ -17,23 +17,23 @@ const INTERFACE_PID = {
 
 test.describe('Database', () => {
   test('Query Tab', async ({ page }) => {
-    await screenshotAccordion(page, INTERFACE_PID.DATABASE, 'Query', 'database-tab-query.png');
+    await screenshotInscriptionTab(page, INTERFACE_PID.DATABASE, 'Query', 'database-tab-query.png');
   });
 });
 
 test.describe('Web Service Call', () => {
   test('Request Tab', async ({ page }) => {
-    await screenshotAccordion(page, INTERFACE_PID.WS_CALL, 'Request', 'web-service-call-tab-request.png');
+    await screenshotInscriptionTab(page, INTERFACE_PID.WS_CALL, 'Request', 'web-service-call-tab-request.png');
   });
 
   test('Response Tab', async ({ page }) => {
-    await screenshotAccordion(page, INTERFACE_PID.WS_CALL, 'Output', 'web-service-call-tab-response.png');
+    await screenshotInscriptionTab(page, INTERFACE_PID.WS_CALL, 'Output', 'web-service-call-tab-response.png');
   });
 });
 
 test.describe('Rest Client', () => {
   test('Request Tab - GET', async ({ page }) => {
-    await screenshotAccordion(page, INTERFACE_PID.REST, 'Request', 'rest-client-tab-request-get.png');
+    await screenshotInscriptionTab(page, INTERFACE_PID.REST, 'Request', 'rest-client-tab-request-get.png');
   });
 
   test('Request Tab - Parameters', async ({ page }) => {
@@ -49,7 +49,7 @@ test.describe('Rest Client', () => {
   });
 
   test('Request Tab - POST', async ({ page }) => {
-    await screenshotAccordion(page, INTERFACE_PID.REST_POST, 'Request', 'rest-client-tab-request-post.png');
+    await screenshotInscriptionTab(page, INTERFACE_PID.REST_POST, 'Request', 'rest-client-tab-request-post.png');
   });
 
   test('Request Tab - Body Raw', async ({ page }) => {
@@ -65,44 +65,44 @@ test.describe('Rest Client', () => {
   });
 
   test('Request Tab - JAX_RS', async ({ page }) => {
-    await screenshotAccordion(page, INTERFACE_PID.REST_JAXRS, 'Request', 'rest-client-tab-request-jaxrs.png');
+    await screenshotInscriptionTab(page, INTERFACE_PID.REST_JAXRS, 'Request', 'rest-client-tab-request-jaxrs.png');
   });
 
   test('Response Tab', async ({ page }) => {
-    await screenshotAccordion(page, INTERFACE_PID.REST_POST, 'Output', 'rest-client-tab-response.png');
+    await screenshotInscriptionTab(page, INTERFACE_PID.REST_POST, 'Output', 'rest-client-tab-response.png');
   });
 });
 
 test.describe('Email', () => {
   test('Header Tab', async ({ page }) => {
-    await screenshotAccordion(page, INTERFACE_PID.EMAIL, 'Header', 'mail-tab-header.png');
+    await screenshotInscriptionTab(page, INTERFACE_PID.EMAIL, 'Header', 'mail-tab-header.png');
   });
 
   test('Content Tab', async ({ page }) => {
-    await screenshotAccordion(page, INTERFACE_PID.EMAIL, 'Content', 'mail-tab-content.png');
+    await screenshotInscriptionTab(page, INTERFACE_PID.EMAIL, 'Content', 'mail-tab-content.png');
   });
 
   test('Attachments Tab', async ({ page }) => {
-    await screenshotAccordion(page, INTERFACE_PID.EMAIL, 'Attachments', 'mail-tab-attachments.png');
+    await screenshotInscriptionTab(page, INTERFACE_PID.EMAIL, 'Attachments', 'mail-tab-attachments.png');
   });
 });
 
 test.describe('Rule', () => {
   test('Error Tab', async ({ page }) => {
-    await screenshotAccordion(page, INTERFACE_PID.RULE, 'Error', 'rule-tab-error.png');
+    await screenshotInscriptionTab(page, INTERFACE_PID.RULE, 'Error', 'rule-tab-error.png');
   });
 
   test('Configuration Tab', async ({ page }) => {
-    await screenshotAccordion(page, INTERFACE_PID.RULE, 'Configuration', 'rule-tab-configuration.png');
+    await screenshotInscriptionTab(page, INTERFACE_PID.RULE, 'Configuration', 'rule-tab-configuration.png');
   });
 });
 
 test.describe('Program', () => {
   test('Start Tab', async ({ page }) => {
-    await screenshotAccordion(page, INTERFACE_PID.PROGRAM, 'Java Bean', 'program-interface-tab-start.png');
+    await screenshotInscriptionTab(page, INTERFACE_PID.PROGRAM, 'Java Bean', 'program-interface-tab-start.png');
   });
 
   test('Configuration Tab', async ({ page }) => {
-    await screenshotAccordion(page, INTERFACE_PID.PROGRAM, 'Configuration', 'program-interface-tab-configuration.png');
+    await screenshotInscriptionTab(page, INTERFACE_PID.PROGRAM, 'Configuration', 'program-interface-tab-configuration.png');
   });
 });

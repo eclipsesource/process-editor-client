@@ -8,6 +8,7 @@ import { mergePaths, PathContext } from '../../../context/usePath';
 import { TaskDataContextInstance } from '../../../context/useDataContext';
 import EmptyWidget from '../../widgets/empty/EmptyWidget';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useMultiTasksPart(): PartProps {
   const { t } = useTranslation();
@@ -16,7 +17,14 @@ export function useMultiTasksPart(): PartProps {
   const compareData = (data: TaskData) => [data.tasks];
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('part.task.tasks'), state, reset: { dirty, action: () => resetTasks() }, content: <MultiTasksPart /> };
+  return {
+    id: 'Tasks',
+    name: t('part.task.tasks'),
+    state,
+    reset: { dirty, action: () => resetTasks() },
+    content: <MultiTasksPart />,
+    icon: IvyIcons.UserTask
+  };
 }
 
 const MultiTasksPart = () => {
