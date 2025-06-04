@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   padding: var(--size-2);
+  flex: 1;
+  overflow: hidden;
 }
 
 .part-tabs-list {
@@ -13,6 +15,30 @@
   border-radius: var(--border-r3);
   margin-bottom: var(--size-3);
   container: tabs-list / inline-size;
+
+  &:has(.part-tabs-trigger:focus-visible) {
+    box-shadow: var(--focus-shadow);
+  }
+
+  @container tabs-list (width <= 16rem) {
+    &.tabs-many .part-tabs-trigger[data-state='active'] .tab-label {
+      display: none;
+    }
+
+    &.tabs-many .part-tabs-trigger[data-state='active'] {
+      min-width: 2rem;
+    }
+  }
+
+  @container tabs-list (width <= 13rem) {
+    &.tabs-few .part-tabs-trigger[data-state='active'] .tab-label {
+      display: none;
+    }
+
+    &.tabs-few .part-tabs-trigger[data-state='active'] {
+      min-width: 2rem;
+    }
+  }
 }
 
 .part-tabs-trigger {
@@ -34,56 +60,43 @@
   gap: var(--size-1);
   min-width: 2rem;
   container: tab-trigger / inline-size;
-}
 
-.part-tabs-list:has(.part-tabs-trigger:focus-visible) {
-  box-shadow: var(--focus-shadow);
-}
+  &:hover {
+    color: var(--P300);
+  }
 
-.part-tabs-trigger:hover {
-  color: var(--P300);
-}
+  &[data-state='active'] {
+    border: 1px solid var(--P75);
+    border-radius: var(--border-r2);
+    background-color: var(--P50);
+    color: var(--P300);
+    min-width: 6.5rem;
+  }
 
-.part-tabs-trigger[data-state='active'] {
-  border: 1px solid var(--P75);
-  border-radius: var(--border-r2);
-  background-color: var(--P50);
-  color: var(--P300);
-  min-width: 6.5rem;
+  i {
+    font-size: 16px;
+  }
+
+  @container tab-trigger (width <= 6.5rem) {
+    &:not([data-state='active']) .tab-label {
+      display: none;
+    }
+  }
 }
 
 .part-tabs-content {
   display: flex;
   flex-direction: column;
   gap: var(--size-3);
-}
+  min-height: 0;
+  overflow: hidden;
 
-.part-tabs-trigger i {
-  font-size: 16px;
-}
-
-@container tab-trigger (width <= 6.5rem) {
-  .part-tabs-trigger:not([data-state='active']) .tab-label {
-    display: none;
-  }
-}
-
-@container tabs-list (width <= 16rem) {
-  .tabs-many .part-tabs-trigger[data-state='active'] .tab-label {
-    display: none;
+  .part-tabs-content-scroll-area {
+    flex: 1;
+    overflow-y: auto;
   }
 
-  .tabs-many .part-tabs-trigger[data-state='active'] {
-    min-width: 2rem;
-  }
-}
-
-@container tabs-list (width <= 13rem) {
-  .tabs-few .part-tabs-trigger[data-state='active'] .tab-label {
-    display: none;
-  }
-
-  .tabs-few .part-tabs-trigger[data-state='active'] {
-    min-width: 2rem;
+  &[data-state='active'] {
+    flex: 1;
   }
 }
