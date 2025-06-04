@@ -8,4 +8,4 @@ export interface Dimension {
   height: number;
 }
 
-export type CmdCtrl = 'Meta' | 'Control';
+export type CmdCtrl = 'Meta' | 'Control' | 'ControlOrMeta';

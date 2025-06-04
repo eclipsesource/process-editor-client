@@ -164,6 +164,7 @@
     "connectionToServerError": "Connection to server is erroring. Shutting down server.",
     "globalError": "An error occurred: {{error}}",
     "noEditorForType": "No editor found for type: {{props.type}}",
+    "noNativeClipboardAccess": "Could not access native clipboard, copy will only work in same editor.",
     "selectElement": "Select a process element"
   },
   "part": {
