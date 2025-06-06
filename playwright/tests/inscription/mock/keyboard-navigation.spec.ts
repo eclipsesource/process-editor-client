@@ -11,6 +11,7 @@ test.describe('Keyboard Navigation', () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
+    await page.keyboard.press('Tab');
     await detailsSection.macroInput('Name').expectCodeFocused();
 
     await page.keyboard.press('Tab');
