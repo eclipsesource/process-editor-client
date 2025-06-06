@@ -4,8 +4,8 @@ export const inscriptionWidthStorage = () => {
     if (newWidth > window.innerWidth - 250) {
       return window.innerWidth - 250;
     }
-    if (newWidth < 200) {
-      return 200;
+    if (newWidth < 250) {
+      return 250;
     }
     return newWidth;
   };

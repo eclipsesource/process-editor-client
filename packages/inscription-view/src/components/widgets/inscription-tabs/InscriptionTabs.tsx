@@ -70,6 +70,7 @@ export const InscriptionTabTrigger = ({ tab, tabIcon }: { tab: PartProps; tabIco
             message,
             variant: severity.toLocaleLowerCase() as Lowercase<Severity>
           }))}
+          className='tab-state-dot'
         />
       )}
       <IvyIcon icon={tabIcon} />
