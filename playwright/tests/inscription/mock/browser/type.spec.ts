@@ -5,7 +5,7 @@ import { assertCodeHidden, assertCodeVisible, browserBtn, code } from './browser
 
 test('browser init searchfilter', async ({ page }) => {
   const inscriptionView = await openMockInscription(page);
-  const task = inscriptionView.accordion('Dialog');
+  const task = inscriptionView.inscriptionTab('Dialog');
   await task.open();
 
   const codeSection = task.section('Code');
@@ -24,7 +24,7 @@ test('browser init searchfilter', async ({ page }) => {
 
 test('browser add type', async ({ page }) => {
   const inscriptionView = await openMockInscription(page);
-  const task = inscriptionView.accordion('Task');
+  const task = inscriptionView.inscriptionTab('Task');
   await task.open();
 
   await task.section('Expiry').open();
@@ -39,7 +39,7 @@ test('browser add type', async ({ page }) => {
 
 test('browser add type as list', async ({ page }) => {
   const inscriptionView = await openMockInscription(page);
-  const task = inscriptionView.accordion('Task');
+  const task = inscriptionView.inscriptionTab('Task');
   await task.open();
 
   await task.section('Expiry').open();
@@ -54,7 +54,7 @@ test('browser add type as list', async ({ page }) => {
 
 test('browser add type doubleclick', async ({ page }) => {
   const inscriptionView = await openMockInscription(page);
-  const task = inscriptionView.accordion('Task');
+  const task = inscriptionView.inscriptionTab('Task');
   await task.open();
 
   await task.section('Expiry').open();

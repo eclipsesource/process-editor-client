@@ -18,10 +18,12 @@ export function useEndPagePart(): PartProps {
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'End Page',
     name: t('part.endPage.title'),
     state,
     reset: { dirty, action: () => update('page', initConfig.page) },
-    content: <EndPagePart />
+    content: <EndPagePart />,
+    icon: IvyIcons.EndPage
   };
 }
 

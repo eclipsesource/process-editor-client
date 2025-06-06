@@ -8,6 +8,7 @@ import { PathCollapsible } from '../common/path/PathCollapsible';
 import { PathFieldset } from '../common/path/PathFieldset';
 import { MacroInput } from '../../widgets/code-editor/MacroInput';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useMailHeaderPart(): PartProps {
   const { t } = useTranslation();
@@ -16,7 +17,14 @@ export function useMailHeaderPart(): PartProps {
   const headerValidations = useValidations(['headers']);
   const state = usePartState(compareData(defaultConfig), compareData(config), headerValidations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('part.mail.header.title'), state, reset: { dirty, action: () => resetHeaders() }, content: <MailHeaderPart /> };
+  return {
+    id: 'Header',
+    name: t('part.mail.header.title'),
+    state,
+    reset: { dirty, action: () => resetHeaders() },
+    content: <MailHeaderPart />,
+    icon: IvyIcons.EMail
+  };
 }
 
 const MailHeaderPart = () => {

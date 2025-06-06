@@ -1,7 +1,7 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
-import { Accordion } from './accordion';
 import { Outline } from './outline';
+import { InscriptionTab } from './inscription-tab';
 
 export const openElementInscription = async (page: Page, pid: string, pmv = 'inscription-test-project') => {
   const server = process.env.BASE_URL ?? 'localhost:8081';
@@ -44,7 +44,10 @@ export class Inscription {
   readonly view: Locator;
   readonly root: Locator;
 
-  constructor(readonly page: Page, parent?: Locator) {
+  constructor(
+    readonly page: Page,
+    parent?: Locator
+  ) {
     this.view = parent ?? page.locator('body');
     this.root = this.view.locator('.editor-root');
   }
@@ -53,8 +56,8 @@ export class Inscription {
     return this.view;
   }
 
-  accordion(partName: string) {
-    return new Accordion(this.page, partName);
+  inscriptionTab(partName: string) {
+    return new InscriptionTab(this.page, partName);
   }
 
   async expectHeaderText(text: string | RegExp, timeout?: number) {

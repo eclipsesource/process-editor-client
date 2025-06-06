@@ -16,7 +16,7 @@ test.describe('Code Editor', () => {
   });
 
   test('MacroInput', async () => {
-    const taskPart = view.accordion('Task');
+    const taskPart = view.inscriptionTab('Task');
     await taskPart.open();
     const details = taskPart.section('Details');
     await details.open();
@@ -26,7 +26,7 @@ test.describe('Code Editor', () => {
   });
 
   test('MacroArea', async () => {
-    const taskPart = view.accordion('Task');
+    const taskPart = view.inscriptionTab('Task');
     await taskPart.open();
     const details = taskPart.section('Details');
     await details.open();
@@ -36,7 +36,7 @@ test.describe('Code Editor', () => {
   });
 
   test('ScriptArea', async () => {
-    const taskPart = view.accordion('Task');
+    const taskPart = view.inscriptionTab('Task');
     await taskPart.open();
     const codeSection = taskPart.section('Code');
     await codeSection.toggle();
@@ -46,7 +46,7 @@ test.describe('Code Editor', () => {
   });
 
   test('ScriptInput', async () => {
-    const taskPart = view.accordion('Task');
+    const taskPart = view.inscriptionTab('Task');
     await taskPart.open();
     const expirySection = taskPart.section('Expiry');
     await expirySection.toggle();

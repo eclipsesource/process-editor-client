@@ -7,6 +7,7 @@ import { PathContext } from '../../../context/usePath';
 import Radio from '../../widgets/radio/Radio';
 import Collapsible from '../../widgets/collapsible/Collapsible';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useCachePart(): PartProps {
   const { t } = useTranslation();
@@ -15,7 +16,14 @@ export function useCachePart(): PartProps {
   const validation = useValidations(['cache']);
   const state = usePartState(compareData(defaultConfig), compareData(config), validation);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('part.cache.title'), state, reset: { dirty, action: () => reset() }, content: <CachePart /> };
+  return {
+    id: 'Cache',
+    name: t('part.cache.title'),
+    state,
+    reset: { dirty, action: () => reset() },
+    content: <CachePart />,
+    icon: IvyIcons.Cache
+  };
 }
 
 const CachePart = () => {

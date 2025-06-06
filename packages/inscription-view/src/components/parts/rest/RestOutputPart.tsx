@@ -13,6 +13,7 @@ import { ValidationFieldset } from '../common/path/validation/ValidationFieldset
 import MappingPart from '../common/mapping-tree/MappingPart';
 import { ScriptArea } from '../../widgets/code-editor/ScriptArea';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useRestOutputPart(): PartProps {
   const { t } = useTranslation();
@@ -22,7 +23,14 @@ export function useRestOutputPart(): PartProps {
   const compareData = (data: RestResponseData) => [data.response.entity];
   const state = usePartState(compareData(defaultConfig), compareData(config), filteredOutputValidations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('label.output'), state: state, reset: { dirty, action: () => resetData() }, content: <RestOutputPart /> };
+  return {
+    id: 'Output',
+    name: t('label.output'),
+    state: state,
+    reset: { dirty, action: () => resetData() },
+    content: <RestOutputPart />,
+    icon: IvyIcons.Output
+  };
 }
 
 const useShowResultTypeCombo = (types: string[], currentType: string) => {

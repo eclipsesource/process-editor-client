@@ -26,10 +26,12 @@ export function useErrorThrowPart(): PartProps {
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'Error',
     name: t('part.error.title'),
     state,
     reset: { dirty, action: () => reset() },
-    content: <ErrorThrowPart />
+    content: <ErrorThrowPart />,
+    icon: IvyIcons.Error
   };
 }
 

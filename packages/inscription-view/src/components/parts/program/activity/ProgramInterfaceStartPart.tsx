@@ -4,6 +4,7 @@ import { useProgramInterfaceData } from './useProgramInterfaceData';
 import JavaClassSelector from '../JavaClassSelector';
 import { useValidations } from '../../../../context/useValidation';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useProgramInterfaceStartPart(): PartProps {
   const { t } = useTranslation();
@@ -13,10 +14,12 @@ export function useProgramInterfaceStartPart(): PartProps {
   const state = usePartState(compareData(defaultConfig), compareData(config), validation);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'Java Bean',
     name: t('part.program.start.title'),
     state,
     reset: { dirty, action: () => resetJavaClass() },
-    content: <ProgramInterfaceStartPart />
+    content: <ProgramInterfaceStartPart />,
+    icon: IvyIcons.StartProgram
   };
 }
 

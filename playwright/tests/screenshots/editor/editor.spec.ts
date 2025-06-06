@@ -45,7 +45,7 @@ test('connector-process', async ({ page }) => {
   const subStart = editor.element('start:callSubStart');
   const inscription = await subStart.inscribe();
   await expect(subStart.locator().getByRole('img').first()).toHaveAttribute('src', /.+user.png/);
-  const start = inscription.accordion('Start');
+  const start = inscription.inscriptionTab('Start');
   await start.open();
   await start.section('Mapping').close();
   await start.section('Input parameters').open();
@@ -59,7 +59,7 @@ test('connector-user', async ({ page }) => {
   const img = subCall.locator().getByRole('img').first();
   await expect(img).toHaveJSProperty('complete', true);
   await expect(img).not.toHaveJSProperty('naturalWidth', 0);
-  const process = inscription.accordion('Process');
+  const process = inscription.inscriptionTab('Process');
   await process.open();
   await screenshot(page, 'connector-user.png', { height: 400 });
 });

@@ -4,7 +4,7 @@ import { assertCodeVisible, code } from './browser-mock-utils';
 
 test('maximized code editor', async ({ page }) => {
   const inscriptionView = await openMockInscription(page);
-  const task = inscriptionView.accordion('Task');
+  const task = inscriptionView.inscriptionTab('Task');
   await task.open();
 
   await page.getByText('Code').click();

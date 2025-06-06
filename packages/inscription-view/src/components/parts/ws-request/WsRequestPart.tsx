@@ -9,6 +9,7 @@ import { WsMapping } from './WsMapping';
 import { ValidationCollapsible } from '../common/path/validation/ValidationCollapsible';
 import { useValidations } from '../../../context/useValidation';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useWsRequestPart(): PartProps {
   const { t } = useTranslation();
@@ -17,7 +18,14 @@ export function useWsRequestPart(): PartProps {
   const compareData = (data: WsRequestData) => [data.clientId, data.operation, data.properties];
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('part.ws.request'), state: state, reset: { dirty, action: () => resetData() }, content: <WsRequestPart /> };
+  return {
+    id: 'Request',
+    name: t('part.ws.request'),
+    state: state,
+    reset: { dirty, action: () => resetData() },
+    content: <WsRequestPart />,
+    icon: IvyIcons.RestClient
+  };
 }
 
 const WsRequestPart = () => {

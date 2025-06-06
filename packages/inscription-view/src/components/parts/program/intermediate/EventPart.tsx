@@ -13,6 +13,7 @@ import ExceptionSelect from '../../common/exception-handler/ExceptionSelect';
 import Radio, { type RadioItemProps } from '../../../widgets/radio/Radio';
 import { useTranslation } from 'react-i18next';
 import { useMemo } from 'react';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useEventPart(options?: { thirdParty?: boolean }): PartProps {
   const { t } = useTranslation();
@@ -22,10 +23,12 @@ export function useEventPart(options?: { thirdParty?: boolean }): PartProps {
   const state = usePartState(compareData(defaultConfig), compareData(config), validation);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'Event',
     name: t('part.program.event.title'),
     state,
     reset: { dirty, action: () => reset() },
-    content: <EventPart thirdParty={options?.thirdParty} />
+    content: <EventPart thirdParty={options?.thirdParty} />,
+    icon: IvyIcons.Clock
   };
 }
 

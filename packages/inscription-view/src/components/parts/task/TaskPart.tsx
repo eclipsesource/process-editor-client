@@ -11,6 +11,7 @@ import { useValidations } from '../../../context/useValidation';
 import { PathContext } from '../../../context/usePath';
 import EmptyWidget from '../../widgets/empty/EmptyWidget';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useTaskPart(options?: TaskPartProps): PartProps {
   const { t } = useTranslation();
@@ -31,10 +32,12 @@ export function useTaskPart(options?: TaskPartProps): PartProps {
     }
   };
   return {
+    id: 'Task',
     name: t('part.task.task'),
     state,
     reset: { dirty, action: () => resetData() },
-    content: <TaskPart type={options?.type} />
+    content: <TaskPart type={options?.type} />,
+    icon: IvyIcons.UserTask
   };
 }
 

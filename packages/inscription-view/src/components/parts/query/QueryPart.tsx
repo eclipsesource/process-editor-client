@@ -13,6 +13,7 @@ import { useValidations } from '../../../context/useValidation';
 import { PathContext } from '../../../context/usePath';
 import { ValidationCollapsible } from '../common/path/validation/ValidationCollapsible';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useQueryPart(): PartProps {
   const { t } = useTranslation();
@@ -21,7 +22,14 @@ export function useQueryPart(): PartProps {
   const compareData = (data: QueryData) => [data.query];
   const state = usePartState(compareData(defaultConfig), compareData(config), queryVal);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('part.db.title'), state: state, reset: { dirty, action: () => reset() }, content: <QueryPart /> };
+  return {
+    id: 'Query',
+    name: t('part.db.title'),
+    state: state,
+    reset: { dirty, action: () => reset() },
+    content: <QueryPart />,
+    icon: IvyIcons.Query
+  };
 }
 
 const QueryPart = () => {

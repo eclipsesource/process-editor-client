@@ -27,7 +27,14 @@ export function useSubCallPart(): PartProps {
     [...subCallValidations, ...callValidations]
   );
   const dirty = usePartDirty(compareData(callData.initConfig, targetData.initConfig), compareData(callData.config, targetData.config));
-  return { name: t('part.call.title'), state, reset: { dirty, action: () => targetData.resetData() }, content: <SubCallPart /> };
+  return {
+    id: 'Process',
+    name: t('part.call.title'),
+    state,
+    reset: { dirty, action: () => targetData.resetData() },
+    content: <SubCallPart />,
+    icon: IvyIcons.Process
+  };
 }
 
 const SubCallPart = () => {

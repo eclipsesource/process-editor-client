@@ -4,7 +4,7 @@ import { openMockInscription } from '../../page-objects/inscription/inscription-
 test.describe('Mappings', () => {
   test('DialogCall change will update mapping tree', async ({ page }) => {
     const inscriptionView = await openMockInscription(page);
-    const callPart = inscriptionView.accordion('Dialog');
+    const callPart = inscriptionView.inscriptionTab('Dialog');
     await callPart.open();
 
     const dialogSection = callPart.section('Dialog');
@@ -20,7 +20,7 @@ test.describe('Mappings', () => {
 
   test('SubStart result param change will update mapping tree', async ({ page }) => {
     const inscriptionView = await openMockInscription(page, { type: 'CallSubStart' });
-    const resultPart = inscriptionView.accordion('Result');
+    const resultPart = inscriptionView.inscriptionTab('Result');
     await resultPart.open();
 
     const mapping = resultPart.section('Mapping');

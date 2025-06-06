@@ -10,6 +10,7 @@ import { useMeta } from '../../../context/useMeta';
 import { PathCollapsible } from '../common/path/PathCollapsible';
 import { ValidationFieldset } from '../common/path/validation/ValidationFieldset';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useProcessDataPart(): PartProps {
   const { t } = useTranslation();
@@ -19,10 +20,12 @@ export function useProcessDataPart(): PartProps {
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'Process Data',
     name: t('part.processData.title'),
     state,
     reset: { dirty, action: () => reset() },
-    content: <ProcessDataPart />
+    content: <ProcessDataPart />,
+    icon: IvyIcons.DatabaseLink
   };
 }
 

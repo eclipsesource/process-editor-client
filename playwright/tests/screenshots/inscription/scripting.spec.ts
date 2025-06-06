@@ -1,7 +1,7 @@
 import { test, type Page } from '@playwright/test';
 import { screenshot } from './screenshot-util';
-import type { Accordion } from '../../page-objects/inscription/accordion';
 import { openElementInscription } from '../../page-objects/inscription/inscription-view';
+import type { InscriptionTab } from '../../page-objects/inscription/inscription-tab';
 
 const GENERIC_PID = {
   SCRIPT: '168F0C6DF682858E-f3',
@@ -11,8 +11,8 @@ const GENERIC_PID = {
 test.describe('Scripting', () => {
   test('Completion', async ({ page }) => {
     await page.setViewportSize({ width: 500, height: 600 });
-    const accordion = await openAccordion(page, GENERIC_PID.SCRIPT, 'Output');
-    const section = await codeOnly(accordion);
+    const inscriptionTab = await openInscriptionTab(page, GENERIC_PID.SCRIPT, 'Output');
+    const section = await codeOnly(inscriptionTab);
     const script = section.scriptArea();
 
     await script.fill('ivy.');
@@ -22,8 +22,8 @@ test.describe('Scripting', () => {
 
   test('Hopping', async ({ page }) => {
     await page.setViewportSize({ width: 500, height: 600 });
-    const accordion = await openAccordion(page, GENERIC_PID.SCRIPT, 'Output');
-    const section = await codeOnly(accordion);
+    const inscriptionTab = await openInscriptionTab(page, GENERIC_PID.SCRIPT, 'Output');
+    const section = await codeOnly(inscriptionTab);
     const script = section.scriptArea();
 
     await script.fill('in.set');
@@ -35,8 +35,8 @@ test.describe('Scripting', () => {
 
   test('Macro', async ({ page }) => {
     await page.setViewportSize({ width: 500, height: 600 });
-    const accordion = await openAccordion(page, GENERIC_PID.USER_TASK, 'Task');
-    const section = accordion.section('Details');
+    const inscriptionTab = await openInscriptionTab(page, GENERIC_PID.USER_TASK, 'Task');
+    const section = inscriptionTab.section('Details');
     await section.open();
     const script = section.macroArea('Name');
 
@@ -49,17 +49,17 @@ test.describe('Scripting', () => {
   });
 });
 
-async function openAccordion(page: Page, pid: string, accordionName): Promise<Accordion> {
+async function openInscriptionTab(page: Page, pid: string, inscriptionTabName): Promise<InscriptionTab> {
   const view = await openElementInscription(page, pid, 'inscription-test-project');
   await page.addStyleTag({ content: 'body { overflow: hidden; }' });
-  const accordion = view.accordion(accordionName);
-  await accordion.open();
-  return accordion;
+  const tab = view.inscriptionTab(inscriptionTabName);
+  await tab.open();
+  return tab;
 }
 
-async function codeOnly(accordion: Accordion) {
-  await accordion.section('Mapping').close();
-  const section = accordion.section('Code');
+async function codeOnly(inscriptionTab: InscriptionTab) {
+  await inscriptionTab.section('Mapping').close();
+  const section = inscriptionTab.section('Code');
   await section.open();
   return section;
 }

@@ -5,7 +5,7 @@ import { assertCodeHidden, browserBtn } from './browser-mock-utils';
 
 test('browser add role', async ({ page }) => {
   const inscriptionView = await openMockInscription(page);
-  const task = inscriptionView.accordion('Task');
+  const task = inscriptionView.inscriptionTab('Task');
   await task.open();
   await assertCodeHidden(page);
   await task.section('Responsible').open();
@@ -17,7 +17,7 @@ test('browser add role', async ({ page }) => {
 
 test('browser role open add role popover', async ({ page }) => {
   const inscriptionView = await openMockInscription(page);
-  const task = inscriptionView.accordion('Task');
+  const task = inscriptionView.inscriptionTab('Task');
   await task.open();
   await assertCodeHidden(page);
   await task.section('Responsible').open();
@@ -29,7 +29,7 @@ test('browser role open add role popover', async ({ page }) => {
 
 test('browser add role doubleclick', async ({ page }) => {
   const inscriptionView = await openMockInscription(page);
-  const task = inscriptionView.accordion('Task');
+  const task = inscriptionView.inscriptionTab('Task');
   await task.open();
   await assertCodeHidden(page);
   await task.section('Responsible').open();

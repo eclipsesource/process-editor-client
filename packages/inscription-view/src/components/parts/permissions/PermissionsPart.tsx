@@ -4,6 +4,7 @@ import Checkbox from '../../widgets/checkbox/Checkbox';
 import Collapsible from '../../widgets/collapsible/Collapsible';
 import { usePermissionsData } from './usePermissionsData';
 import type { PermissionsData } from '@axonivy/process-editor-inscription-protocol';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function usePermissionsPart(): PartProps {
   const { t } = useTranslation();
@@ -11,7 +12,14 @@ export function usePermissionsPart(): PartProps {
   const compareData = (data: PermissionsData) => [data.permissions];
   const state = usePartState(compareData(defaultConfig), compareData(config), []);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('part.permission.title'), state, reset: { dirty, action: () => reset() }, content: <PermissionsPart /> };
+  return {
+    id: 'Permissions',
+    name: t('part.permission.title'),
+    state,
+    reset: { dirty, action: () => reset() },
+    content: <PermissionsPart />,
+    icon: IvyIcons.Permission
+  };
 }
 
 const PermissionsPart = () => {

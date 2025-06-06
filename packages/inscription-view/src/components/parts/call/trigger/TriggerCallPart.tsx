@@ -28,10 +28,12 @@ export function useTriggerCallPart(): PartProps {
   );
   const dirty = usePartDirty(compareData(callData.initConfig, targetData.initConfig), compareData(callData.config, targetData.config));
   return {
+    id: 'Process',
     name: t('part.call.title'),
     state,
     reset: { dirty, action: () => targetData.resetData() },
-    content: <TriggerCallPart />
+    content: <TriggerCallPart />,
+    icon: IvyIcons.Process
   };
 }
 

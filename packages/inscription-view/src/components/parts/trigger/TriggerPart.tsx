@@ -11,6 +11,7 @@ import { PathFieldset } from '../common/path/PathFieldset';
 import { ScriptInput } from '../../widgets/code-editor/ScriptInput';
 import EmptyWidget from '../../widgets/empty/EmptyWidget';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useTriggerPart(): PartProps {
   const { t } = useTranslation();
@@ -20,7 +21,14 @@ export function useTriggerPart(): PartProps {
   const compareData = (data: TriggerData) => [data.triggerable, data.case.attachToBusinessCase, data.task?.responsible, data.task?.delay];
   const state = usePartState(compareData(defaultConfig), compareData(config), [...responsibleVal, ...delayVal]);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('part.trigger.title'), state: state, reset: { dirty, action: () => resetData() }, content: <TriggerPart /> };
+  return {
+    id: 'Trigger',
+    name: t('part.trigger.title'),
+    state: state,
+    reset: { dirty, action: () => resetData() },
+    content: <TriggerPart />,
+    icon: IvyIcons.Trigger
+  };
 }
 
 const TriggerPart = () => {

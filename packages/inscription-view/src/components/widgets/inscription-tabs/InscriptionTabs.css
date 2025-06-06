@@ -1,0 +1,102 @@
+.part-tabs-root {
+  display: flex;
+  flex-direction: column;
+  padding: var(--size-2);
+  flex: 1;
+  overflow: hidden;
+}
+
+.part-tabs-list {
+  display: flex;
+  overflow: hidden;
+  padding: var(--size-1);
+  background-color: var(--N25);
+  border: var(--basic-border);
+  border-radius: var(--border-r3);
+  margin-bottom: var(--size-3);
+  container: tabs-list / inline-size;
+
+  &:has(.part-tabs-trigger:focus-visible) {
+    box-shadow: var(--focus-shadow);
+  }
+
+  @container tabs-list (width <= 16rem) {
+    &.tabs-many .part-tabs-trigger[data-state='active'] .tab-label {
+      display: none;
+    }
+
+    &.tabs-many .part-tabs-trigger[data-state='active'] {
+      min-width: 2rem;
+    }
+  }
+
+  @container tabs-list (width <= 13rem) {
+    &.tabs-few .part-tabs-trigger[data-state='active'] .tab-label {
+      display: none;
+    }
+
+    &.tabs-few .part-tabs-trigger[data-state='active'] {
+      min-width: 2rem;
+    }
+  }
+}
+
+.part-tabs-trigger {
+  all: unset;
+  font-family: inherit;
+  height: var(--size-2);
+  padding: var(--size-3) var(--size-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1;
+  color: var(--N700);
+  user-select: none;
+  cursor: pointer;
+  flex: 1;
+  gap: var(--size-1);
+  min-width: 2rem;
+  container: tab-trigger / inline-size;
+
+  &:hover {
+    color: var(--P300);
+  }
+
+  &[data-state='active'] {
+    border: 1px solid var(--P75);
+    border-radius: var(--border-r2);
+    background-color: var(--P50);
+    color: var(--P300);
+    min-width: 6.5rem;
+  }
+
+  i {
+    font-size: 16px;
+  }
+
+  @container tab-trigger (width <= 6.5rem) {
+    &:not([data-state='active']) .tab-label {
+      display: none;
+    }
+  }
+}
+
+.part-tabs-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-3);
+  min-height: 0;
+  overflow: hidden;
+
+  .part-tabs-content-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  &[data-state='active'] {
+    flex: 1;
+  }
+}

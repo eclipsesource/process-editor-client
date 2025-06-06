@@ -9,6 +9,7 @@ import { useEditorContext } from '../../../context/useEditorContext';
 import { useMeta } from '../../../context/useMeta';
 import { PathContext } from '../../../context/usePath';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useConditionPart(): PartProps {
   const { t } = useTranslation();
@@ -18,10 +19,12 @@ export function useConditionPart(): PartProps {
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'Condition',
     name: t('part.condition.title'),
     state: state,
     reset: { dirty, action: () => update('conditions', initConfig.conditions) },
-    content: <ConditionPart />
+    content: <ConditionPart />,
+    icon: IvyIcons.Reconnect
   };
 }
 

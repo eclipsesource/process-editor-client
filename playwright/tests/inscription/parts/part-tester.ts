@@ -19,7 +19,10 @@ export interface PartTest {
 }
 
 export class NewPartTest implements PartTest {
-  constructor(readonly name: string, readonly partObjectFactory: (part: Part) => PartObject) {}
+  constructor(
+    readonly name: string,
+    readonly partObjectFactory: (part: Part) => PartObject
+  ) {}
 
   partName() {
     return this.name;
@@ -43,22 +46,22 @@ export class NewPartTest implements PartTest {
 }
 
 export async function runTest(view: Inscription, test: PartTest) {
-  const accordion = view.accordion(test.partName());
+  const tab = view.inscriptionTab(test.partName());
 
-  await accordion.open();
-  await test.fill(accordion);
+  await tab.open();
+  await test.fill(tab);
   await view.expectMutationStateSuccess();
   await view.page.reload();
 
-  await accordion.open();
-  await test.assertFill(accordion);
+  await tab.open();
+  await test.assertFill(tab);
   await view.page.reload();
 
-  await accordion.open();
-  await test.clear(accordion);
+  await tab.open();
+  await test.clear(tab);
   await view.expectMutationStateSuccess();
   await view.page.reload();
 
-  await accordion.open();
-  await test.assertClear(accordion);
+  await tab.open();
+  await test.assertClear(tab);
 }

@@ -1,4 +1,3 @@
-import type { Accordion } from '../../page-objects/inscription/accordion';
 import type { PartTest } from './part-tester';
 import { NewPartTest, PartObject } from './part-tester';
 import type { Part } from '../../page-objects/inscription/part';
@@ -9,6 +8,7 @@ import type { Table } from '../../page-objects/inscription/table';
 import type { Checkbox } from '../../page-objects/inscription/checkbox';
 import type { InfoComponent } from '../../page-objects/inscription/info-component';
 import type { ResponsibleComponent } from '../../page-objects/inscription/responsible-component';
+import type { InscriptionTab } from '../../page-objects/inscription/inscription-tab';
 
 export class TasksTester implements PartTest {
   private tasks: { tab: string; test: PartTest }[];
@@ -23,28 +23,28 @@ export class TasksTester implements PartTest {
   }
   async fill(part: Part) {
     for (const task of this.tasks) {
-      const tab = (part as Accordion).tab(task.tab);
+      const tab = (part as InscriptionTab).tab(task.tab);
       await tab.switchTo();
       await task.test.fill(tab);
     }
   }
   async assertFill(part: Part) {
     for (const task of this.tasks) {
-      const tab = (part as Accordion).tab(task.tab);
+      const tab = (part as InscriptionTab).tab(task.tab);
       tab.switchTo();
       await task.test.assertFill(tab);
     }
   }
   async clear(part: Part) {
     for (const task of this.tasks) {
-      const tab = (part as Accordion).tab(task.tab);
+      const tab = (part as InscriptionTab).tab(task.tab);
       tab.switchTo();
       await task.test.clear(tab);
     }
   }
   async assertClear(part: Part) {
     for (const task of this.tasks) {
-      const tab = (part as Accordion).tab(task.tab);
+      const tab = (part as InscriptionTab).tab(task.tab);
       tab.switchTo();
       await task.test.assertClear(tab);
     }

@@ -17,6 +17,7 @@ import { useOpenApi } from '../../../context/useOpenApi';
 import { useEditorContext } from '../../../context/useEditorContext';
 import { useMeta } from '../../../context/useMeta';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useRestRequestPart(): PartProps {
   const { t } = useTranslation();
@@ -31,11 +32,13 @@ export function useRestRequestPart(): PartProps {
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
+    id: 'Request',
     name: t('label.request'),
     state: state,
     reset: { dirty, action: () => resetData() },
     content: <RestRequestPart />,
-    control: <OpenApiSwitch />
+    control: <OpenApiSwitch />,
+    icon: IvyIcons.RestClient
   };
 }
 

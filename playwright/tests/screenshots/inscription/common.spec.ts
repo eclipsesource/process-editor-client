@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { screenshotAccordion, screenshotSection } from './screenshot-util';
+import { screenshotInscriptionTab, screenshotSection } from './screenshot-util';
 
 const GENERIC_PID = {
   SCRIPT: '168F0C6DF682858E-f3',
@@ -12,11 +12,11 @@ const GENERIC_PID = {
 
 test.describe('Common', () => {
   test('General', async ({ page }) => {
-    await screenshotAccordion(page, GENERIC_PID.SCRIPT, 'General', 'common-tab-general.png');
+    await screenshotInscriptionTab(page, GENERIC_PID.SCRIPT, 'General', 'common-tab-general.png');
   });
 
   test('Output', async ({ page }) => {
-    await screenshotAccordion(page, GENERIC_PID.USER_TASK, 'Output', 'common-tab-output.png');
+    await screenshotInscriptionTab(page, GENERIC_PID.USER_TASK, 'Output', 'common-tab-output.png');
   });
 
   test('Code', async ({ page }) => {
@@ -24,23 +24,23 @@ test.describe('Common', () => {
   });
 
   test('Start', async ({ page }) => {
-    await screenshotAccordion(page, GENERIC_PID.SUB_START, 'Start', 'common-tab-start.png');
+    await screenshotInscriptionTab(page, GENERIC_PID.SUB_START, 'Start', 'common-tab-start.png');
   });
 
   test('Result', async ({ page }) => {
-    await screenshotAccordion(page, GENERIC_PID.SUB_START, 'Result', 'common-tab-result.png');
+    await screenshotInscriptionTab(page, GENERIC_PID.SUB_START, 'Result', 'common-tab-result.png');
   });
 
   test('Data Cache', async ({ page }) => {
-    await screenshotAccordion(page, GENERIC_PID.WS_CALL, 'Cache', 'common-tab-data-cache.png');
+    await screenshotInscriptionTab(page, GENERIC_PID.WS_CALL, 'Cache', 'common-tab-data-cache.png');
   });
 
   test('Case', async ({ page }) => {
-    await screenshotAccordion(page, GENERIC_PID.USER_TASK, 'Case', 'common-tab-case.png');
+    await screenshotInscriptionTab(page, GENERIC_PID.USER_TASK, 'Case', 'common-tab-case.png');
   });
 
   test('Task', async ({ page }) => {
-    await screenshotAccordion(page, GENERIC_PID.USER_TASK, 'Task', 'common-tab-task.png');
+    await screenshotInscriptionTab(page, GENERIC_PID.USER_TASK, 'Task', 'common-tab-task.png');
   });
 
   test('Task Options', async ({ page }) => {
@@ -64,6 +64,6 @@ test.describe('Common', () => {
   });
 
   test('Call', async ({ page }) => {
-    await screenshotAccordion(page, GENERIC_PID.USER_TASK, 'Dialog', 'common-tab-call.png');
+    await screenshotInscriptionTab(page, GENERIC_PID.USER_TASK, 'Dialog', 'common-tab-call.png');
   });
 });

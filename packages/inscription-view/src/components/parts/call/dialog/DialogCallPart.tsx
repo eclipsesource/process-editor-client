@@ -28,10 +28,12 @@ export function useDialogCallPart(options?: { offline?: boolean }): PartProps {
   );
   const dirty = usePartDirty(compareData(callData.initConfig, targetData.initConfig), compareData(callData.config, targetData.config));
   return {
+    id: 'Dialog',
     name: t('part.call.dialog.title'),
     state,
     reset: { dirty, action: () => targetData.resetData() },
-    content: <DialogCallPart offline={options?.offline} />
+    content: <DialogCallPart offline={options?.offline} />,
+    icon: IvyIcons.UserDialog
   };
 }
 

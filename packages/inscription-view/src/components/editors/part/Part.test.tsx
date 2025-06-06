@@ -2,6 +2,7 @@ import { customRender, screen, userEvent } from 'test-utils';
 import Part from './Part';
 import type { PartProps, PartStateFlag } from './usePart';
 import { describe, test, expect, beforeEach, afterEach, vi } from 'vitest';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 const ErrorWidget = () => {
   throw new Error('this is an exception');
@@ -9,39 +10,47 @@ const ErrorWidget = () => {
 
 describe('Part', () => {
   const generalPart: PartProps = {
+    id: 'General',
     name: 'General',
     state: { state: undefined, validations: [] },
     reset: { dirty: false, action: () => {} },
-    content: <h1>General</h1>
+    content: <h1>General</h1>,
+    icon: IvyIcons.InfoCircle
   };
   const callPart: PartProps = {
+    id: 'Call',
     name: 'Call',
     state: { state: 'warning', validations: [] },
     content: <h1>Call</h1>,
-    reset: { dirty: true, action: () => {} }
+    reset: { dirty: true, action: () => {} },
+    icon: IvyIcons.InfoCircle
   };
   const resultPart: PartProps = {
+    id: 'Result',
     name: 'Result',
     state: { state: 'error', validations: [] },
     reset: { dirty: false, action: () => {} },
-    content: <h1>Result</h1>
+    content: <h1>Result</h1>,
+    icon: IvyIcons.InfoCircle
   };
   const errorPart: PartProps = {
+    id: 'Error',
     name: 'Error',
     state: { state: 'error', validations: [] },
     reset: { dirty: false, action: () => {} },
-    content: <ErrorWidget />
+    content: <ErrorWidget />,
+    icon: IvyIcons.InfoCircle
   };
 
-  function renderPart(partProps: PartProps): {
+  function renderPart(partProps: PartProps[]): {
     data: () => PartProps;
     rerender: () => void;
   } {
     const part = partProps;
-    const view = customRender(<Part parts={[part]} />);
+    const view = customRender(<Part parts={part} />);
     return {
-      data: () => part,
-      rerender: () => view.rerender(<Part parts={[part]} />)
+      data: () => part[0],
+      rerender: () => view.rerender(<Part parts={part} />)
     };
   }
 
@@ -56,69 +65,69 @@ describe('Part', () => {
   });
 
   test('render', () => {
-    renderPart(generalPart);
-    assertExpanded('General', false);
+    renderPart([generalPart]);
+    assertActive('General', 'active');
   });
 
   test('state', () => {
-    renderPart(generalPart);
+    renderPart([generalPart]);
     assertPartState('General', undefined);
-    renderPart(callPart);
+    renderPart([callPart]);
     assertPartState('Call', 'warning');
-    renderPart(resultPart);
+    renderPart([resultPart]);
     assertPartState('Result', 'error');
   });
 
   test('reset data', async () => {
     let dirty = true;
     const action = () => (dirty = false);
-    renderPart({ ...callPart, reset: { dirty, action } });
-    await userEvent.click(screen.getByRole('button', { name: 'Reset Call' }));
+    renderPart([{ ...generalPart, reset: { dirty, action } }]);
+    await userEvent.click(screen.getByRole('button', { name: 'Reset General' }));
     expect(dirty).toBeFalsy();
   });
 
-  test('open section', async () => {
-    renderPart(generalPart);
-    const trigger = screen.getByRole('button', { name: 'General' });
-    assertExpanded('General', false);
+  test('open tab', async () => {
+    renderPart([generalPart, callPart]);
+    assertActive('General', 'active');
+    assertActive('Call', 'inactive');
+    const trigger = screen.getByRole('tab', { name: 'Call' });
     await userEvent.click(trigger);
-    assertExpanded('General', true);
-    await userEvent.click(trigger);
-    assertExpanded('General', false);
+    assertActive('General', 'inactive');
+    assertActive('Call', 'active');
   });
 
   test('open section by keyboard', async () => {
-    renderPart(callPart);
-
-    const trigger = screen.getByRole('button', { name: 'Call' });
-
-    await userEvent.tab();
+    renderPart([generalPart, callPart]);
+    const trigger = screen.getByRole('tab', { name: 'General' });
+    await userEvent.click(trigger);
     expect(trigger).toHaveFocus();
-    assertExpanded('Call', false);
-
-    await userEvent.keyboard('[Enter]');
-    assertExpanded('Call', true);
-
-    await userEvent.keyboard('[Space]');
-    assertExpanded('Call', false);
+    assertActive('General', 'active');
+    await userEvent.keyboard('[ArrowRight]');
+    assertActive('Call', 'active');
+    assertActive('General', 'inactive');
+    await userEvent.keyboard('[ArrowLeft]');
+    assertActive('Call', 'inactive');
+    assertActive('General', 'active');
   });
 
   test('part render error', async () => {
-    renderPart(errorPart);
-    await userEvent.click(screen.getByRole('button', { name: 'Error' }));
+    renderPart([errorPart]);
+    await userEvent.click(screen.getByRole('tab', { name: 'Error' }));
     expect(screen.getByRole('alert')).toHaveTextContent('this is an exception');
     expect(console.error).toHaveBeenCalled();
   });
 
-  function assertExpanded(accordionName: string, expanded: boolean) {
-    expect(screen.getByRole('button', { name: accordionName })).toHaveAttribute('aria-expanded', `${expanded}`);
+  function assertActive(tabName: string, expanded: 'active' | 'inactive') {
+    expect(screen.getByRole('tab', { name: tabName })).toHaveAttribute('data-state', expanded);
   }
 
-  function assertPartState(accordionName: string, state: PartStateFlag) {
+  function assertPartState(tabName: string, state: PartStateFlag) {
+    const stateDot = screen.getByRole('tab', { name: tabName }).querySelector('.ui-state-dot');
     if (state) {
-      expect(screen.getByRole('button', { name: accordionName }).querySelector('.ui-state-dot')).toHaveAttribute('data-state', state);
+      expect(stateDot).not.toBeNull();
+      expect(stateDot).toHaveAttribute('data-state', state);
     } else {
-      expect(screen.getByRole('button', { name: accordionName }).querySelector('.ui-state-dot')).not.toHaveAttribute('data-state');
+      expect(stateDot).toBeNull();
     }
   }
 });

@@ -7,6 +7,7 @@ import { PathCollapsible } from '../common/path/PathCollapsible';
 import { ValidationFieldset } from '../common/path/validation/ValidationFieldset';
 import ExceptionSelect from '../common/exception-handler/ExceptionSelect';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useWsErrorPart(): PartProps {
   const { t } = useTranslation();
@@ -15,7 +16,14 @@ export function useWsErrorPart(): PartProps {
   const compareData = (data: WsErrorData) => [data];
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('label.error'), state: state, reset: { dirty, action: () => resetData() }, content: <WsErrorPart /> };
+  return {
+    id: 'Error',
+    name: t('label.error'),
+    state: state,
+    reset: { dirty, action: () => resetData() },
+    content: <WsErrorPart />,
+    icon: IvyIcons.Error
+  };
 }
 
 const WsErrorPart = () => {

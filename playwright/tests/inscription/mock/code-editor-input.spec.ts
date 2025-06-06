@@ -6,14 +6,14 @@ import { openMockInscription } from '../../page-objects/inscription/inscription-
 test.describe('Code Editor Input', () => {
   test('MacroInput - no new line', async ({ page }) => {
     const inscriptionView = await openMockInscription(page);
-    const taskPart = inscriptionView.accordion('Case');
+    const taskPart = inscriptionView.inscriptionTab('Case');
     await taskPart.open();
     await assertNoNewLine(page, taskPart.macroInput('Name'));
   });
 
   test('ScriptInput - no new line', async ({ page }) => {
     const inscriptionView = await openMockInscription(page);
-    const taskPart = inscriptionView.accordion('Task');
+    const taskPart = inscriptionView.inscriptionTab('Task');
     await taskPart.open();
     const expirySection = taskPart.section('Expiry');
     await expirySection.toggle();
@@ -43,7 +43,7 @@ test.describe('Code Editor Input', () => {
 
   async function assertAcceptScriptCellValue(page: Page, key?: string) {
     const inscriptionView = await openMockInscription(page);
-    const taskPart = inscriptionView.accordion('Output');
+    const taskPart = inscriptionView.inscriptionTab('Output');
     await taskPart.open();
     await taskPart.table(['label', 'expression']).row(1).column(1).fill('test');
     if (key) {

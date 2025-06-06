@@ -8,6 +8,7 @@ import { useValidations } from '../../../context/useValidation';
 import Checkbox from '../../widgets/checkbox/Checkbox';
 import { PathContext } from '../../../context/usePath';
 import { useTranslation } from 'react-i18next';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useRequestPart(): PartProps {
   const { t } = useTranslation();
@@ -17,7 +18,14 @@ export function useRequestPart(): PartProps {
   const compareData = (data: RequestData) => [data];
   const state = usePartState(compareData(defaultConfig), compareData(config), [...requestVal, ...permissionVal]);
   const dirty = usePartDirty(compareData(initConfig), compareData(config));
-  return { name: t('part.request.title'), state: state, reset: { dirty, action: () => resetData() }, content: <RequestPart /> };
+  return {
+    id: 'Request',
+    name: t('part.request.title'),
+    state: state,
+    reset: { dirty, action: () => resetData() },
+    content: <RequestPart />,
+    icon: IvyIcons.RestClient
+  };
 }
 
 const RequestPart = () => {
