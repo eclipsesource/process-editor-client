@@ -32,7 +32,7 @@ export function useTaskPart(options?: TaskPartProps): PartProps {
     }
   };
   return {
-    id: 'Tasks',
+    id: 'Task',
     name: t('part.task.task'),
     state,
     reset: { dirty, action: () => resetData() },

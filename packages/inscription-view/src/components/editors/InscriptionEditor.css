@@ -9,5 +9,6 @@
 }
 
 .content {
-  overflow-y: auto;
+  overflow: hidden;
+  flex: 1;
 }

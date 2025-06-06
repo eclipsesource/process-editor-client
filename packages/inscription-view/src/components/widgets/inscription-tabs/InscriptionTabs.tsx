@@ -2,7 +2,7 @@ import './InscriptionTabs.css';
 import { Tabs as TabsRoot, TabsContent, TabsList, TabsTrigger } from '@radix-ui/react-tabs';
 import type { ReactNode } from 'react';
 import type { IvyIcons } from '@axonivy/ui-icons';
-import { IvyIcon, StateDot } from '@axonivy/ui-components';
+import { Flex, IvyIcon, StateDot } from '@axonivy/ui-components';
 import { ErrorBoundary } from 'react-error-boundary';
 import type { PartProps } from '../../editors/part/usePart';
 import ErrorFallback from '../error/ErrorFallback';
@@ -44,8 +44,10 @@ export const InscriptionTabContent = ({ tabs }: TabsProps) => (
     {tabs.map((tab, index) => (
       <TabsContent key={`${index}-${tab}`} className='part-tabs-content' value={tab.id}>
         <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[tab]}>
+          <Flex direction='column' gap={3} className='part-tabs-content-scroll-area'>
+            {tab.content}
+          </Flex>
           <Control reset={tab.reset} name={tab.name} control={tab.control} className='reset-tab' />
-          {tab.content}
         </ErrorBoundary>
       </TabsContent>
     ))}
