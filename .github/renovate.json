@@ -3,9 +3,7 @@
   "extends": [
     "local>axonivy/renovate-config:npm",
     "group:allNonMajor",
-    "npm:unpublishSafe",
-    "schedule:earlyMondays",
-    ":disableRateLimiting"
+    "npm:unpublishSafe"
   ],
   "timezone": "Europe/Zurich",
   "rebaseWhen": "conflicted",
