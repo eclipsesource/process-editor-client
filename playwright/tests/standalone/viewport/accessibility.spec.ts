@@ -27,7 +27,10 @@ test('toggle and focus inscription shortcut', async ({ page }) => {
   await page.keyboard.press('Digit3');
   await inscription.expectOpen();
   await page.keyboard.press('Digit3');
-  await expect(inscription.locator().locator('button').first()).toBeFocused();
+  await page.waitForFunction(() => {
+    return document.activeElement?.getAttribute('aria-label') === 'General';
+  });
+  await expect(inscription.inscriptionTab('General').tabButtonLocator).toBeFocused();
 });
 
 test('do not change focus if input is focused', async ({ page }) => {

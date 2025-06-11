@@ -5,7 +5,7 @@ import { Tab } from './tab';
 import type { PartStateFlag } from '@axonivy/process-editor-inscription-view/src/components/editors/part/usePart';
 
 export class InscriptionTab extends Part {
-  private readonly tabButtonLocator: Locator;
+  readonly tabButtonLocator: Locator;
 
   constructor(
     page: Page,
@@ -33,10 +33,6 @@ export class InscriptionTab extends Part {
 
   tab(label: string) {
     return new Tab(this.page, this.locator, label);
-  }
-
-  reset() {
-    return this.page.locator(`button[aria-label="Reset ${this.label}"]`);
   }
 
   async expectState(state: PartStateFlag) {

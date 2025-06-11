@@ -27,7 +27,7 @@ export class IvyInscriptionGlobalKeyListenerTool extends IvyGlobalKeyListenerToo
     if (this.isInput(event) || !this.matchesSetFocusOnInscription(event)) {
       return [];
     }
-    const selector = '#inscription-ui button';
+    const selector = '#inscription-ui .ui-inscription-tabs-list button';
     const focusAction = FocusDomAction.create(selector);
     if (document.querySelector<HTMLElement>(selector)?.checkVisibility()) {
       return [focusAction];
