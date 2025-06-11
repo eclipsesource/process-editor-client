@@ -1,5 +1,5 @@
 import { MonacoEditorUtil } from '@axonivy/process-editor-inscription-view';
-import { IvyBaseJsonrpcGLSPClient, SwitchThemeActionHandler } from '@axonivy/process-editor';
+import { IvyBaseJsonrpcGLSPClient, prefsColorScheme } from '@axonivy/process-editor';
 import type { ThemeMode } from '@axonivy/process-editor-protocol';
 import type { IActionDispatcher } from '@eclipse-glsp/client';
 import { DiagramLoader, EditMode, GLSPWebSocketProvider, MessageAction, StatusAction, TYPES } from '@eclipse-glsp/client';
@@ -22,7 +22,7 @@ const pmv = parameters.get('pmv') ?? '';
 const pid = parameters.get('pid') ?? '';
 const sourceUri = parameters.get('file') ?? '';
 const select = parameters.get('select');
-const theme = (parameters.get('theme') as ThemeMode) ?? SwitchThemeActionHandler.prefsColorScheme();
+const theme = (parameters.get('theme') as ThemeMode) ?? prefsColorScheme();
 const debug = parameters.has('debug', 'true');
 
 const id = 'ivy-glsp-process-editor';

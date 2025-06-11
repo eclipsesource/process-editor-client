@@ -15,6 +15,7 @@ export { ivyLabelEditModule, ivyLabelEditUiModule } from './edit-label/di.config
 export { ivyChangeBoundsToolModule, ivyExportModule } from './tools/di.config';
 export { ivyAccessibilityModule, ivyKeyListenerModule } from './accessibility/di.config';
 export * from './copy-paste/di.config';
+export * from './ui-tools/notification/di.config';
 
 /* Features */
 export * from './jump/action';
@@ -33,7 +34,7 @@ export * from './diagram/model';
 export * from './diagram/view-types';
 export * from './options';
 export * from './types';
-export * from './theme/action-handler';
+export * from './theme/current-theme';
 export * from './ui-tools/tool-bar/options/action-handler';
 export * from './ui-tools/tool-bar/options/action';
 export * from './ui-tools/tool-bar/button';

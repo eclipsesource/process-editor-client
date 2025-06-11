@@ -18,8 +18,11 @@ export class ViewerDiagramStartup implements IDiagramStartup {
   @inject(ContainerSymbol)
   protected container: interfaces.Container;
 
-  async postModelInitialization(): Promise<void> {
+  async preRequestModel() {
     this.actionDispatcher.dispatch(SwitchThemeAction.create({ theme: this.options.theme }));
+  }
+
+  async postModelInitialization(): Promise<void> {
     if (this.isNumeric(this.options.zoom)) {
       this.actionDispatcher.dispatch(SetViewportZoomAction.create({ zoom: +this.options.zoom / 100 }));
       this.showElement((ids: string[]) => CenterAction.create(ids, { animate: false, retainZoom: true }));

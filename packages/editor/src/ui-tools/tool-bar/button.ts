@@ -9,11 +9,11 @@ import {
   TYPES,
   UndoAction
 } from '@eclipse-glsp/client';
-import { inject, injectable, optional } from 'inversify';
-import { SwitchThemeActionHandler } from '../../theme/action-handler';
+import { inject, injectable } from 'inversify';
 import { ShowToolBarOptionsMenuAction } from './options/action';
 import { CustomIconToggleActionHandler } from './options/action-handler';
 import { t } from 'i18next';
+import { currentTheme } from '../../theme/current-theme';
 
 export interface ToolBarButtonProvider {
   button(): ToolBarButton | undefined;
@@ -90,13 +90,11 @@ export const RedoToolButton = (): ToolBarButton => ({
 export class OptionsButtonProvider implements ToolBarButtonProvider {
   @inject(CustomIconToggleActionHandler) protected customIconHandler: CustomIconToggleActionHandler;
   @inject(TYPES.IGridManager) protected gridManager: IGridManager;
-  @inject(SwitchThemeActionHandler) @optional() protected switchThemeHandler?: SwitchThemeActionHandler;
 
   button() {
     const customIconState = () => this.customIconHandler.isShowCustomIcons;
     const grid = () => this.gridManager.isGridVisible;
-    const handler = this.switchThemeHandler;
-    const theme = handler ? () => handler.theme() : undefined;
+    const theme = () => currentTheme();
     return {
       icon: IvyIcons.Settings,
       title: t('common.label.settings'),

@@ -1,4 +1,4 @@
-import { IvyBaseJsonrpcGLSPClient, SwitchThemeActionHandler } from '@axonivy/process-editor';
+import { IvyBaseJsonrpcGLSPClient, prefsColorScheme } from '@axonivy/process-editor';
 import type { IActionDispatcher } from '@eclipse-glsp/client';
 import { DiagramLoader, EditMode, GLSPWebSocketProvider, MessageAction, StatusAction, TYPES } from '@eclipse-glsp/client';
 import { ApplicationIdProvider, GLSPClient } from '@eclipse-glsp/protocol';
@@ -11,7 +11,7 @@ import { initTranslation } from './i18n';
 
 const { webSocketUrl, app, pmv, pid, sourceUri, highlight, select, zoom, theme, previewMode } = params(
   new URL(window.location.href),
-  SwitchThemeActionHandler.prefsColorScheme
+  prefsColorScheme
 );
 
 const id = 'ivy-glsp-process-viewer';

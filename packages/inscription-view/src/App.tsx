@@ -6,7 +6,7 @@ import type {
   ValidationResult,
   PID
 } from '@axonivy/process-editor-inscription-protocol';
-import { PanelMessage, ReadonlyProvider, Spinner, Toaster } from '@axonivy/ui-components';
+import { PanelMessage, ReadonlyProvider, Spinner } from '@axonivy/ui-components';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import AppStateView from './AppStateView';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -129,7 +129,6 @@ function App({ outline, app, pmv, pid }: InscriptionElementContext & Inscription
           </DataContextInstance.Provider>
         </EditorContextInstance.Provider>
       </ReadonlyProvider>
-      <Toaster closeButton={true} position='bottom-left' />
     </div>
   );
 }
