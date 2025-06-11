@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { customRender, customRenderHook, screen } from 'test-utils';
-import type { CacheData, ElementData, ValidationResult } from '@axonivy/process-editor-inscription-protocol';
+import type { CacheData, ValidationResult } from '@axonivy/process-editor-inscription-protocol';
 import { useCachePart } from './CachePart';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { describe, test, expect } from 'vitest';
@@ -62,22 +62,5 @@ describe('CachePart', () => {
 
     assertState('error', undefined, { path: 'cache.cause', message: '', severity: 'ERROR' });
     assertState('warning', undefined, { path: 'cache.error', message: '', severity: 'WARNING' });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: {
-        cache: {
-          mode: 'CACHE'
-        }
-      }
-    };
-    const view = customRenderHook(() => useCachePart(), {
-      wrapperProps: { data, setData: newData => (data = newData) }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.cache?.mode).toEqual('DO_NOT_CACHE');
   });
 });

@@ -7,7 +7,6 @@ export function useGeneralData(): {
   data: GeneralData;
   initData: GeneralData;
   update: DataUpdater<GeneralData>;
-  resetData: () => void;
 } {
   const { data, initData, setData } = useDataContext();
 
@@ -18,15 +17,5 @@ export function useGeneralData(): {
       })
     );
 
-  const resetData = () =>
-    setData(
-      produce(draft => {
-        draft.name = initData.name;
-        draft.description = initData.description;
-        draft.docs = initData.docs;
-        draft.tags = initData.tags;
-      })
-    );
-
-  return { data, initData, update, resetData };
+  return { data, initData, update };
 }

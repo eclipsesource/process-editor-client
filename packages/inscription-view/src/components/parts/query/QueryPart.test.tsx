@@ -134,20 +134,4 @@ describe('QueryPart', () => {
     assertState('error', undefined, { path: 'query.dbName', message: '', severity: 'ERROR' });
     assertState('warning', undefined, { path: 'query.dbName', message: '', severity: 'WARNING' });
   });
-
-  test('reset', () => {
-    let data = { config: { exceptionHandler: 'bla', query: { dbName: 'init', sql: { stmt: 'update' } } } };
-    const view = customRenderHook(() => useQueryPart(), {
-      wrapperProps: {
-        data,
-        setData: newData => (data = newData),
-        initData: { config: { exceptionHandler: 'err', query: { dbName: 'init' } } }
-      }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config.query.dbName).toEqual('init');
-    expect(data.config.query.sql.stmt).toEqual('');
-  });
 });

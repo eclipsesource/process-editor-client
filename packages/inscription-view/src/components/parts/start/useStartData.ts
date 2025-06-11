@@ -6,10 +6,9 @@ import { useConfigDataContext, useDataContext, type ConfigDataContext } from '..
 export function useStartData(synchParams?: boolean): ConfigDataContext<StartData> & {
   update: DataUpdater<StartData['input']>;
   updateSignature: Consumer<string>;
-  resetData: () => void;
 } {
   const { setData } = useDataContext();
-  const { setConfig, ...config } = useConfigDataContext();
+  const { ...config } = useConfigDataContext();
 
   const update: DataUpdater<StartData['input']> = (field, value) => {
     setData(
@@ -44,18 +43,9 @@ export function useStartData(synchParams?: boolean): ConfigDataContext<StartData
       })
     );
 
-  const resetData = () =>
-    setConfig(
-      produce(draft => {
-        draft.signature = config.initConfig.signature;
-        draft.input = config.initConfig.input;
-      })
-    );
-
   return {
     ...config,
     update,
-    updateSignature,
-    resetData
+    updateSignature
   };
 }

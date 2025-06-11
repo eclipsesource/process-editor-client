@@ -1,6 +1,6 @@
 import type { HttpMethod, RestRequestData } from '@axonivy/process-editor-inscription-protocol';
 import { Field, Label, Switch } from '@axonivy/ui-components';
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useRestRequestData } from './useRestRequestData';
 import { RestClientSelect } from './rest-request/rest-target/RestClientSelect';
 import { RestMethodSelect } from './rest-request/rest-target/RestMethodSelect';
@@ -21,7 +21,7 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useRestRequestPart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, resetData } = useRestRequestData();
+  const { config, defaultConfig } = useRestRequestData();
   const validations = [
     ...useValidations(['method']),
     ...useValidations(['target']),
@@ -30,12 +30,10 @@ export function useRestRequestPart(): PartProps {
   ];
   const compareData = (data: RestRequestData) => [data.body, data.code, data.method, data.target];
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Request',
     name: t('label.request'),
     state: state,
-    reset: { dirty, action: () => resetData() },
     content: <RestRequestPart />,
     control: <OpenApiSwitch />,
     icon: IvyIcons.RestClient

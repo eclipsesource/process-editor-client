@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { customRender, screen, customRenderHook, TableUtil, SelectUtil, CollapsableUtil } from 'test-utils';
-import type { ElementData, ValidationResult, RequestData } from '@axonivy/process-editor-inscription-protocol';
+import type { ValidationResult, RequestData } from '@axonivy/process-editor-inscription-protocol';
 import { useRequestPart } from './RequestPart';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { describe, test, expect } from 'vitest';
@@ -100,17 +100,5 @@ describe('RequestPart', () => {
 
     assertState('error', undefined, { path: 'permission.role', message: '', severity: 'ERROR' });
     assertState('warning', undefined, { path: 'request.name', message: '', severity: 'WARNING' });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = { config: { request: { isHttpRequestable: false, name: 'bla' } } };
-    const view = customRenderHook(() => useRequestPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { request: { name: 'init' } } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.request?.isHttpRequestable).toEqual(true);
-    expect(data.config?.request?.name).toEqual('init');
   });
 });

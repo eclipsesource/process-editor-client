@@ -1,6 +1,6 @@
 import type { EventData, IntermediateEventTimeoutAction } from '@axonivy/process-editor-inscription-protocol';
 import { IVY_EXCEPTIONS, IVY_SCRIPT_TYPES } from '@axonivy/process-editor-inscription-protocol';
-import { usePartDirty, usePartState, type PartProps } from '../../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../../editors/part/usePart';
 import { useEventData } from './useEventData';
 import JavaClassSelector from '../JavaClassSelector';
 import { deepEqual } from '../../../../utils/equals';
@@ -17,16 +17,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useEventPart(options?: { thirdParty?: boolean }): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, reset } = useEventData();
+  const { config, defaultConfig } = useEventData();
   const compareData = (data: EventData) => [data.javaClass, data.eventId, data.timeout];
   const validation = [...useValidations(['timeout']), ...useValidations(['eventId']), ...useValidations(['javaClass'])];
   const state = usePartState(compareData(defaultConfig), compareData(config), validation);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Event',
     name: t('part.program.event.title'),
     state,
-    reset: { dirty, action: () => reset() },
     content: <EventPart thirdParty={options?.thirdParty} />,
     icon: IvyIcons.Clock
   };

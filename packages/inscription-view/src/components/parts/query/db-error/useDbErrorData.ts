@@ -5,7 +5,6 @@ import { useConfigDataContext, type ConfigDataContext } from '../../../../contex
 
 export function useDbErrorData(): ConfigDataContext<DbErrorData> & {
   updateException: Consumer<string>;
-  reset: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -17,16 +16,8 @@ export function useDbErrorData(): ConfigDataContext<DbErrorData> & {
     );
   };
 
-  const reset = () =>
-    setConfig(
-      produce(draft => {
-        draft.exceptionHandler = config.initConfig.exceptionHandler;
-      })
-    );
-
   return {
     ...config,
-    updateException,
-    reset
+    updateException
   };
 }

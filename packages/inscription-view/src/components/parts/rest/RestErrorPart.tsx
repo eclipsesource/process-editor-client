@@ -1,5 +1,5 @@
 import type { RestResponseData } from '@axonivy/process-editor-inscription-protocol';
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { RestError } from './rest-response/RestError';
 import { useRestErrorData } from './useRestErrorData';
 import { useValidations } from '../../../context/useValidation';
@@ -10,17 +10,15 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useRestErrorPart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, resetData } = useRestErrorData();
+  const { config, defaultConfig } = useRestErrorData();
   const validations = useValidations(['response']);
   const filteredErrorValidations = validations.filter(item => !item.path.startsWith('response.entity'));
   const compareData = (data: RestResponseData) => [data.response.clientError, data.response.statusError];
   const state = usePartState(compareData(defaultConfig), compareData(config), filteredErrorValidations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Error',
     name: t('label.error'),
     state: state,
-    reset: { dirty, action: () => resetData() },
     content: <RestErrorPart />,
     icon: IvyIcons.Error
   };

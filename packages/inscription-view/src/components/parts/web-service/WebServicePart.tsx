@@ -1,5 +1,5 @@
 import type { WebserviceStartData } from '@axonivy/process-editor-inscription-protocol';
-import { usePartDirty, usePartState, type PartProps } from '../../../components/editors/part/usePart';
+import { usePartState, type PartProps } from '../../../components/editors/part/usePart';
 import { useWebServiceData } from './useWebServiceData';
 import { Exception } from './Exception';
 import { PID } from '../../../utils/pid';
@@ -12,16 +12,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useWebServicePart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, reset } = useWebServiceData();
+  const { config, defaultConfig } = useWebServiceData();
   const compareData = (data: WebserviceStartData) => [data];
   const validation = [...useValidations(['permission']), ...useValidations(['exception'])];
   const state = usePartState(compareData(defaultConfig), compareData(config), validation);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Web Service',
     name: t('part.ws.title'),
     state,
-    reset: { dirty, action: () => reset() },
     content: <WebServicePart />,
     icon: IvyIcons.WsStart
   };

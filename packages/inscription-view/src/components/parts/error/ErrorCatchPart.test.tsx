@@ -1,6 +1,5 @@
-import type { DeepPartial } from 'test-utils';
 import { CollapsableUtil, ComboboxUtil, customRender, customRenderHook } from 'test-utils';
-import type { ElementData, ErrorCatchData } from '@axonivy/process-editor-inscription-protocol';
+import type { ErrorCatchData } from '@axonivy/process-editor-inscription-protocol';
 import { useErrorCatchPart } from './ErrorCatchPart';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { describe, test, expect } from 'vitest';
@@ -40,18 +39,5 @@ describe('ErrorCatchPart', () => {
   test('configured', async () => {
     assertState(undefined);
     assertState('configured', { errorCode: 'error' });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: { errorCode: 'error' }
-    };
-    const view = customRenderHook(() => useErrorCatchPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { errorCode: 'init' } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.errorCode).toEqual('init');
   });
 });

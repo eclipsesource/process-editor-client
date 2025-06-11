@@ -1,4 +1,4 @@
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useRequestData } from './useRequestData';
 import type { RequestData } from '@axonivy/process-editor-inscription-protocol';
 import Information from '../common/info/Information';
@@ -12,17 +12,15 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useRequestPart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, resetData } = useRequestData();
+  const { config, defaultConfig } = useRequestData();
   const requestVal = useValidations(['request']);
   const permissionVal = useValidations(['permission']);
   const compareData = (data: RequestData) => [data];
   const state = usePartState(compareData(defaultConfig), compareData(config), [...requestVal, ...permissionVal]);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Request',
     name: t('part.request.title'),
     state: state,
-    reset: { dirty, action: () => resetData() },
     content: <RequestPart />,
     icon: IvyIcons.RestClient
   };

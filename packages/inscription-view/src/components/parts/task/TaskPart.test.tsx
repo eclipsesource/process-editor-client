@@ -1,7 +1,6 @@
 import type { DeepPartial } from 'test-utils';
-import { customRenderHook, screen, customRender, cloneObject } from 'test-utils';
-import type { WfTask, TaskData, ElementData } from '@axonivy/process-editor-inscription-protocol';
-import { DEFAULT_TASK } from '@axonivy/process-editor-inscription-protocol';
+import { customRenderHook, screen, customRender } from 'test-utils';
+import type { WfTask, TaskData } from '@axonivy/process-editor-inscription-protocol';
 import type { TaskPartProps } from './TaskPart';
 import { useTaskPart } from './TaskPart';
 import type { PartStateFlag } from '../../editors/part/usePart';
@@ -50,36 +49,5 @@ describe('TaskPart', () => {
 
     assertState('configured', { customFields: [{ name: 'cf', type: 'NUMBER', value: '123' }] });
     assertState('configured', { code: 'code' });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: {
-        task: {
-          name: 'name',
-          description: 'desc',
-          category: 'cat',
-          responsible: { type: 'ROLE_FROM_ATTRIBUTE', script: '' },
-          priority: { level: 'LOW', script: '' },
-          skipTasklist: true,
-          notification: { suppress: true },
-          delay: 'delay',
-          expiry: { timeout: 'asf' },
-          customFields: [{ name: 'cf', type: 'NUMBER', value: '123' }],
-          code: 'code'
-        },
-        persistOnStart: true
-      }
-    };
-    const view = customRenderHook(() => useTaskPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { task: { name: 'init' } } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    const expectedTask = cloneObject(DEFAULT_TASK);
-    expectedTask.name = 'init';
-    expect(data.config?.task).toEqual(expectedTask);
-    expect(data.config?.persistOnStart).toEqual(false);
   });
 });

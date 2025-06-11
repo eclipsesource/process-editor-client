@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { customRender, TableUtil, customRenderHook, screen, CollapsableUtil } from 'test-utils';
-import type { ConditionData, ConnectorRef, ElementData } from '@axonivy/process-editor-inscription-protocol';
+import type { ConditionData, ConnectorRef } from '@axonivy/process-editor-inscription-protocol';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { useConditionPart } from './ConditionPart';
 import { describe, test, expect } from 'vitest';
@@ -49,16 +49,5 @@ describe('ConditionPart', () => {
   test('configured', async () => {
     assertState(undefined);
     assertState('configured', { conditions: { f1: 'false' } });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = { config: { conditions: { f1: 'test' } } };
-    const view = customRenderHook(() => useConditionPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { conditions: { f1: 'init' } } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.conditions?.f1).toEqual('init');
   });
 });

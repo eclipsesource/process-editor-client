@@ -6,7 +6,6 @@ import { useConfigDataContext, useDataContext, type ConfigDataContext } from '..
 export function useErrorThrowData(): ConfigDataContext<ErrorThrowData> & {
   update: DataUpdater<ErrorThrowData>;
   updateThrows: DataUpdater<ErrorThrowData['throws']>;
-  reset: () => void;
 } {
   const { setData } = useDataContext();
   const { setConfig, ...config } = useConfigDataContext();
@@ -30,13 +29,5 @@ export function useErrorThrowData(): ConfigDataContext<ErrorThrowData> & {
     );
   };
 
-  const reset = () =>
-    setConfig(
-      produce(draft => {
-        draft.throws = config.initConfig.throws;
-        draft.code = config.initConfig.code;
-      })
-    );
-
-  return { ...config, update, updateThrows, reset };
+  return { ...config, update, updateThrows };
 }

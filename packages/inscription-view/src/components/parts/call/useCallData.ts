@@ -21,7 +21,6 @@ export function useCallData(): ConfigDataContext<CallData> & {
 
 export function useDialogCallData(): ConfigDataContext<DialogCallData> & {
   update: DataUpdater<DialogCallData>;
-  resetData: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -33,20 +32,11 @@ export function useDialogCallData(): ConfigDataContext<DialogCallData> & {
     );
   };
 
-  const resetData = () =>
-    setConfig(
-      produce(draft => {
-        draft.dialog = config.initConfig.dialog;
-        draft.call = config.initConfig.call;
-      })
-    );
-
-  return { ...config, update, resetData };
+  return { ...config, update };
 }
 
 export function useProcessCallData(): ConfigDataContext<ProcessCallData> & {
   update: DataUpdater<ProcessCallData>;
-  resetData: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -58,13 +48,5 @@ export function useProcessCallData(): ConfigDataContext<ProcessCallData> & {
     );
   };
 
-  const resetData = () =>
-    setConfig(
-      produce(draft => {
-        draft.processCall = config.initConfig.processCall;
-        draft.call = config.initConfig.call;
-      })
-    );
-
-  return { ...config, update, resetData };
+  return { ...config, update };
 }

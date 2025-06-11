@@ -7,7 +7,6 @@ export function useCacheData(): ConfigDataContext<CacheData> & {
   update: DataUpdater<CacheData['cache']>;
   updateGroup: DataUpdater<CacheData['cache']['group']>;
   updateEntry: DataUpdater<CacheData['cache']['entry']>;
-  reset: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -35,18 +34,10 @@ export function useCacheData(): ConfigDataContext<CacheData> & {
     );
   };
 
-  const reset = () =>
-    setConfig(
-      produce(draft => {
-        draft.cache = config.initConfig.cache;
-      })
-    );
-
   return {
     ...config,
     update,
     updateGroup,
-    updateEntry,
-    reset
+    updateEntry
   };
 }

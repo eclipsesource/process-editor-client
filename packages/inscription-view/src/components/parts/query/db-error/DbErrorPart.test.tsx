@@ -36,19 +36,4 @@ describe('DbErrorPart', () => {
     assertState('error', undefined, { path: 'exceptionHandler', message: '', severity: 'ERROR' });
     assertState('warning', undefined, { path: 'exceptionHandler', message: '', severity: 'WARNING' });
   });
-
-  test('reset', () => {
-    let data = { config: { exceptionHandler: 'bla' } };
-    const view = customRenderHook(() => useDbErrorPart(), {
-      wrapperProps: {
-        data,
-        setData: newData => (data = newData),
-        initData: { config: { exceptionHandler: 'err' } }
-      }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config.exceptionHandler).toEqual('err');
-  });
 });

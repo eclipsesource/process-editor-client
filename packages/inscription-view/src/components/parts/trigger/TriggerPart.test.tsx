@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { customRender, screen, customRenderHook, CollapsableUtil, SelectUtil } from 'test-utils';
-import type { ElementData, ValidationResult, TriggerData } from '@axonivy/process-editor-inscription-protocol';
+import type { ValidationResult, TriggerData } from '@axonivy/process-editor-inscription-protocol';
 import { useTriggerPart } from './TriggerPart';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { describe, test, expect } from 'vitest';
@@ -70,34 +70,5 @@ describe('TriggerPart', () => {
     assertState(undefined, undefined, { path: 'task.name', message: '', severity: 'ERROR' });
     assertState('error', undefined, { path: 'task.delay', message: '', severity: 'ERROR' });
     assertState('warning', undefined, { path: 'task.responsible', message: '', severity: 'WARNING' });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: {
-        triggerable: true,
-        task: {
-          delay: 'test',
-          responsible: {
-            type: 'ROLE_FROM_ATTRIBUTE',
-            script: 'Test'
-          }
-        },
-        case: {
-          attachToBusinessCase: false
-        }
-      }
-    };
-    const view = customRenderHook(() => useTriggerPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { triggerable: true, task: { delay: 'init' } } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.triggerable).toEqual(true);
-    expect(data.config?.task?.delay).toEqual('init');
-    expect(data.config?.task?.responsible?.type).toEqual('ROLES');
-    expect(data.config?.task?.responsible?.roles).toEqual(['Everybody']);
-    expect(data.config?.case?.attachToBusinessCase).toEqual(true);
   });
 });

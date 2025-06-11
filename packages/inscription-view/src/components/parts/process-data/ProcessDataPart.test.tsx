@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { CollapsableUtil, customRender, customRenderHook, screen } from 'test-utils';
-import type { ElementData, ValidationResult, ProcessDataData } from '@axonivy/process-editor-inscription-protocol';
+import type { ValidationResult, ProcessDataData } from '@axonivy/process-editor-inscription-protocol';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { useProcessDataPart } from './ProcessDataPart';
 import { describe, test, expect } from 'vitest';
@@ -43,20 +43,5 @@ describe('ProcessDataPart', () => {
     });
 
     assertState('warning', undefined, { path: 'data.error', message: '', severity: 'WARNING' });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: {
-        data: 'screenshot.project.Order'
-      }
-    };
-    const view = customRenderHook(() => useProcessDataPart(), {
-      wrapperProps: { data, setData: newData => (data = newData) }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.data).toEqual('');
   });
 });

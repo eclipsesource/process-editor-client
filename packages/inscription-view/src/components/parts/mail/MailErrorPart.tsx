@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { PathContext } from '../../../context/usePath';
 import { useValidations } from '../../../context/useValidation';
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import Checkbox from '../../widgets/checkbox/Checkbox';
 import ExceptionSelect from '../common/exception-handler/ExceptionSelect';
 import { ValidationCollapsible } from '../common/path/validation/ValidationCollapsible';
@@ -12,16 +12,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useMailErrorPart(): PartProps {
   const { t } = useTranslation();
-  const { config, initConfig, defaultConfig, resetError } = useMailData();
+  const { config, defaultConfig } = useMailData();
   const compareData = (data: MailData) => [data.exceptionHandler, data.failIfMissingAttachments];
   const exceptionValidations = useValidations(['exceptionHandler']);
   const state = usePartState(compareData(defaultConfig), compareData(config), exceptionValidations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Error',
     name: t('part.error.title'),
     state,
-    reset: { dirty, action: () => resetError() },
     content: <MailErrorPart />,
     icon: IvyIcons.Error
   };

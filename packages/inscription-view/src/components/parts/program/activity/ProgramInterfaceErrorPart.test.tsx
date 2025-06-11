@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { CollapsableUtil, SelectUtil, customRender, customRenderHook, screen } from 'test-utils';
-import type { ElementData, ValidationResult, ProgramInterfaceStartData } from '@axonivy/process-editor-inscription-protocol';
+import type { ValidationResult, ProgramInterfaceStartData } from '@axonivy/process-editor-inscription-protocol';
 import type { PartStateFlag } from '../../../editors/part/usePart';
 import { useProgramInterfaceErrorPart } from './ProgramInterfaceErrorPart';
 import { describe, test, expect } from 'vitest';
@@ -48,19 +48,5 @@ describe('ProgramInterfaceErrorPart', () => {
 
     assertState('warning', undefined, { path: 'exceptionHandler.error', message: '', severity: 'WARNING' });
     assertState('error', undefined, { path: 'timeout.cause', message: '', severity: 'ERROR' });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: { exceptionHandler: '>> Ignore Exception', timeout: { seconds: '123' } }
-    };
-    const view = customRenderHook(() => useProgramInterfaceErrorPart(), {
-      wrapperProps: { data, setData: newData => (data = newData) }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.exceptionHandler).toEqual('');
-    expect(data.config?.timeout?.seconds).toEqual('');
   });
 });

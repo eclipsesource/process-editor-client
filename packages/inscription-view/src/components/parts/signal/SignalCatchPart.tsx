@@ -1,5 +1,5 @@
 import { IvyIcons } from '@axonivy/ui-icons';
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useSignalCatchData } from './useSignalCatchData';
 import type { SignalCatchData } from '@axonivy/process-editor-inscription-protocol';
 import { classifiedItemInfo } from '../../../utils/event-code-categorie';
@@ -15,16 +15,14 @@ import { useTranslation } from 'react-i18next';
 
 export function useSignalCatchPart(options?: { makroSupport?: boolean; withBrowser?: boolean }): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, resetData } = useSignalCatchData();
+  const { config, defaultConfig } = useSignalCatchData();
   const compareData = (data: SignalCatchData) => [data.signalCode, options?.makroSupport ? '' : data.attachToBusinessCase];
   const validations = useValidations(['signalCode']);
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Signal',
     name: t('part.signal.title'),
     state,
-    reset: { dirty, action: () => resetData() },
     content: <SignalCatchPart makroSupport={options?.makroSupport} withBrowser={options?.withBrowser} />,
     icon: IvyIcons.StartSignal
   };

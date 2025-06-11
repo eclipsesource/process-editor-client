@@ -6,7 +6,6 @@ import { useConfigDataContext, type ConfigDataContext } from '../../../../contex
 export function useProgramStartData(): ConfigDataContext<ProgramStartData> & {
   update: DataUpdater<ProgramStartData>;
   updatePermission: DataUpdater<ProgramStartData['permission']>;
-  reset: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -26,18 +25,9 @@ export function useProgramStartData(): ConfigDataContext<ProgramStartData> & {
     );
   };
 
-  const reset = () =>
-    setConfig(
-      produce(draft => {
-        draft.javaClass = config.initConfig.javaClass;
-        draft.permission = config.initConfig.permission;
-      })
-    );
-
   return {
     ...config,
     update,
-    updatePermission,
-    reset
+    updatePermission
   };
 }

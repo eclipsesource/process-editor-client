@@ -6,7 +6,6 @@ import { useConfigDataContext, useDataContext, type ConfigDataContext } from '..
 export function useSignalCatchData(): ConfigDataContext<SignalCatchData> & {
   update: DataUpdater<SignalCatchData>;
   updateSignal: Consumer<string>;
-  resetData: () => void;
 } {
   const { setData } = useDataContext();
   const { setConfig, ...config } = useConfigDataContext();
@@ -30,13 +29,5 @@ export function useSignalCatchData(): ConfigDataContext<SignalCatchData> & {
     );
   };
 
-  const resetData = () =>
-    setConfig(
-      produce(draft => {
-        draft.signalCode = config.initConfig.signalCode;
-        draft.attachToBusinessCase = config.initConfig.attachToBusinessCase;
-      })
-    );
-
-  return { ...config, update, updateSignal, resetData };
+  return { ...config, update, updateSignal };
 }

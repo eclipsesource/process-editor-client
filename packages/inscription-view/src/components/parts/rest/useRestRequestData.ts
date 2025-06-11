@@ -11,7 +11,6 @@ export function useRestRequestData(): ConfigDataContext<RestRequestData> & {
   updateTarget: DataUpdater<RestRequestData['target']>;
   updateAcceptHeader: Consumer<string>;
   updateParameters: Consumer<{ queryParams: ScriptMappings; templateParams: ScriptMappings }>;
-  resetData: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -74,16 +73,6 @@ export function useRestRequestData(): ConfigDataContext<RestRequestData> & {
     );
   };
 
-  const resetData = () =>
-    setConfig(
-      produce(draft => {
-        draft.target = config.initConfig.target;
-        draft.body = config.initConfig.body;
-        draft.method = config.initConfig.method;
-        draft.code = config.initConfig.code;
-      })
-    );
-
   return {
     ...config,
     update,
@@ -92,7 +81,6 @@ export function useRestRequestData(): ConfigDataContext<RestRequestData> & {
     updateMethod,
     updateTarget,
     updateAcceptHeader,
-    updateParameters,
-    resetData
+    updateParameters
   };
 }

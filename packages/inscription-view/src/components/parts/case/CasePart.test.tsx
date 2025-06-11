@@ -1,6 +1,5 @@
-import type { DeepPartial } from 'test-utils';
 import { customRender, screen, TableUtil, customRenderHook, CollapsableUtil } from 'test-utils';
-import type { WfCase, CaseData, ElementData } from '@axonivy/process-editor-inscription-protocol';
+import type { WfCase, CaseData } from '@axonivy/process-editor-inscription-protocol';
 import { useCasePart } from './CasePart';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { describe, test, expect } from 'vitest';
@@ -54,29 +53,5 @@ describe('CasePart', () => {
     assertState('configured', { description: 'des' });
     assertState('configured', { category: 'category' });
     assertState('configured', { customFields: [{ name: 'asfd', type: 'NUMBER', value: '123' }] });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: {
-        case: {
-          name: 'name',
-          description: 'description',
-          category: 'category',
-          customFields: [{ name: 'field', type: 'STRING', value: '123' }],
-          attachToBusinessCase: true
-        }
-      }
-    };
-    const view = customRenderHook(() => useCasePart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { case: { name: 'init' } } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.case?.name).toEqual('init');
-    expect(data.config?.case?.description).toEqual('');
-    expect(data.config?.case?.category).toEqual('');
-    expect(data.config?.case?.customFields).toEqual([]);
   });
 });

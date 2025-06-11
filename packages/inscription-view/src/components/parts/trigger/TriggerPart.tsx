@@ -1,4 +1,4 @@
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useTriggerData } from './useTriggerData';
 import type { TriggerData } from '@axonivy/process-editor-inscription-protocol';
 import { IVY_SCRIPT_TYPES } from '@axonivy/process-editor-inscription-protocol';
@@ -15,17 +15,15 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useTriggerPart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, resetData } = useTriggerData();
+  const { config, defaultConfig } = useTriggerData();
   const responsibleVal = useValidations(['task', 'responsible']);
   const delayVal = useValidations(['task', 'delay']);
   const compareData = (data: TriggerData) => [data.triggerable, data.case.attachToBusinessCase, data.task?.responsible, data.task?.delay];
   const state = usePartState(compareData(defaultConfig), compareData(config), [...responsibleVal, ...delayVal]);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Trigger',
     name: t('part.trigger.title'),
     state: state,
-    reset: { dirty, action: () => resetData() },
     content: <TriggerPart />,
     icon: IvyIcons.Trigger
   };

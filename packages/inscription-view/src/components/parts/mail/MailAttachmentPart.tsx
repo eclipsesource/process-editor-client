@@ -1,4 +1,4 @@
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useMailData } from './useMailData';
 import type { MailData } from '@axonivy/process-editor-inscription-protocol';
 import type { ColumnDef } from '@tanstack/react-table';
@@ -16,16 +16,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useMailAttachmentPart(): PartProps {
   const { t } = useTranslation();
-  const { config, initConfig, defaultConfig, resetAttachments } = useMailData();
+  const { config, defaultConfig } = useMailData();
   const compareData = (data: MailData) => [data.attachments];
   const validations = useValidations(['attachments']);
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Attachments',
     name: t('part.mail.attachments.title'),
     state,
-    reset: { dirty, action: () => resetAttachments() },
     content: <MailAttachmentsPart />,
     icon: IvyIcons.Attachment
   };

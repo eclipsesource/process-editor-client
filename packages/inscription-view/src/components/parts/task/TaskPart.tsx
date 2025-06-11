@@ -1,4 +1,4 @@
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import type { TaskPersistData } from './options/usePersistOptionsData';
 import { useTaskPersistData } from './options/usePersistOptionsData';
 import Task from './task/Task';
@@ -15,8 +15,8 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useTaskPart(options?: TaskPartProps): PartProps {
   const { t } = useTranslation();
-  const { task, defaultTask, initTask, resetTask } = useTaskData();
-  const { config, defaultConfig, initConfig, updatePersist } = useTaskPersistData();
+  const { task, defaultTask } = useTaskData();
+  const { config, defaultConfig } = useTaskPersistData();
   let validations = useValidations(['task']);
   const isStartRequest = options?.type === 'request';
   if (isStartRequest) {
@@ -24,18 +24,11 @@ export function useTaskPart(options?: TaskPartProps): PartProps {
   }
   const compareData = (task: WfTask, persist: TaskPersistData) => [task, isStartRequest ? persist.persistOnStart : ''];
   const state = usePartState(compareData(defaultTask, defaultConfig), compareData(task, config), validations);
-  const dirty = usePartDirty(compareData(initTask, initConfig), compareData(task, config));
-  const resetData = () => {
-    resetTask();
-    if (isStartRequest) {
-      updatePersist(initConfig.persistOnStart);
-    }
-  };
+
   return {
     id: 'Task',
     name: t('part.task.task'),
     state,
-    reset: { dirty, action: () => resetData() },
     content: <TaskPart type={options?.type} />,
     icon: IvyIcons.UserTask
   };

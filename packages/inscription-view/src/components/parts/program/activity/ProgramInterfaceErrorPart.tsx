@@ -1,6 +1,6 @@
 import type { ProgramInterfaceStartData } from '@axonivy/process-editor-inscription-protocol';
 import { IVY_EXCEPTIONS, IVY_SCRIPT_TYPES } from '@axonivy/process-editor-inscription-protocol';
-import { usePartDirty, usePartState, type PartProps } from '../../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../../editors/part/usePart';
 import { useProgramInterfaceData } from './useProgramInterfaceData';
 import { deepEqual } from '../../../../utils/equals';
 import { useValidations } from '../../../../context/useValidation';
@@ -14,16 +14,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useProgramInterfaceErrorPart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, resetError } = useProgramInterfaceData();
+  const { config, defaultConfig } = useProgramInterfaceData();
   const compareData = (data: ProgramInterfaceStartData) => [data.exceptionHandler, data.timeout];
   const validation = [...useValidations(['timeout']), ...useValidations(['exceptionHandler'])];
   const state = usePartState(compareData(defaultConfig), compareData(config), validation);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Error',
     name: t('part.program.error.title'),
     state,
-    reset: { dirty, action: () => resetError() },
     content: <ProgramInterfaceErrorPart />,
     icon: IvyIcons.Error
   };

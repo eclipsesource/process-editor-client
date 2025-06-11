@@ -6,7 +6,6 @@ import { useConfigDataContext, type ConfigDataContext } from '../../../context/u
 export function useQueryData(): ConfigDataContext<QueryData> & {
   update: DataUpdater<QueryData['query']>;
   updateSql: DataUpdater<QueryData['query']['sql']>;
-  reset: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -26,17 +25,9 @@ export function useQueryData(): ConfigDataContext<QueryData> & {
     );
   };
 
-  const reset = () =>
-    setConfig(
-      produce(draft => {
-        draft.query = config.initConfig.query;
-      })
-    );
-
   return {
     ...config,
     update,
-    updateSql,
-    reset
+    updateSql
   };
 }

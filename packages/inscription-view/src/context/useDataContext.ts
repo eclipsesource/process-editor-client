@@ -47,7 +47,6 @@ export type TaskDataContext = {
   task: WfTask;
   defaultTask: WfTask;
   initTask: WfTask;
-  resetTask: () => void;
 };
 
 export function useTaskDataContext(): TaskDataContext & {
@@ -70,25 +69,8 @@ export function useTaskDataContext(): TaskDataContext & {
     [setConfig, taskNumber]
   );
 
-  const resetTask = useCallback<() => void>(
-    () =>
-      setConfig(
-        produce(draft => {
-          if (taskNumber !== undefined) {
-            draft.tasks[taskNumber] = initConfig.tasks[taskNumber];
-          } else {
-            draft.task = initConfig.task;
-          }
-          if (draft.persistOnStart !== undefined) {
-            draft.persistOnStart = initConfig.persistOnStart;
-          }
-        })
-      ),
-    [initConfig, setConfig, taskNumber]
-  );
-
   const task = taskNumber !== undefined ? config.tasks[taskNumber] : config.task;
   const defaultTask = taskNumber !== undefined ? defaultConfig.tasks[taskNumber] : defaultConfig.task;
   const initTask = taskNumber !== undefined ? initConfig.tasks[taskNumber] : initConfig.task;
-  return { task, defaultTask, initTask, setTask, resetTask };
+  return { task, defaultTask, initTask, setTask };
 }

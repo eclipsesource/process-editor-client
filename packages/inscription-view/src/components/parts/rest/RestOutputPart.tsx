@@ -1,5 +1,5 @@
 import type { RestResponseData } from '@axonivy/process-editor-inscription-protocol';
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useRestOutputData } from './useRestOutputData';
 import { RestEntityTypeCombobox, useShowRestEntityTypeCombo } from './RestEntityTypeCombobox';
 import { useRestEntityTypeMeta, useRestResourceMeta } from './useRestResourceMeta';
@@ -17,17 +17,15 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useRestOutputPart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, resetData } = useRestOutputData();
+  const { config, defaultConfig } = useRestOutputData();
   const validations = useValidations(['response']);
   const filteredOutputValidations = validations.filter(item => item.path.startsWith('response.entity'));
   const compareData = (data: RestResponseData) => [data.response.entity];
   const state = usePartState(compareData(defaultConfig), compareData(config), filteredOutputValidations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Output',
     name: t('label.output'),
     state: state,
-    reset: { dirty, action: () => resetData() },
     content: <RestOutputPart />,
     icon: IvyIcons.Output
   };

@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { customRender, customRenderHook, screen } from 'test-utils';
-import type { ElementData, ValidationResult, WebserviceStartData } from '@axonivy/process-editor-inscription-protocol';
+import type { ValidationResult, WebserviceStartData } from '@axonivy/process-editor-inscription-protocol';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { useWebServicePart } from './WebServicePart';
 import { describe, test, expect } from 'vitest';
@@ -43,24 +43,5 @@ describe('WebServicePart', () => {
 
     assertState('error', undefined, { path: 'permission.cause', message: '', severity: 'ERROR' });
     assertState('warning', undefined, { path: 'exception.error', message: '', severity: 'WARNING' });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: {
-        exception: {
-          message: 'hallo',
-          enabled: true
-        }
-      }
-    };
-    const view = customRenderHook(() => useWebServicePart(), {
-      wrapperProps: { data, setData: newData => (data = newData) }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.exception?.message).toEqual('');
-    expect(data.config?.exception?.enabled).toBeFalsy();
   });
 });

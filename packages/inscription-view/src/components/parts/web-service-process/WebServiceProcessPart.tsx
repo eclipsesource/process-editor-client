@@ -1,6 +1,6 @@
 import type { WebServiceProcessData, WsAuth } from '@axonivy/process-editor-inscription-protocol';
 import { IVY_SCRIPT_TYPES } from '@axonivy/process-editor-inscription-protocol';
-import { usePartDirty, usePartState, type PartProps } from '../../../components/editors/part/usePart';
+import { usePartState, type PartProps } from '../../../components/editors/part/usePart';
 import { useWebServiceProcessData } from './useWebServiceProcessData';
 import { useValidations } from '../../../context/useValidation';
 import { ValidationCollapsible } from '../common/path/validation/ValidationCollapsible';
@@ -13,16 +13,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useWebServiceProcessPart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, reset } = useWebServiceProcessData();
+  const { config, defaultConfig } = useWebServiceProcessData();
   const compareData = (data: WebServiceProcessData) => [data.wsAuth, data.wsTypeName];
   const validation = [...useValidations(['wsAuth']), ...useValidations(['wsTypeName'])];
   const state = usePartState(compareData(defaultConfig), compareData(config), validation);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Web Service Process',
     name: t('part.wsprocess.title'),
     state,
-    reset: { dirty, action: () => reset() },
     content: <WebServiceProcessPart />,
     icon: IvyIcons.WebServiceProcess
   };

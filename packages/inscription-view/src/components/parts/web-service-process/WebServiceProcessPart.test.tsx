@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { CollapsableUtil, customRender, customRenderHook, screen } from 'test-utils';
-import type { WebServiceProcessData, ElementData, ValidationResult } from '@axonivy/process-editor-inscription-protocol';
+import type { WebServiceProcessData, ValidationResult } from '@axonivy/process-editor-inscription-protocol';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { useWebServiceProcessPart } from './WebServiceProcessPart';
 import { describe, test, expect } from 'vitest';
@@ -48,22 +48,5 @@ describe('WebServiceProcessPart', () => {
 
     assertState('error', undefined, { path: 'wsAuth.cause', message: '', severity: 'ERROR' });
     assertState('warning', undefined, { path: 'wsTypeName.error', message: '', severity: 'WARNING' });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: {
-        wsAuth: 'HTTP_BASIC',
-        wsTypeName: 'Test'
-      }
-    };
-    const view = customRenderHook(() => useWebServiceProcessPart(), {
-      wrapperProps: { data, setData: newData => (data = newData) }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.wsAuth).toEqual('NONE');
-    expect(data.config?.wsTypeName).toEqual('');
   });
 });

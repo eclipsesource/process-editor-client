@@ -1,4 +1,4 @@
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useStartData } from './useStartData';
 import type { StartData } from '@axonivy/process-editor-inscription-protocol';
 import useMaximizedCodeEditor from '../../browser/useMaximizedCodeEditor';
@@ -25,16 +25,14 @@ export const useStartPartValidation = () => {
 
 export function useStartPart(props?: StartPartProps): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, resetData } = useStartData();
+  const { config, defaultConfig } = useStartData();
   const validations = useStartPartValidation();
   const compareData = (data: StartData) => [data.signature, data.input];
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Start',
     name: t('part.start.title'),
     state,
-    reset: { dirty, action: () => resetData() },
     content: <StartPart {...props} />,
     icon: IvyIcons.Play
   };

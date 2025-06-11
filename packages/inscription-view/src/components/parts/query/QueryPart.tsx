@@ -2,7 +2,7 @@ import { useQueryData } from './useQueryData';
 import type { QueryData } from '@axonivy/process-editor-inscription-protocol';
 import { DatabaseSelect } from './database/DatabaseSelect';
 import { QueryKindSelect } from './database/QueryKindSelect';
-import { usePartDirty, usePartState, type PartProps } from '../../../components/editors/part/usePart';
+import { usePartState, type PartProps } from '../../../components/editors/part/usePart';
 import { QueryRead } from './db-query/QueryRead';
 import { QueryWrite } from './db-query/QueryWrite';
 import { QueryUpdate } from './db-query/QueryUpdate';
@@ -17,16 +17,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useQueryPart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, reset } = useQueryData();
+  const { config, defaultConfig } = useQueryData();
   const queryVal = useValidations(['query']);
   const compareData = (data: QueryData) => [data.query];
   const state = usePartState(compareData(defaultConfig), compareData(config), queryVal);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Query',
     name: t('part.db.title'),
     state: state,
-    reset: { dirty, action: () => reset() },
     content: <QueryPart />,
     icon: IvyIcons.Query
   };

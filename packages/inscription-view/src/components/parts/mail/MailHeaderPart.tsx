@@ -1,4 +1,4 @@
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useMailData } from './useMailData';
 import type { MailData } from '@axonivy/process-editor-inscription-protocol';
 import { deepEqual } from '../../../utils/equals';
@@ -12,16 +12,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useMailHeaderPart(): PartProps {
   const { t } = useTranslation();
-  const { config, initConfig, defaultConfig, resetHeaders } = useMailData();
+  const { config, defaultConfig } = useMailData();
   const compareData = (data: MailData) => [data.headers];
   const headerValidations = useValidations(['headers']);
   const state = usePartState(compareData(defaultConfig), compareData(config), headerValidations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Header',
     name: t('part.mail.header.title'),
     state,
-    reset: { dirty, action: () => resetHeaders() },
     content: <MailHeaderPart />,
     icon: IvyIcons.EMail
   };

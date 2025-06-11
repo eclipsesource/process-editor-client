@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { CollapsableUtil, ComboboxUtil, customRender, customRenderHook } from 'test-utils';
-import type { ElementData, ErrorThrowData, ValidationResult } from '@axonivy/process-editor-inscription-protocol';
+import type { ErrorThrowData, ValidationResult } from '@axonivy/process-editor-inscription-protocol';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { useErrorThrowPart } from './ErrorThrowPart';
 import { describe, test, expect } from 'vitest';
@@ -46,19 +46,5 @@ describe('ErrorThrowPart', () => {
 
     assertState('error', undefined, { path: 'throws.cause', message: '', severity: 'ERROR' });
     assertState('warning', undefined, { path: 'throws.error', message: '', severity: 'WARNING' });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: { throws: { error: 'error', cause: 'asdf' } }
-    };
-    const view = customRenderHook(() => useErrorThrowPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { throws: { error: 'init' } } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.throws?.error).toEqual('init');
-    expect(data.config?.throws?.cause).toEqual('');
   });
 });

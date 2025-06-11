@@ -1,4 +1,4 @@
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useEndPageData } from './useEndPageData';
 import type { EndPageData } from '@axonivy/process-editor-inscription-protocol';
 import { IvyIcons } from '@axonivy/ui-icons';
@@ -12,16 +12,14 @@ import { useTranslation } from 'react-i18next';
 
 export function useEndPagePart(): PartProps {
   const { t } = useTranslation();
-  const { config, initConfig, defaultConfig, update } = useEndPageData();
+  const { config, defaultConfig } = useEndPageData();
   const compareData = (data: EndPageData) => [data.page];
   const validations = useValidations(['page']);
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'End Page',
     name: t('part.endPage.title'),
     state,
-    reset: { dirty, action: () => update('page', initConfig.page) },
     content: <EndPagePart />,
     icon: IvyIcons.EndPage
   };
