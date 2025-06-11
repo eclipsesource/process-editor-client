@@ -1,4 +1,4 @@
-import type { Locator, Page } from '@playwright/test';
+import type { ConsoleMessage, Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 import { Activity, Element, Lane, Pool } from './element';
 import { Toolbar } from './toolbar';
@@ -134,8 +134,12 @@ export class ProcessEditor {
     await this.graph.click({ position });
   }
 
-  async copyPaste(cmdCtrl: CmdCtrl) {
+  async copyPaste(cmdCtrl: CmdCtrl, ...expectedClipboardData: Array<string>) {
+    const message = waitForConsoleMessage(this.page, /Added data to clipboard:/);
     await this.page.keyboard.press(`${cmdCtrl}+C`);
+    for (const data of expectedClipboardData) {
+      expect(await message).toContain(data);
+    }
     await this.page.keyboard.press(`${cmdCtrl}+V`);
   }
 
@@ -188,4 +192,34 @@ export class ProcessEditor {
     await this.page.keyboard.press('Digit2');
     await expect(this.diagram).toBeFocused();
   }
+}
+
+async function waitForConsoleMessage(
+  page: Page,
+  messageContent: string | RegExp,
+  timeout = 30000 // Default timeout of 30 seconds
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const onConsoleMessage = (msg: ConsoleMessage) => {
+      let found = false;
+      if (typeof messageContent === 'string') {
+        found = msg.text().includes(messageContent);
+      } else {
+        found = messageContent.test(msg.text());
+      }
+
+      if (found) {
+        page.removeListener('console', onConsoleMessage);
+        clearTimeout(timeoutId);
+        resolve(msg.text());
+      }
+    };
+
+    const timeoutId = setTimeout(() => {
+      page.removeListener('console', onConsoleMessage);
+      reject(new Error(`Timeout waiting for console message: "${messageContent.toString()}"`));
+    }, timeout);
+
+    page.on('console', onConsoleMessage);
+  });
 }

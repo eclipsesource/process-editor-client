@@ -164,6 +164,7 @@
     "connectionToServerError": "Verbindung zum Server fehlerhaft. Server wird heruntergefahren.",
     "globalError": "Ein Fehler ist aufgetreten: {{error}}",
     "noEditorForType": "Kein Editor für Typ gefunden: {{props.type}}",
+    "noNativeClipboardAccess": "Kein Zugruff auf das native Clipboard, Kopieren funktioniert nur in diesem Editor.",
     "selectElement": "Wählen Sie ein Prozesselement aus"
   },
   "part": {
