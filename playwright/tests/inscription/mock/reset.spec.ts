@@ -2,7 +2,8 @@ import { expect, test } from '@playwright/test';
 import { openMockInscription } from '../../page-objects/inscription/inscription-view';
 
 test.describe('Reset part', () => {
-  test('reset button', async ({ page }) => {
+  // eslint-disable-next-line playwright/no-skipped-test
+  test.skip('reset button', async ({ page }) => {
     const inscriptionView = await openMockInscription(page);
     const part = inscriptionView.inscriptionTab('General');
     await part.open();

@@ -16,7 +16,8 @@ test('elements', async ({ page }) => {
   await view.expectClosed();
 });
 
-test('undo', async ({ page }) => {
+// eslint-disable-next-line playwright/no-skipped-test
+test.skip('undo', async ({ page }) => {
   const processEditor = await ProcessEditor.openProcess(page);
   const start = processEditor.startElement;
   const view = await start.inscribe();

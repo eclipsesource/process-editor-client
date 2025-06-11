@@ -24,7 +24,7 @@ export class InscriptionTab extends Part {
   }
 
   private static locator(page: Page) {
-    return page.locator('.part-tabs-root');
+    return page.locator('.ui-inscription-tabs');
   }
 
   private static tabButtonLocator(page: Page, label: string) {

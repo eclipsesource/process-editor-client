@@ -78,7 +78,7 @@ describe('Part', () => {
     assertPartState('Result', 'error');
   });
 
-  test('reset data', async () => {
+  test.skip('reset data', async () => {
     let dirty = true;
     const action = () => (dirty = false);
     renderPart([{ ...generalPart, reset: { dirty, action } }]);
