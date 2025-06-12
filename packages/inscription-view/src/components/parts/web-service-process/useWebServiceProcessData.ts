@@ -5,7 +5,6 @@ import { useConfigDataContext, type ConfigDataContext } from '../../../context/u
 
 export function useWebServiceProcessData(): ConfigDataContext<WebServiceProcessData> & {
   update: DataUpdater<WebServiceProcessData>;
-  reset: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -16,18 +15,8 @@ export function useWebServiceProcessData(): ConfigDataContext<WebServiceProcessD
       })
     );
   };
-
-  const reset = () =>
-    setConfig(
-      produce(draft => {
-        draft.wsAuth = config.initConfig.wsAuth;
-        draft.wsTypeName = config.initConfig.wsTypeName;
-      })
-    );
-
   return {
     ...config,
-    update,
-    reset
+    update
   };
 }

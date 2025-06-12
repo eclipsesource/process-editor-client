@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { usePartDirty, usePartState, type PartProps } from '../../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../../editors/part/usePart';
 import type { CallData, DialogCallData, VariableInfo } from '@axonivy/process-editor-inscription-protocol';
 import CallMapping, { useCallPartValidation } from '../CallMapping';
 import { useCallData, useDialogCallData } from '../useCallData';
@@ -26,12 +26,10 @@ export function useDialogCallPart(options?: { offline?: boolean }): PartProps {
     compareData(callData.config, targetData.config),
     [...dialogValidations, ...callValidations]
   );
-  const dirty = usePartDirty(compareData(callData.initConfig, targetData.initConfig), compareData(callData.config, targetData.config));
   return {
     id: 'Dialog',
     name: t('part.call.dialog.title'),
     state,
-    reset: { dirty, action: () => targetData.resetData() },
     content: <DialogCallPart offline={options?.offline} />,
     icon: IvyIcons.UserDialog
   };

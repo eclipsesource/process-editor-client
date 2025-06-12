@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { customRender, customRenderHook, CollapsableUtil, SelectUtil } from 'test-utils';
-import type { ElementData, ValidationResult, WsErrorData } from '@axonivy/process-editor-inscription-protocol';
+import type { ValidationResult, WsErrorData } from '@axonivy/process-editor-inscription-protocol';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { useWsErrorPart } from './WsErrorPart';
 import { describe, test, expect } from 'vitest';
@@ -39,16 +39,5 @@ describe('WsResponsePart', () => {
 
     assertState('error', undefined, { path: 'exceptionHandler', message: '', severity: 'ERROR' });
     assertState('warning', undefined, { path: 'exceptionHandler', message: '', severity: 'WARNING' });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = { config: { exceptionHandler: 'ex' } };
-    const view = customRenderHook(() => useWsErrorPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { exceptionHandler: 'init' } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.exceptionHandler).toEqual('init');
   });
 });

@@ -1,7 +1,6 @@
 import { useDialogCallPart } from './DialogCallPart';
-import type { DeepPartial } from 'test-utils';
 import { customRender, screen, TableUtil, customRenderHook, CollapsableUtil } from 'test-utils';
-import type { CallData, DialogCallData, ElementData } from '@axonivy/process-editor-inscription-protocol';
+import type { CallData, DialogCallData } from '@axonivy/process-editor-inscription-protocol';
 import type { PartStateFlag } from '../../../editors/part/usePart';
 import { describe, test, expect } from 'vitest';
 
@@ -43,20 +42,5 @@ describe('DialogCallPart', () => {
     assertState('configured', { dialog: 'dialog' });
     assertState('configured', { call: { code: 'code', map: {} } });
     assertState('configured', { call: { code: '', map: { key: 'value' } } });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: { dialog: 'dialog', call: { code: 'code', map: { key: 'value' } } }
-    };
-    const view = customRenderHook(() => useDialogCallPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { dialog: 'init' } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.dialog).toEqual('init');
-    expect(data.config?.call?.code).toEqual('');
-    expect(data.config?.call?.map).toEqual({});
   });
 });

@@ -1,6 +1,5 @@
-import type { DeepPartial } from 'test-utils';
 import { CollapsableUtil, ComboboxUtil, customRender, customRenderHook, screen } from 'test-utils';
-import type { ElementData, SignalCatchData } from '@axonivy/process-editor-inscription-protocol';
+import type { SignalCatchData } from '@axonivy/process-editor-inscription-protocol';
 import { useSignalCatchPart } from './SignalCatchPart';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { describe, test, expect } from 'vitest';
@@ -41,19 +40,5 @@ describe('SignalCatchPart', () => {
     assertState(undefined);
     assertState('configured', { signalCode: 'error' });
     assertState('configured', { attachToBusinessCase: false });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: { signalCode: 'error', attachToBusinessCase: false }
-    };
-    const view = customRenderHook(() => useSignalCatchPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { signalCode: 'init' } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.signalCode).toEqual('init');
-    expect(data.config?.attachToBusinessCase).toEqual(true);
   });
 });

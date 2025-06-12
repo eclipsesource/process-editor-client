@@ -44,20 +44,4 @@ describe('MailMessagePart', () => {
     assertState('configured', { message: { body: 'hi' } });
     assertState('configured', { message: { contentType: MAIL_TYPE.html } });
   });
-
-  test('reset', () => {
-    let data = {
-      config: {
-        message: { body: 'hello world', contentType: MAIL_TYPE.html as string }
-      }
-    };
-    const view = customRenderHook(() => useMailMessagePart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { message: { body: 'init' } } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config.message.body).toEqual('init');
-    expect(data.config.message.contentType).toEqual(MAIL_TYPE.plain);
-  });
 });

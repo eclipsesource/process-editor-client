@@ -1,4 +1,4 @@
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { IvyIcons } from '@axonivy/ui-icons';
 import type { ErrorThrowData } from '@axonivy/process-editor-inscription-protocol';
 import { IVY_SCRIPT_TYPES } from '@axonivy/process-editor-inscription-protocol';
@@ -20,16 +20,14 @@ import { useTranslation } from 'react-i18next';
 
 export function useErrorThrowPart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, reset } = useErrorThrowData();
+  const { config, defaultConfig } = useErrorThrowData();
   const compareData = (data: ErrorThrowData) => [data];
   const validations = [...useValidations(['throws']), ...useValidations(['code'])];
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Error',
     name: t('part.error.title'),
     state,
-    reset: { dirty, action: () => reset() },
     content: <ErrorThrowPart />,
     icon: IvyIcons.Error
   };

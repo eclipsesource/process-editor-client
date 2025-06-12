@@ -41,21 +41,4 @@ describe('MailErrorPart', () => {
     assertState('configured', { failIfMissingAttachments: true });
     assertState('configured', { exceptionHandler: 'hi' });
   });
-
-  test('reset', () => {
-    let data = {
-      config: {
-        failIfMissingAttachments: true,
-        exceptionHandler: 'hi'
-      }
-    };
-    const view = customRenderHook(() => useMailErrorPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { exceptionHandler: 'init' } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config.failIfMissingAttachments).toBeFalsy();
-    expect(data.config.exceptionHandler).toEqual('init');
-  });
 });

@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { customRender, screen, customRenderHook, userEvent } from 'test-utils';
-import type { TaskData, ElementData } from '@axonivy/process-editor-inscription-protocol';
+import type { TaskData } from '@axonivy/process-editor-inscription-protocol';
 import { DEFAULT_TASK, DEFAULT_TASK_DATA } from '@axonivy/process-editor-inscription-protocol';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { useMultiTasksPart } from './MultiTasksPart';
@@ -58,27 +58,6 @@ describe('MultiTasksPart', () => {
     assertState(undefined, { tasks: [] });
     assertState(undefined, { tasks: [{ id: 'TaskA' }] });
     assertState('configured', { tasks: [{ id: 'TaskA', name: 'task1' }] });
-  });
-
-  test('reset', () => {
-    const taskData = addDefaultTaskData({
-      tasks: [
-        { id: 'TaskA', name: 'task1' },
-        { id: 'TaskB', name: 'task2' }
-      ]
-    });
-    let data: DeepPartial<ElementData> = { config: taskData };
-    const initTaskData = {
-      tasks: [DEFAULT_TASK, DEFAULT_TASK]
-    };
-    const view = customRenderHook(() => useMultiTasksPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: initTaskData } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.tasks?.at(0)?.name).toEqual('');
-    expect(data.config?.tasks?.at(1)?.name).toEqual('');
   });
 
   function addDefaultTaskData(data?: DeepPartial<TaskData>): DeepPartial<TaskData> | undefined {

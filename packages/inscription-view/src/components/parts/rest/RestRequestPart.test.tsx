@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { CollapsableUtil, customRender, customRenderHook, screen } from 'test-utils';
-import type { ElementData, ValidationResult, RestRequestData, RestResource } from '@axonivy/process-editor-inscription-protocol';
+import type { ValidationResult, RestRequestData, RestResource } from '@axonivy/process-editor-inscription-protocol';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { useRestRequestPart } from './RestRequestPart';
 import { describe, test, expect } from 'vitest';
@@ -58,23 +58,6 @@ describe('RestRequestPart', () => {
     assertState('error', undefined, { path: 'method', message: '', severity: 'ERROR' });
     assertState('warning', undefined, { path: 'body.mediaType', message: '', severity: 'WARNING' });
     assertState('warning', undefined, { path: 'target.clientId', message: '', severity: 'WARNING' });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: { code: 'code', method: 'DELETE', target: { clientId: '123', headers: { myHeader: 'a' } }, body: { mediaType: 'type' } }
-    };
-    const view = customRenderHook(() => useRestRequestPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { method: 'PUT' } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.code).toEqual('');
-    expect(data.config?.method).toEqual('PUT');
-    expect(data.config?.body?.mediaType).toEqual('application/json');
-    expect(data.config?.target?.clientId).toEqual('');
-    expect(data.config?.target?.headers).toEqual({ Accept: '*/*' });
   });
 
   async function renderControl() {

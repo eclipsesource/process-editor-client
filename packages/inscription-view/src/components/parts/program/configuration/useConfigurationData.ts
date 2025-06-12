@@ -5,7 +5,6 @@ import { useConfigDataContext, type ConfigDataContext } from '../../../../contex
 
 export function useConfigurationData(): ConfigDataContext<ConfigurationData> & {
   updateUserConfig: DataUpdater<ConfigurationData['userConfig']>;
-  reset: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -17,16 +16,8 @@ export function useConfigurationData(): ConfigDataContext<ConfigurationData> & {
     );
   };
 
-  const reset = () =>
-    setConfig(
-      produce(draft => {
-        draft.userConfig = config.initConfig.userConfig;
-      })
-    );
-
   return {
     ...config,
-    updateUserConfig,
-    reset
+    updateUserConfig
   };
 }

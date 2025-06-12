@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import Collapsible from '../../widgets/collapsible/Collapsible';
 import Fieldset from '../../widgets/fieldset/Fieldset';
 import Textarea from '../../widgets/input/Textarea';
@@ -12,15 +12,13 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useGeneralPart(options?: { hideTags?: boolean; disableName?: boolean }): PartProps {
   const { t } = useTranslation();
-  const { data, initData, resetData } = useGeneralData();
+  const { data } = useGeneralData();
   const currentData = [data.name, data.description, data.docs, data.tags];
   const state = usePartState(['', '', [], []], currentData, []);
-  const dirty = usePartDirty([initData.name, initData.description, initData.docs, initData.tags], currentData);
   return {
     id: 'General',
     name: t('part.general.title'),
     state,
-    reset: { dirty, action: () => resetData() },
     content: <GeneralPart hideTags={options?.hideTags} disableName={options?.disableName} />,
     icon: IvyIcons.InfoCircle
   };

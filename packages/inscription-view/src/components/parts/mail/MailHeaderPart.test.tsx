@@ -51,24 +51,4 @@ describe('MailHeaderPart', () => {
     assertState('configured', { headers: { cc: 's' } });
     assertState('configured', { headers: { bcc: 's' } });
   });
-
-  test('reset', () => {
-    let data = {
-      config: {
-        headers: { subject: 'sub', from: 'from', replyTo: 'reply', to: 'to', cc: 'cc', bcc: 'bcc' }
-      }
-    };
-    const view = customRenderHook(() => useMailHeaderPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { headers: { subject: 'init' } } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config.headers.subject).toEqual('init');
-    expect(data.config.headers.from).toEqual('');
-    expect(data.config.headers.replyTo).toEqual('');
-    expect(data.config.headers.cc).toEqual('');
-    expect(data.config.headers.bcc).toEqual('');
-    expect(data.config.headers.to).toEqual('');
-  });
 });

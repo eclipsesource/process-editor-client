@@ -1,6 +1,6 @@
 import type { WsErrorData } from '@axonivy/process-editor-inscription-protocol';
 import { IVY_EXCEPTIONS } from '@axonivy/process-editor-inscription-protocol';
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useWsErrorData } from './useWsErrorData';
 import { useValidations } from '../../../context/useValidation';
 import { PathCollapsible } from '../common/path/PathCollapsible';
@@ -11,16 +11,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useWsErrorPart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, resetData } = useWsErrorData();
+  const { config, defaultConfig } = useWsErrorData();
   const validations = useValidations(['exceptionHandler']);
   const compareData = (data: WsErrorData) => [data];
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Error',
     name: t('label.error'),
     state: state,
-    reset: { dirty, action: () => resetData() },
     content: <WsErrorPart />,
     icon: IvyIcons.Error
   };

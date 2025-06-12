@@ -5,7 +5,6 @@ import { useConfigDataContext, type ConfigDataContext } from '../../../context/u
 
 export function useWsErrorData(): ConfigDataContext<WsErrorData> & {
   update: DataUpdater<WsErrorData>;
-  resetData: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -17,16 +16,8 @@ export function useWsErrorData(): ConfigDataContext<WsErrorData> & {
     );
   };
 
-  const resetData = () =>
-    setConfig(
-      produce(draft => {
-        draft.exceptionHandler = config.initConfig.exceptionHandler;
-      })
-    );
-
   return {
     ...config,
-    update,
-    resetData
+    update
   };
 }

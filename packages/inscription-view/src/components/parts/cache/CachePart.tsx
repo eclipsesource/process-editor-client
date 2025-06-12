@@ -1,5 +1,5 @@
 import type { CacheData } from '@axonivy/process-editor-inscription-protocol';
-import { usePartDirty, usePartState, type PartProps } from '../../../components/editors/part/usePart';
+import { usePartState, type PartProps } from '../../../components/editors/part/usePart';
 import { useCacheData } from './useCacheData';
 import { CacheLifetime } from './CacheLifetime';
 import { useValidations } from '../../../context/useValidation';
@@ -11,16 +11,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useCachePart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, reset } = useCacheData();
+  const { config, defaultConfig } = useCacheData();
   const compareData = (data: CacheData) => [data.cache];
   const validation = useValidations(['cache']);
   const state = usePartState(compareData(defaultConfig), compareData(config), validation);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Cache',
     name: t('part.cache.title'),
     state,
-    reset: { dirty, action: () => reset() },
     content: <CachePart />,
     icon: IvyIcons.Cache
   };

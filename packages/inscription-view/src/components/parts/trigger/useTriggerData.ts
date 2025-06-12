@@ -9,7 +9,6 @@ export function useTriggerData(): ConfigDataContext<TriggerData> & {
   updateResponsible: ResponsibleUpdater;
   updateDelay: (value: string) => void;
   updateAttach: (value: boolean) => void;
-  resetData: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -45,22 +44,11 @@ export function useTriggerData(): ConfigDataContext<TriggerData> & {
     );
   };
 
-  const resetData = () =>
-    setConfig(
-      produce(draft => {
-        draft.triggerable = config.initConfig.triggerable;
-        draft.case.attachToBusinessCase = config.initConfig.case.attachToBusinessCase;
-        draft.task.responsible = config.initConfig.task.responsible;
-        draft.task.delay = config.initConfig.task.delay;
-      })
-    );
-
   return {
     ...config,
     update,
     updateResponsible,
     updateDelay,
-    updateAttach,
-    resetData
+    updateAttach
   };
 }

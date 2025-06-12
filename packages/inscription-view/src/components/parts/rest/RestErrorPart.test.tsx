@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { customRender, customRenderHook, CollapsableUtil, ComboboxUtil } from 'test-utils';
-import type { ElementData, ValidationResult, RestResponseData } from '@axonivy/process-editor-inscription-protocol';
+import type { ValidationResult, RestResponseData } from '@axonivy/process-editor-inscription-protocol';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { useRestErrorPart } from './RestErrorPart';
 import { describe, test, expect } from 'vitest';
@@ -39,16 +39,5 @@ describe('RestErrorPart', () => {
     assertState('configured', { response: { clientError: 'asdf' } });
 
     assertState('error', undefined, { path: 'response.statusError', message: '', severity: 'ERROR' });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = { config: { response: { entity: { code: '123' }, clientError: 'code' } } };
-    const view = customRenderHook(() => useRestErrorPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { response: { clientError: 'init' } } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.response?.clientError).toEqual('init');
   });
 });

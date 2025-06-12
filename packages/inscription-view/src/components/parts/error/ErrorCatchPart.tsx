@@ -1,4 +1,4 @@
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useErrorCatchData } from './useErrorCatchData';
 import { IvyIcons } from '@axonivy/ui-icons';
 import type { ErrorCatchData } from '@axonivy/process-editor-inscription-protocol';
@@ -14,16 +14,14 @@ import { useTranslation } from 'react-i18next';
 
 export function useErrorCatchPart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, updateError } = useErrorCatchData();
+  const { config, defaultConfig } = useErrorCatchData();
   const compareData = (data: ErrorCatchData) => [data.errorCode];
   const validations = useValidations(['errorCode']);
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Error',
     name: t('part.error.title'),
     state,
-    reset: { dirty, action: () => updateError(initConfig.errorCode) },
     content: <ErrorCatchPart />,
     icon: IvyIcons.Error
   };

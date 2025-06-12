@@ -6,8 +6,6 @@ import { useConfigDataContext, type ConfigDataContext } from '../../../../contex
 export function useProgramInterfaceData(): ConfigDataContext<ProgramInterfaceStartData> & {
   update: DataUpdater<ProgramInterfaceStartData>;
   updateTimeout: DataUpdater<ProgramInterfaceStartData['timeout']>;
-  resetJavaClass: () => void;
-  resetError: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -27,26 +25,9 @@ export function useProgramInterfaceData(): ConfigDataContext<ProgramInterfaceSta
     );
   };
 
-  const resetJavaClass = () =>
-    setConfig(
-      produce(draft => {
-        draft.javaClass = config.initConfig.javaClass;
-      })
-    );
-
-  const resetError = () =>
-    setConfig(
-      produce(draft => {
-        draft.exceptionHandler = config.initConfig.exceptionHandler;
-        draft.timeout = config.initConfig.timeout;
-      })
-    );
-
   return {
     ...config,
     update,
-    updateTimeout,
-    resetJavaClass,
-    resetError
+    updateTimeout
   };
 }

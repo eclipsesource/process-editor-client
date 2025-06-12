@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { CollapsableUtil, customRender, customRenderHook, screen, TableUtil } from 'test-utils';
-import type { ElementData, ResultData, VariableInfo } from '@axonivy/process-editor-inscription-protocol';
+import type { ResultData, VariableInfo } from '@axonivy/process-editor-inscription-protocol';
 import { useResultPart } from './ResultPart';
 import type { PartStateFlag } from '../../editors/part/usePart';
 import { describe, test, expect } from 'vitest';
@@ -57,22 +57,5 @@ describe('ResultPart', () => {
     assertState('configured', { result: { code: 'code' } });
     assertState('configured', { result: { map: { key: 'value' } } });
     assertState('configured', { result: { params: [{ name: 'param', type: 'String', desc: 'desc' }] } });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: {
-        result: { code: 'code', map: { key: 'value' }, params: [{ name: 'param', type: 'String', desc: 'desc' }] }
-      }
-    };
-    const view = customRenderHook(() => useResultPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { result: { code: 'initcode' } } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.result?.code).toEqual('initcode');
-    expect(data.config?.result?.map).toEqual({});
-    expect(data.config?.result?.params).toEqual([]);
   });
 });

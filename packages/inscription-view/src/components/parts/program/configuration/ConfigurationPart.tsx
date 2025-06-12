@@ -1,6 +1,6 @@
 import type { ConfigurationData, Label, Script, Text, Widget } from '@axonivy/process-editor-inscription-protocol';
 import { IVY_SCRIPT_TYPES } from '@axonivy/process-editor-inscription-protocol';
-import { usePartDirty, usePartState, type PartProps } from '../../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../../editors/part/usePart';
 import { useConfigurationData } from './useConfigurationData';
 import './Configuration.css';
 import { Flex, Message } from '@axonivy/ui-components';
@@ -15,16 +15,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useConfigurationPart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, reset } = useConfigurationData();
+  const { config, defaultConfig } = useConfigurationData();
   const compareData = (data: ConfigurationData) => [data.userConfig];
   const validation = useValidations(['userConfig']);
   const state = usePartState(compareData(defaultConfig), compareData(config), validation);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Configuration',
     name: t('part.program.configuration.title'),
     state,
-    reset: { dirty, action: () => reset() },
     content: <ConfigurationPart />,
     icon: IvyIcons.Configuration
   };

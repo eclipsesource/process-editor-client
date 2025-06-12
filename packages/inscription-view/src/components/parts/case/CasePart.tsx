@@ -1,4 +1,4 @@
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useCaseData } from './useCaseData';
 import type { CaseData } from '@axonivy/process-editor-inscription-protocol';
 import Information from '../common/info/Information';
@@ -10,16 +10,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useCasePart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, resetData } = useCaseData();
+  const { config, defaultConfig } = useCaseData();
   const validaitons = useValidations(['case']);
   const compareData = (data: CaseData) => [data.case];
   const state = usePartState(compareData(defaultConfig), compareData(config), validaitons);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Case',
     name: t('part.case.title'),
     state: state,
-    reset: { dirty, action: () => resetData() },
     content: <CasePart />,
     icon: IvyIcons.List
   };

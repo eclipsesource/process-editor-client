@@ -6,7 +6,6 @@ import { useConfigDataContext, type ConfigDataContext } from '../../../context/u
 export function useWsRequestData(): ConfigDataContext<WsRequestData> & {
   update: DataUpdater<WsRequestData>;
   updateOperation: DataUpdater<WsRequestData['operation']>;
-  resetData: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -26,19 +25,9 @@ export function useWsRequestData(): ConfigDataContext<WsRequestData> & {
     );
   };
 
-  const resetData = () =>
-    setConfig(
-      produce(draft => {
-        draft.clientId = config.initConfig.clientId;
-        draft.properties = config.initConfig.properties;
-        draft.operation = config.initConfig.operation;
-      })
-    );
-
   return {
     ...config,
     update,
-    updateOperation,
-    resetData
+    updateOperation
   };
 }

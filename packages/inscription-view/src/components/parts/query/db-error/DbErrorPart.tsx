@@ -1,5 +1,5 @@
 import { IVY_EXCEPTIONS, type DbErrorData } from '@axonivy/process-editor-inscription-protocol';
-import { usePartDirty, usePartState, type PartProps } from '../../../../components/editors/part/usePart';
+import { usePartState, type PartProps } from '../../../../components/editors/part/usePart';
 import { useDbErrorData } from './useDbErrorData';
 import { useValidations } from '../../../../context/useValidation';
 import { PathCollapsible } from '../../common/path/PathCollapsible';
@@ -10,16 +10,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useDbErrorPart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, reset } = useDbErrorData();
+  const { config, defaultConfig } = useDbErrorData();
   const exceptionVal = useValidations(['exceptionHandler']);
   const compareData = (data: DbErrorData) => [data];
   const state = usePartState(compareData(defaultConfig), compareData(config), exceptionVal);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Error',
     name: t('label.error'),
     state: state,
-    reset: { dirty, action: () => reset() },
     content: <QueryPart />,
     icon: IvyIcons.Error
   };

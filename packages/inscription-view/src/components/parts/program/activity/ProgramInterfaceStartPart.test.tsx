@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { CollapsableUtil, ComboboxUtil, customRender, customRenderHook } from 'test-utils';
-import type { ElementData, ValidationResult, ProgramInterfaceStartData } from '@axonivy/process-editor-inscription-protocol';
+import type { ValidationResult, ProgramInterfaceStartData } from '@axonivy/process-editor-inscription-protocol';
 import type { PartStateFlag } from '../../../editors/part/usePart';
 import { useProgramInterfaceStartPart } from './ProgramInterfaceStartPart';
 import { describe, test, expect } from 'vitest';
@@ -42,18 +42,5 @@ describe('ProgramInterfaceStartPart', () => {
 
     assertState('error', undefined, { path: 'javaClass.cause', message: '', severity: 'ERROR' });
     assertState('warning', undefined, { path: 'javaClass.cause', message: '', severity: 'WARNING' });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: { javaClass: 'Test' }
-    };
-    const view = customRenderHook(() => useProgramInterfaceStartPart(), {
-      wrapperProps: { data, setData: newData => (data = newData) }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.javaClass).toEqual('');
   });
 });

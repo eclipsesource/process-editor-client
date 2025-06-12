@@ -1,5 +1,5 @@
 import type { ProgramInterfaceStartData } from '@axonivy/process-editor-inscription-protocol';
-import { usePartDirty, usePartState, type PartProps } from '../../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../../editors/part/usePart';
 import { useProgramInterfaceData } from './useProgramInterfaceData';
 import JavaClassSelector from '../JavaClassSelector';
 import { useValidations } from '../../../../context/useValidation';
@@ -8,16 +8,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useProgramInterfaceStartPart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, resetJavaClass } = useProgramInterfaceData();
+  const { config, defaultConfig } = useProgramInterfaceData();
   const compareData = (data: ProgramInterfaceStartData) => [data.javaClass];
   const validation = useValidations(['javaClass']);
   const state = usePartState(compareData(defaultConfig), compareData(config), validation);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Java Bean',
     name: t('part.program.start.title'),
     state,
-    reset: { dirty, action: () => resetJavaClass() },
     content: <ProgramInterfaceStartPart />,
     icon: IvyIcons.StartProgram
   };

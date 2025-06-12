@@ -15,7 +15,6 @@ export type PartProps = {
   id: string;
   name: string;
   state: PartState;
-  reset: { dirty: boolean; action: () => void };
   content: ReactNode;
   icon: IvyIcons;
   control?: ReactNode;

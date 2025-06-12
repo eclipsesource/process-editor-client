@@ -6,8 +6,6 @@ import { useConfigDataContext, type ConfigDataContext } from '../../../context/u
 export function useOutputData(): ConfigDataContext<OutputData> & {
   update: DataUpdater<OutputData['output']>;
   updateSudo: Consumer<boolean>;
-  resetCode: () => void;
-  resetOutput: Consumer<boolean | undefined>;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -26,29 +24,9 @@ export function useOutputData(): ConfigDataContext<OutputData> & {
       })
     );
 
-  const resetCode = () =>
-    setConfig(
-      produce(draft => {
-        draft.output.code = config.initConfig.output.code;
-      })
-    );
-
-  const resetOutput = (resetSudo?: boolean) =>
-    setConfig(
-      produce(draft => {
-        draft.output.map = config.initConfig.output.map;
-        draft.output.code = config.initConfig.output.code;
-        if (resetSudo) {
-          draft.sudo = config.initConfig.sudo;
-        }
-      })
-    );
-
   return {
     ...config,
     update,
-    updateSudo,
-    resetCode,
-    resetOutput
+    updateSudo
   };
 }

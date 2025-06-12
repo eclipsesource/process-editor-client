@@ -6,7 +6,6 @@ import { useConfigDataContext, type ConfigDataContext } from '../../../context/u
 export function useWebServiceData(): ConfigDataContext<WebserviceStartData> & {
   updatePermission: DataUpdater<WebserviceStartData['permission']>;
   updateException: DataUpdater<WebserviceStartData['exception']>;
-  reset: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -26,18 +25,9 @@ export function useWebServiceData(): ConfigDataContext<WebserviceStartData> & {
     );
   };
 
-  const reset = () =>
-    setConfig(
-      produce(draft => {
-        draft.permission = config.initConfig.permission;
-        draft.exception = config.initConfig.exception;
-      })
-    );
-
   return {
     ...config,
     updatePermission,
-    updateException,
-    reset
+    updateException
   };
 }

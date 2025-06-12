@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { usePartDirty, usePartState, type PartProps } from '../../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../../editors/part/usePart';
 import type { CallData, VariableInfo, ProcessCallData } from '@axonivy/process-editor-inscription-protocol';
 import CallMapping, { useCallPartValidation } from '../CallMapping';
 import { useCallData, useProcessCallData } from '../useCallData';
@@ -26,12 +26,10 @@ export function useSubCallPart(): PartProps {
     compareData(callData.config, targetData.config),
     [...subCallValidations, ...callValidations]
   );
-  const dirty = usePartDirty(compareData(callData.initConfig, targetData.initConfig), compareData(callData.config, targetData.config));
   return {
     id: 'Process',
     name: t('part.call.title'),
     state,
-    reset: { dirty, action: () => targetData.resetData() },
     content: <SubCallPart />,
     icon: IvyIcons.Process
   };

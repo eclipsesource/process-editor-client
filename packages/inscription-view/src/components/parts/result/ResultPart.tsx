@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useResultData } from './useResultData';
 import type { ResultData } from '@axonivy/process-editor-inscription-protocol';
 import { useQueryClient } from '@tanstack/react-query';
@@ -18,16 +18,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useResultPart(props?: { hideParamDesc?: boolean }): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, resetData } = useResultData();
+  const { config, defaultConfig } = useResultData();
   const compareData = (data: ResultData) => [data.result];
   const validations = useValidations(['result']);
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Result',
     name: t('part.result.title'),
     state,
-    reset: { dirty, action: () => resetData() },
     content: <ResultPart {...props} />,
     icon: IvyIcons.SubEnd
   };

@@ -1,8 +1,7 @@
-import type { DeepPartial } from 'test-utils';
 import { customRender, screen, TableUtil, customRenderHook, CollapsableUtil } from 'test-utils';
 import { useOutputPart } from './OutputPart';
 import type { PartStateFlag } from '../../editors/part/usePart';
-import type { ElementData, OutputData } from '@axonivy/process-editor-inscription-protocol';
+import type { OutputData } from '@axonivy/process-editor-inscription-protocol';
 import { describe, test, expect } from 'vitest';
 
 const Part = (props: { showSudo?: boolean }) => {
@@ -48,32 +47,5 @@ describe('OutputPart', () => {
     assertState('configured', { output: { code: '', map: {} }, sudo: true });
     assertState('configured', { output: { code: 'code', map: {} } });
     assertState('configured', { output: { code: '', map: { key: 'value' } } });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: { output: { map: { key: 'value' }, code: 'code' } }
-    };
-    const view = customRenderHook(() => useOutputPart(), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { output: { code: 'init' } } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.output?.code).toEqual('init');
-    expect(data.config?.output?.map).toEqual({});
-  });
-
-  test('reset - enable Sudo', () => {
-    let data: DeepPartial<ElementData> = {
-      config: { output: { map: { key: 'value' }, code: 'code' }, sudo: true }
-    };
-    const view = customRenderHook(() => useOutputPart({ showSudo: true }), {
-      wrapperProps: { data, setData: newData => (data = newData), initData: { config: { sudo: false } } }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.sudo).toEqual(false);
   });
 });

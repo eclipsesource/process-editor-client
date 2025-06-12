@@ -5,7 +5,6 @@ import { useConfigDataContext, type ConfigDataContext } from '../../../context/u
 
 export function useCaseData(): ConfigDataContext<CaseData> & {
   update: DataUpdater<CaseData['case']>;
-  resetData: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -17,16 +16,8 @@ export function useCaseData(): ConfigDataContext<CaseData> & {
     );
   };
 
-  const resetData = () =>
-    setConfig(
-      produce(draft => {
-        draft.case = config.initConfig.case;
-      })
-    );
-
   return {
     ...config,
-    update,
-    resetData
+    update
   };
 }

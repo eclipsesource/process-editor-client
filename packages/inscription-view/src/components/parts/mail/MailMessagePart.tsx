@@ -1,4 +1,4 @@
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useMailData } from './useMailData';
 import type { MailData } from '@axonivy/process-editor-inscription-protocol';
 import { MAIL_TYPE } from '@axonivy/process-editor-inscription-protocol';
@@ -15,16 +15,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useMailMessagePart(): PartProps {
   const { t } = useTranslation();
-  const { config, initConfig, defaultConfig, resetMessage } = useMailData();
+  const { config, defaultConfig } = useMailData();
   const compareData = (data: MailData) => [data.message];
   const validations = useValidations(['message']);
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Content',
     name: t('part.mail.content.title'),
     state,
-    reset: { dirty, action: () => resetMessage() },
     content: <MailMessagePart />,
     icon: IvyIcons.Note
   };

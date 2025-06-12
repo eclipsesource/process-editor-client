@@ -1,5 +1,5 @@
 import type { OutputData } from '@axonivy/process-editor-inscription-protocol';
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useOutputData } from './useOutputData';
 import useMaximizedCodeEditor from '../../browser/useMaximizedCodeEditor';
 import { useValidations } from '../../../context/useValidation';
@@ -17,16 +17,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useOutputPart(options?: { showSudo?: boolean; additionalBrowsers?: BrowserType[] }): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, resetOutput } = useOutputData();
+  const { config, defaultConfig } = useOutputData();
   const compareData = (data: OutputData) => [data];
   const validations = [...useValidations(['output']), ...useValidations(['map'])];
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Output',
     name: t('part.output.title'),
     state,
-    reset: { dirty, action: () => resetOutput(options?.showSudo) },
     content: <OutputPart showSudo={options?.showSudo} additionalBrowsers={options?.additionalBrowsers} />,
     icon: IvyIcons.Output
   };

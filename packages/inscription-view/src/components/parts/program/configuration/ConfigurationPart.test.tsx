@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { customRender, customRenderHook, screen } from 'test-utils';
-import type { ConfigurationData, ElementData, ValidationResult } from '@axonivy/process-editor-inscription-protocol';
+import type { ConfigurationData, ValidationResult } from '@axonivy/process-editor-inscription-protocol';
 import type { PartStateFlag } from '../../../editors/part/usePart';
 import { useConfigurationPart } from './ConfigurationPart';
 import { describe, test, expect } from 'vitest';
@@ -51,20 +51,5 @@ describe('ConfigurationPart', () => {
     assertState('configured', {
       userConfig: { directory: '/tmp/myDir' }
     });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: {
-        userConfig: { directory: '/tmp/myDir' }
-      }
-    };
-    const view = customRenderHook(() => useConfigurationPart(), {
-      wrapperProps: { data, setData: newData => (data = newData) }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.userConfig).toEqual({});
   });
 });

@@ -1,4 +1,4 @@
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useConditionData } from './useConditionData';
 import { useEffect, useState } from 'react';
 import { Condition } from './condition';
@@ -13,16 +13,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useConditionPart(): PartProps {
   const { t } = useTranslation();
-  const { config, initConfig, defaultConfig, update } = useConditionData();
+  const { config, defaultConfig } = useConditionData();
   const compareData = (data: ConditionData) => [data.conditions];
   const validations = useValidations(['conditions']);
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Condition',
     name: t('part.condition.title'),
     state: state,
-    reset: { dirty, action: () => update('conditions', initConfig.conditions) },
     content: <ConditionPart />,
     icon: IvyIcons.Reconnect
   };

@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'test-utils';
 import { CollapsableUtil, ComboboxUtil, SelectUtil, customRender, customRenderHook, screen } from 'test-utils';
-import type { ElementData, EventData, ValidationResult } from '@axonivy/process-editor-inscription-protocol';
+import type { EventData, ValidationResult } from '@axonivy/process-editor-inscription-protocol';
 import type { PartStateFlag } from '../../../editors/part/usePart';
 import { useEventPart } from './EventPart';
 import { describe, test, expect } from 'vitest';
@@ -59,20 +59,5 @@ describe('EventPart', () => {
     assertState('error', undefined, { path: 'javaClass.cause', message: '', severity: 'ERROR' });
     assertState('warning', undefined, { path: 'eventId.error', message: '', severity: 'WARNING' });
     assertState('warning', undefined, { path: 'timeout.error', message: '', severity: 'WARNING' });
-  });
-
-  test('reset', () => {
-    let data: DeepPartial<ElementData> = {
-      config: { javaClass: 'Test', eventId: '123', timeout: { duration: '456' } }
-    };
-    const view = customRenderHook(() => useEventPart(), {
-      wrapperProps: { data, setData: newData => (data = newData) }
-    });
-    expect(view.result.current.reset.dirty).toEqual(true);
-
-    view.result.current.reset.action();
-    expect(data.config?.javaClass).toEqual('');
-    expect(data.config?.eventId).toEqual('');
-    expect(data.config?.timeout?.duration).toEqual('');
   });
 });

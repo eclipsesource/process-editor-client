@@ -5,7 +5,6 @@ import { useConfigDataContext, type ConfigDataContext } from '../../../context/u
 
 export function usePermissionsData(): ConfigDataContext<PermissionsData> & {
   update: DataUpdater<PermissionsData['permissions']['view']>;
-  reset: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -17,16 +16,8 @@ export function usePermissionsData(): ConfigDataContext<PermissionsData> & {
     );
   };
 
-  const reset = () =>
-    setConfig(
-      produce(draft => {
-        draft.permissions = config.initConfig.permissions;
-      })
-    );
-
   return {
     ...config,
-    update,
-    reset
+    update
   };
 }

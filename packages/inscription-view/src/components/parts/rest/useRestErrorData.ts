@@ -5,7 +5,6 @@ import { useConfigDataContext, type ConfigDataContext } from '../../../context/u
 
 export function useRestErrorData(): ConfigDataContext<RestResponseData> & {
   update: DataUpdater<RestResponseData['response']>;
-  resetData: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -17,17 +16,8 @@ export function useRestErrorData(): ConfigDataContext<RestResponseData> & {
     );
   };
 
-  const resetData = () =>
-    setConfig(
-      produce(draft => {
-        draft.response.clientError = config.initConfig.response.clientError;
-        draft.response.statusError = config.initConfig.response.statusError;
-      })
-    );
-
   return {
     ...config,
-    update,
-    resetData
+    update
   };
 }

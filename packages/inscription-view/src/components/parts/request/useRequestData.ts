@@ -6,7 +6,6 @@ import { useConfigDataContext, type ConfigDataContext } from '../../../context/u
 export function useRequestData(): ConfigDataContext<RequestData> & {
   updateRequest: DataUpdater<RequestData['request']>;
   updatePermission: DataUpdater<RequestData['permission']>;
-  resetData: () => void;
 } {
   const { setConfig, ...config } = useConfigDataContext();
 
@@ -26,18 +25,9 @@ export function useRequestData(): ConfigDataContext<RequestData> & {
     );
   };
 
-  const resetData = () =>
-    setConfig(
-      produce(draft => {
-        draft.request = config.initConfig.request;
-        draft.permission = config.initConfig.permission;
-      })
-    );
-
   return {
     ...config,
     updateRequest,
-    updatePermission,
-    resetData
+    updatePermission
   };
 }

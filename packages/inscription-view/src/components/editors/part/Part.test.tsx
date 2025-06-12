@@ -13,7 +13,6 @@ describe('Part', () => {
     id: 'General',
     name: 'General',
     state: { state: undefined, validations: [] },
-    reset: { dirty: false, action: () => {} },
     content: <h1>General</h1>,
     icon: IvyIcons.InfoCircle
   };
@@ -22,14 +21,12 @@ describe('Part', () => {
     name: 'Call',
     state: { state: 'warning', validations: [] },
     content: <h1>Call</h1>,
-    reset: { dirty: true, action: () => {} },
     icon: IvyIcons.InfoCircle
   };
   const resultPart: PartProps = {
     id: 'Result',
     name: 'Result',
     state: { state: 'error', validations: [] },
-    reset: { dirty: false, action: () => {} },
     content: <h1>Result</h1>,
     icon: IvyIcons.InfoCircle
   };
@@ -37,7 +34,6 @@ describe('Part', () => {
     id: 'Error',
     name: 'Error',
     state: { state: 'error', validations: [] },
-    reset: { dirty: false, action: () => {} },
     content: <ErrorWidget />,
     icon: IvyIcons.InfoCircle
   };
@@ -76,14 +72,6 @@ describe('Part', () => {
     assertPartState('Call', 'warning');
     renderPart([resultPart]);
     assertPartState('Result', 'error');
-  });
-
-  test.skip('reset data', async () => {
-    let dirty = true;
-    const action = () => (dirty = false);
-    renderPart([{ ...generalPart, reset: { dirty, action } }]);
-    await userEvent.click(screen.getByRole('button', { name: 'Reset General' }));
-    expect(dirty).toBeFalsy();
   });
 
   test('open tab', async () => {

@@ -1,4 +1,4 @@
-import { usePartDirty, usePartState, type PartProps } from '../../editors/part/usePart';
+import { usePartState, type PartProps } from '../../editors/part/usePart';
 import { useProcessDataData } from './useProcessDataData';
 import type { ProcessDataData } from '@axonivy/process-editor-inscription-protocol';
 import type { DataClassItem } from './ClassSelectorPart';
@@ -14,16 +14,14 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 export function useProcessDataPart(): PartProps {
   const { t } = useTranslation();
-  const { config, defaultConfig, initConfig, reset } = useProcessDataData();
+  const { config, defaultConfig } = useProcessDataData();
   const compareData = (data: ProcessDataData) => [data.data];
   const validations = useValidations(['data']);
   const state = usePartState(compareData(defaultConfig), compareData(config), validations);
-  const dirty = usePartDirty(compareData(initConfig), compareData(config));
   return {
     id: 'Process Data',
     name: t('part.processData.title'),
     state,
-    reset: { dirty, action: () => reset() },
     content: <ProcessDataPart />,
     icon: IvyIcons.DatabaseLink
   };
