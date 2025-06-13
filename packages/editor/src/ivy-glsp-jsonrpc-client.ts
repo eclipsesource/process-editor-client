@@ -1,19 +1,14 @@
+import { toast } from '@axonivy/ui-components';
 import { BaseJsonrpcGLSPClient, ClientState } from '@eclipse-glsp/client';
 import { t } from 'i18next';
-import Toastify from 'toastify-js';
 
 export class IvyBaseJsonrpcGLSPClient extends BaseJsonrpcGLSPClient {
   error(message: string, ...optionalParams: Error[]): void {
     console.error(`[IvyJsonrpcGLSPClient] ${message}`, optionalParams);
-    Toastify({
-      text: t('message.clickToReload', { message }),
-      className: 'severity-ERROR',
-      duration: -1,
-      close: true,
-      gravity: 'bottom',
-      position: 'left',
-      onClick: () => window.location.reload()
-    }).showToast();
+    toast.error(t('message.clickToReload', { message }), {
+      action: { label: 'Reload', onClick: () => window.location.reload() },
+      duration: Infinity
+    });
   }
 
   override handleConnectionError(error: Error): void {

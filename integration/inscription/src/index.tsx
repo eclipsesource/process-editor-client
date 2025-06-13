@@ -1,6 +1,6 @@
 import { InscriptionClientJsonRpc, IvyScriptLanguage } from '@axonivy/process-editor-inscription-core';
 import type { MonacoLanguageClient } from 'monaco-languageclient';
-import { ThemeProvider, Spinner, Flex } from '@axonivy/ui-components';
+import { ThemeProvider, Spinner, Flex, Toaster } from '@axonivy/ui-components';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import { URLParams } from './url-helper';
@@ -41,6 +41,7 @@ export async function start(): Promise<void> {
           <ClientContextProvider client={client}>
             <QueryProvider client={queryClient}>
               <App app={app} pmv={pmv} pid={pid} />
+              <Toaster closeButton={true} position='bottom-left' />
             </QueryProvider>
           </ClientContextProvider>
         </ThemeProvider>

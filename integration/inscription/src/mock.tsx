@@ -1,6 +1,6 @@
 import { App, ClientContextProvider, MonacoEditorUtil, QueryProvider, initQueryClient } from '@axonivy/process-editor-inscription-view';
 import type { ElementType } from '@axonivy/process-editor-inscription-protocol';
-import { ThemeProvider } from '@axonivy/ui-components';
+import { ThemeProvider, Toaster } from '@axonivy/ui-components';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import { InscriptionClientMock } from './mock/inscription-client-mock';
@@ -28,6 +28,7 @@ export async function start(): Promise<void> {
         <ClientContextProvider client={client}>
           <QueryProvider client={queryClient}>
             <App app='' pmv='' pid='1' />
+            <Toaster closeButton={true} position='bottom-left' />
           </QueryProvider>
         </ClientContextProvider>
       </ThemeProvider>

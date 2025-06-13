@@ -1,12 +1,11 @@
-import { SwitchThemeAction, type ThemeMode } from '@axonivy/process-editor-protocol';
-import { Action, type IActionHandler } from '@eclipse-glsp/client';
-import { injectable } from 'inversify';
+import { SwitchThemeAction } from '@axonivy/process-editor-protocol';
+import { Action, SetUIExtensionVisibilityAction, TYPES, type IActionDispatcher, type IActionHandler } from '@eclipse-glsp/client';
+import { inject, injectable } from 'inversify';
+import { NotificationToasterId } from '../ui-tools/notification/di.config';
 
 @injectable()
 export class SwitchThemeActionHandler implements IActionHandler {
-  theme(): ThemeMode {
-    return (document.documentElement.dataset.theme as ThemeMode) ?? SwitchThemeActionHandler.prefsColorScheme();
-  }
+  @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: IActionDispatcher;
 
   handle(action: Action) {
     if (SwitchThemeAction.is(action)) {
@@ -14,10 +13,7 @@ export class SwitchThemeActionHandler implements IActionHandler {
       root.dataset.theme = action.theme;
       root.classList.remove('light', 'dark');
       root.classList.add(action.theme);
+      this.actionDispatcher.dispatch(SetUIExtensionVisibilityAction.create({ extensionId: NotificationToasterId, visible: true }));
     }
-  }
-
-  static prefsColorScheme(): ThemeMode {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 }

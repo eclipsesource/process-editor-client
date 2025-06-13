@@ -29,7 +29,7 @@ import ivyExecutionModule from './execution/di.config';
 import { IvyGLSPCommandStack } from './ivy-command-stack';
 import ivyJumpModule from './jump/di.config';
 import ivyLaneModule from './lanes/di.config';
-import { ivyNotificationModule } from './notification/di.config';
+import { ivyNotificationModule } from './ui-tools/notification/di.config';
 import type { IvyViewerOptions } from './options';
 import { defaultIvyViewerOptions } from './options';
 import { ivyChangeBoundsToolModule, ivyExportModule, ivySelectModule } from './tools/di.config';
@@ -41,7 +41,6 @@ import ivyWrapModule from './wrap/di.config';
 import ivyZorderModule from './zorder/di.config';
 
 import './colors.css';
-import './toastify.css';
 import { ivyAccessibilityModule } from './accessibility/di.config';
 import { ivyCopyPasteModule } from './copy-paste/di.config';
 
