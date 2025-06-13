@@ -1,14 +1,23 @@
-import type {
-  IActionDispatcher,
-  IAsyncClipboardService,
-  ViewerOptions,
-  ICopyPasteHandler,
-  SetClipboardDataAction
+import {
+  TYPES,
+  EditorContextService,
+  RequestClipboardDataAction,
+  CutOperation,
+  PasteOperation,
+  MessageAction,
+  RequestExportSvgAction,
+  isSelectable,
+  SelectionService,
+  type IActionDispatcher,
+  type IAsyncClipboardService,
+  type ICopyPasteHandler,
+  type SetClipboardDataAction,
+  type ViewerOptions
 } from '@eclipse-glsp/client';
-import { TYPES, EditorContextService, RequestClipboardDataAction, CutOperation, PasteOperation, MessageAction } from '@eclipse-glsp/client';
 import { t } from 'i18next';
 import { injectable, inject } from 'inversify';
 import { v4 as uuid } from 'uuid';
+import type { IvySvgExporter } from '../tools/export/ivy-svg-exporter';
 
 interface ClipboardId {
   readonly clipboardId: string;
@@ -37,6 +46,8 @@ export class IvyServerCopyPasteHandler implements ICopyPasteHandler {
   @inject(TYPES.ViewerOptions) protected viewerOptions: ViewerOptions;
   @inject(TYPES.IAsyncClipboardService) protected clipboardService: IAsyncClipboardService;
   @inject(EditorContextService) protected editorContext: EditorContextService;
+  @inject(SelectionService) protected selectionService: SelectionService;
+  @inject(TYPES.SvgExporter) protected svgExporter: IvySvgExporter;
 
   handleCopy(event: ClipboardEvent): void {
     if (event.clipboardData && this.shouldCopy()) {
@@ -72,10 +83,20 @@ export class IvyServerCopyPasteHandler implements ICopyPasteHandler {
     }
   }
 
-  setClipboardData(action: SetClipboardDataAction, clipboardId: string) {
+  async setClipboardData(action: SetClipboardDataAction, clipboardId: string) {
     console.debug('Added data to clipboard: ', action.clipboardData[PROCESS_DATA_FORMAT]);
     this.clipboardService.put(action.clipboardData, clipboardId);
-    if (navigator.clipboard) {
+    if (navigator.clipboard?.write && shouldCopyPng(this.editorContext)) {
+      const clipboardItemData: Record<string, string | Blob | PromiseLike<string | Blob>> = {
+        'text/plain': action.clipboardData[PROCESS_DATA_FORMAT]
+      };
+      const response = await this.actionDispatcher.request(RequestExportSvgAction.create());
+      if (response.svg) {
+        const bounds = this.svgExporter.getBounds(this.editorContext.modelRoot);
+        clipboardItemData['image/png'] = await toPNGBlob(response.svg, bounds);
+      }
+      navigator.clipboard.write([new ClipboardItem(clipboardItemData)]);
+    } else if (navigator.clipboard) {
       navigator.clipboard.writeText(action.clipboardData[PROCESS_DATA_FORMAT]);
     } else {
       this.actionDispatcher.dispatch(MessageAction.create(t('message.noNativeClipboardAccess'), { severity: 'INFO' }));
@@ -91,7 +112,7 @@ export class IvyServerCopyPasteHandler implements ICopyPasteHandler {
   }
 
   protected shouldCopy(): boolean {
-    return this.editorContext.get().selectedElementIds.length > 0 && this.isDiagramActive();
+    return this.isDiagramActive();
   }
 
   protected shouldPaste(): boolean {
@@ -102,3 +123,39 @@ export class IvyServerCopyPasteHandler implements ICopyPasteHandler {
     return document.activeElement?.parentElement?.id === this.viewerOptions.baseDiv;
   }
 }
+
+const shouldCopyPng = (editorContext: EditorContextService) => {
+  if (editorContext.selectedElements.length === 0) {
+    return true;
+  }
+  const allElements = [];
+  editorContext.modelRoot.index
+    .all()
+    .filter(isSelectable)
+    .forEach(element => allElements.push(element));
+  if (allElements.length === editorContext.selectedElements.length) {
+    return true;
+  }
+  return false;
+};
+
+const toPNGBlob = async (svg: string, size: { width: number; height: number }) => {
+  return new Promise<Blob>((resolve, reject) => {
+    const canvas = new OffscreenCanvas(size.width, size.height);
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      reject(new Error('Failed to get 2D rendering context.'));
+      return;
+    }
+    const img = new Image();
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, size.width, size.height);
+      canvas.convertToBlob({ type: 'image/png' }).then(resolve).catch(reject);
+    };
+    img.onerror = error => {
+      reject(new Error(`Failed to load SVG as image: ${error}`));
+    };
+    const encodedSvg = encodeURIComponent(svg);
+    img.src = `data:image/svg+xml;charset=utf-8,${encodedSvg}`;
+  });
+};

@@ -5,7 +5,7 @@ import { getAbsoluteEdgeBounds, getAbsoluteLabelBounds } from '../../utils/diagr
 
 @injectable()
 export class IvySvgExporter extends GLSPSvgExporter {
-  protected getBounds(root: GModelRoot): Bounds {
+  public getBounds(root: GModelRoot): Bounds {
     const allBounds: Bounds[] = [];
     root.index
       .all()
