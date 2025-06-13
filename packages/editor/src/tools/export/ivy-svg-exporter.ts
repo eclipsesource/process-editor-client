@@ -1,16 +1,21 @@
-import { Bounds, GEdge, GLSPSvgExporter, GModelRoot, GNode, getAbsoluteBounds } from '@eclipse-glsp/client';
+import { Bounds, GEdge, GLSPSvgExporter, GModelRoot, GNode, getAbsoluteBounds, type GModelElement } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { MulitlineEditLabel, RotateLabel } from '../../diagram/model';
 import { getAbsoluteEdgeBounds, getAbsoluteLabelBounds } from '../../utils/diagram-utils';
 
 @injectable()
 export class IvySvgExporter extends GLSPSvgExporter {
-  public getBounds(root: GModelRoot): Bounds {
+  override getBounds(root: GModelRoot): Bounds {
+    return this.getSvgBounds(root);
+  }
+
+  public getSvgBounds(root: GModelRoot, selectedElements?: Array<GModelElement>): Bounds {
     const allBounds: Bounds[] = [];
     root.index
       .all()
       .filter(element => element.root !== element)
       .filter(element => !(element instanceof RotateLabel))
+      .filter(element => !selectedElements || selectedElements.length === 0 || selectedElements.includes(element))
       .forEach(element => {
         if (element instanceof GNode) {
           allBounds.push(getAbsoluteBounds(element));
