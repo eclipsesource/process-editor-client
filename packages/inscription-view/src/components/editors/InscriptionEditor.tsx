@@ -16,7 +16,6 @@ import { useEditorContext } from '../../context/useEditorContext';
 import { useAction } from '../../context/useAction';
 import { useTranslation } from 'react-i18next';
 import { useKnownHotkeys } from '../../utils/useKnownHotkeys';
-import { usePartDirty } from './part/usePart';
 
 export type KnownEditor = { editor: ReactNode; icon?: IvyIcons };
 
@@ -38,8 +37,7 @@ const inscriptionEditor = (type?: ElementType): ReactNode => {
 const Header = ({ children }: { children?: ReactNode }) => {
   const { t } = useTranslation();
   const { data } = useGeneralData();
-  const { data: tabData, initData, setData, validations } = useDataContext();
-  const dirty = usePartDirty(initData, tabData);
+  const { validations } = useDataContext();
   const tabValidations = validations.filter(val => val.path.length === 0);
   const { type } = useEditorContext();
   const helpUrl = type.helpUrl;
@@ -51,14 +49,6 @@ const Header = ({ children }: { children?: ReactNode }) => {
   return (
     <>
       <SidebarHeader title={title} icon={icon} className='header'>
-        {dirty && (
-          <Button
-            icon={IvyIcons.Undo}
-            onClick={() => setData(() => initData)}
-            title={t('label.reset', { name: title })}
-            aria-label={t('label.reset', { name: title })}
-          />
-        )}
         {children}
         {helpUrl !== undefined && helpUrl !== '' && (
           <Button icon={IvyIcons.Help} onClick={() => action(helpUrl)} title={openHelp.label} aria-label={openHelp.label} />
