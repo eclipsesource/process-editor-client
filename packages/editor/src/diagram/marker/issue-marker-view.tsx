@@ -1,11 +1,12 @@
 /** @jsx svg */
-import { GIssueMarker, GIssueMarkerView, type GIssueSeverity, setClass, svg } from '@eclipse-glsp/client';
+import { decorationFeature, GIssueMarker, GIssueMarkerView, type GIssueSeverity, setClass, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import type { VNode } from 'snabbdom';
 
 @injectable()
 export class IvyIssueMarkerView extends GIssueMarkerView {
   override render(marker: GIssueMarker): VNode {
+    marker.features = new Set([decorationFeature]);
     const maxSeverity = super.getMaxSeverity(marker);
     const group = (
       <g class-sprotty-issue>
