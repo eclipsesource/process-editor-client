@@ -56,10 +56,6 @@ export class Inscription {
     return this.view;
   }
 
-  reset() {
-    return this.page.locator('button[aria-label^="Reset"]');
-  }
-
   inscriptionTab(partName: string) {
     return new InscriptionTab(this.page, partName);
   }
