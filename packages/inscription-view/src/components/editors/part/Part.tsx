@@ -1,4 +1,4 @@
-import { BasicInscriptionTabs, Flex } from '@axonivy/ui-components';
+import { BasicInscriptionTabs, Flex, type StateDotProps } from '@axonivy/ui-components';
 import { useInscriptionTabState, type PartProps } from './usePart';
 
 import { ErrorBoundary } from 'react-error-boundary';
@@ -19,7 +19,18 @@ const Part = ({ parts }: { parts: PartProps[] }) => {
             {p.content}
           </ErrorBoundary>
         );
-        return { ...p, content };
+        const state: StateDotProps = {
+          ...p.state,
+          messages: p.state.validations.map(v => ({
+            message: v.message,
+            variant: v.severity === 'ERROR' ? 'error' : v.severity === 'WARNING' ? 'warning' : 'description'
+          }))
+        };
+        return {
+          ...p,
+          content,
+          state
+        };
       })}
       value={value}
       onChange={updateValue}
