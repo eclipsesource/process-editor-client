@@ -13,7 +13,7 @@ export class IvyViewportKeyTool extends ViewportKeyTool {
           {
             shortcuts: ['M'],
             description: t('a11y.hotkeyDesc.center'),
-            group: messages.shortcut.group_move,
+            group: messages.shortcut.group_zoom,
             position: 0
           },
           {

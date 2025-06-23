@@ -6,16 +6,14 @@
     "diagram": {
       "label": "Diagram"
     },
-    "grid": {
-      "message": "Select a digit from 1-9 to zoom in on the respective box."
-    },
     "hotkeyDesc": {
       "center": "Center",
       "fitToScreen": "Fit to screen",
       "focusGraph": "Focus on graph",
       "focusInscription": "Focus on inscription",
       "focusToolbar": "Focus on tool palette",
-      "move": "Move element or viewport",
+      "moveElement": "Move selected element",
+      "moveViewport": "Move viewport",
       "navigationActivate": "Activate default navigation",
       "navigationActivatePosition": "Activate position based navigation",
       "origin": "Origin screen",
@@ -25,8 +23,8 @@
       "resizeDefault": "Set element size to default",
       "resizeIncrease": "Increase size of element",
       "searchPalette": "Activate search for elements",
-      "zoomIn": "Zoom in to element or viewport",
-      "zoomInGrid": "Zoom in via grid"
+      "zoomInElement": "Zoom in on selected element",
+      "zoomInViewport": "Zoom in viewport"
     },
     "hotkeyGroup": {
       "graph": "Graph",

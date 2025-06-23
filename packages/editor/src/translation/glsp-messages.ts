@@ -17,12 +17,12 @@ const doTranslateMessages = () => {
     //   shortcut_focus_graph: messages.focus.shortcut_focus_graph, // GlobalKeyListenerTool, ALT+G, not used, we have IvyGlobalKeyListenerTool
     //   shortcut_focus_palette: messages.focus.shortcut_focus_palette // GlobalKeyListenerTool, ALT+P, not used, we have IvyGlobalKeyListenerTool
     // },
-    grid: {
-      shortcut_zoom_in: t('a11y.hotkeyDesc.zoomInGrid'), // GridCellZoomTool (previously: ZoomKeyListener), CTRL++
-      zoom_in_grid: t('a11y.grid.message') // GridCellZoomTool (previously: ZoomKeyListener), toast message
-    },
+    // grid: {
+    //   shortcut_zoom_in: messages.grid.shortcut_zoom_in, // GridCellZoomTool (previously: ZoomKeyListener), CTRL++
+    //   zoom_in_grid: messages.grid.zoom_in_grid // GridCellZoomTool (previously: ZoomKeyListener), toast message
+    // },
     move: {
-      shortcut_move: t('a11y.hotkeyDesc.move') // ChangeBoundsTool (previously: MoveKeyListener, combined as 'element or viewport'), ⬅ ⬆ ➡ ⬇
+      shortcut_move: t('a11y.hotkeyDesc.moveElement') // ChangeBoundsTool (previously: MoveKeyListener, combined as 'element or viewport'), ⬅ ⬆ ➡ ⬇
     },
     navigation: {
       default_navigation_mode_activated: t('a11y.navigation.on'), // ElementNavigatorKeyListener
@@ -79,9 +79,9 @@ const doTranslateMessages = () => {
     //   validate_button: undefined // ToolPalette, KeyboardToolPalette, not used, we have ToolBar
     // },
     viewport: {
-      shortcut_move_viewport: t('a11y.hotkeyDesc.move'), // ViewportKeyTool (previously: MoveKeyListener, combined as 'element or viewport'), ⬅ ⬆ ➡ ⬇
-      shortcut_zoom_element: t('a11y.hotkeyDesc.zoomIn'), // ViewportKeyTool (previously: ZoomKeyListener, separate as '+' and '-' but combined as 'element or viewport'), +-
-      shortcut_zoom_viewport: t('a11y.hotkeyDesc.zoomIn') // ViewportKeyTool (previously ZoomKeyListener, separate as '+' and '-' but combined as 'element or viewport'), +-
+      shortcut_move_viewport: t('a11y.hotkeyDesc.moveViewport'), // ViewportKeyTool (previously: MoveKeyListener, combined as 'element or viewport'), ⬅ ⬆ ➡ ⬇
+      shortcut_zoom_element: t('a11y.hotkeyDesc.zoomInElement'), // ViewportKeyTool (previously: ZoomKeyListener, separate as '+' and '-' but combined as 'element or viewport'), +-
+      shortcut_zoom_viewport: t('a11y.hotkeyDesc.zoomInViewport') // ViewportKeyTool (previously ZoomKeyListener, separate as '+' and '-' but combined as 'element or viewport'), +-
     }
   });
 };

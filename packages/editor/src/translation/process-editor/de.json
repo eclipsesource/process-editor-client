@@ -6,16 +6,14 @@
     "diagram": {
       "label": "Diagramm"
     },
-    "grid": {
-      "message": "Wähle eine Ziffer von 1-9 um in den jeweiligen Bereich hinein zu zoomen."
-    },
     "hotkeyDesc": {
       "center": "Zentrieren",
       "fitToScreen": "Ansicht an Bildschirm anpassen",
       "focusGraph": "Fokus auf den Graph",
       "focusInscription": "Fokus auf die Inscription",
       "focusToolbar": "Fokus auf die Toolbar",
-      "move": "Element oder Ansicht verschieben",
+      "moveElement": "Ausgewähltes Element verschieben",
+      "moveViewport": "Ansicht verschieben",
       "navigationActivate": "Standardnavigation aktivieren",
       "navigationActivatePosition": "Positionsbasierte Navigation aktivieren",
       "origin": "Ursprungsansicht",
@@ -25,8 +23,8 @@
       "resizeDefault": "Elementgrösse auf Standard setzen",
       "resizeIncrease": "Element vergrößern",
       "searchPalette": "Suche nach Elementen aktivieren",
-      "zoomIn": "In Element oder Ansicht hineinzoomen",
-      "zoomInGrid": "Mittels Raster zoomen"
+      "zoomInElement": "In ausgewähltes Element hineinzoomen",
+      "zoomInViewport": "In Ansicht hineinzoomen"
     },
     "hotkeyGroup": {
       "graph": "Graph",

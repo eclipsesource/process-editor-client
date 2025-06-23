@@ -1,15 +1,15 @@
 import type { Action, GModelElement, KeyListener, TrackedElementResize, TrackedResize } from '@eclipse-glsp/client';
 import {
   Bounds,
-  boundsFeature,
   ChangeBoundsListener,
   ChangeBoundsTool,
+  Direction,
   GChildElement,
   isMoveable,
+  isSizeable,
   MoveElementRelativeAction,
   ResizeHandleLocation,
-  SetBoundsFeedbackAction,
-  SetUIExtensionVisibilityAction
+  SetBoundsFeedbackAction
 } from '@eclipse-glsp/client';
 import { MoveElementKeyListener } from '@eclipse-glsp/client/lib/features/change-bounds/move-element-key-listener';
 import { injectable } from 'inversify';
@@ -59,48 +59,51 @@ export class IvyChangeBoundsListener extends ChangeBoundsListener {
 }
 
 export class IvyMoveElementKeyListener extends MoveElementKeyListener {
-  adaptedKeyDown(element: GModelElement, event: KeyboardEvent): Action[] {
-    const selectedElementIds = this.selectionService
-      .getSelectedElements()
-      .filter(element => isMoveable(element))
-      .map(element => element.id);
+  keyDown(element: GModelElement, event: KeyboardEvent): Action[] {
+    const direction = this.getDirection(event);
+    if (!direction) {
+      return [];
+    }
+    const elementIds = this.getMovableElementIds();
+    if (elementIds.length === 0) {
+      return [];
+    }
+
     const snap = this.changeBoundsManager.usePositionSnap(event);
     const offsetX = snap ? this.grid.x : 1;
     const offsetY = snap ? this.grid.y : 1;
 
     // adapted: do not snap again if we already used snap to get the offset since our elements may not already be positioned on the grid but we still only want grid-sized movements
-    if (selectedElementIds.length > 0) {
-      if (this.matchesMoveUpKeystroke(event)) {
-        return [MoveElementRelativeAction.create({ elementIds: selectedElementIds, moveX: 0, moveY: -offsetY, snap: false })];
-      } else if (this.matchesMoveDownKeystroke(event)) {
-        return [MoveElementRelativeAction.create({ elementIds: selectedElementIds, moveX: 0, moveY: offsetY, snap: false })];
-      } else if (this.matchesMoveRightKeystroke(event)) {
-        return [MoveElementRelativeAction.create({ elementIds: selectedElementIds, moveX: offsetX, moveY: 0, snap: false })];
-      } else if (this.matchesMoveLeftKeystroke(event)) {
-        return [MoveElementRelativeAction.create({ elementIds: selectedElementIds, moveX: -offsetX, moveY: 0, snap: false })];
-      }
+    // adapted: show quick actions UI
+    switch (direction) {
+      case Direction.Up:
+        return [MoveElementRelativeAction.create({ elementIds, moveX: 0, moveY: -offsetY, snap: false }), QuickActionUI.show(elementIds)];
+      case Direction.Down:
+        return [MoveElementRelativeAction.create({ elementIds, moveX: 0, moveY: offsetY, snap: false }), QuickActionUI.show(elementIds)];
+      case Direction.Right:
+        return [MoveElementRelativeAction.create({ elementIds, moveX: offsetX, moveY: 0, snap: false }), QuickActionUI.show(elementIds)];
+      case Direction.Left:
+        return [MoveElementRelativeAction.create({ elementIds, moveX: -offsetX, moveY: 0, snap: false }), QuickActionUI.show(elementIds)];
     }
-    return [];
   }
 
-  keyDown(element: GModelElement, event: KeyboardEvent): Action[] {
-    const actions = this.adaptedKeyDown(element, event);
-    if (actions.length === 0) {
-      return actions;
+  protected getDirection(event: KeyboardEvent): Direction | undefined {
+    if (this.matchesMoveUpKeystroke(event)) {
+      return Direction.Up;
+    } else if (this.matchesMoveDownKeystroke(event)) {
+      return Direction.Down;
+    } else if (this.matchesMoveRightKeystroke(event)) {
+      return Direction.Right;
+    } else if (this.matchesMoveLeftKeystroke(event)) {
+      return Direction.Left;
     }
-    let selectedElements = this.selectionService.getSelectedElements().filter(element => isMoveable(element));
-    selectedElements = selectedElements.filter(e => !this.isChildOfSelected(selectedElements, e)).filter(e => e.hasFeature(boundsFeature));
-    if (selectedElements.length === 0) {
-      return actions;
-    }
-    return [
-      ...actions,
-      SetUIExtensionVisibilityAction.create({
-        extensionId: QuickActionUI.ID,
-        visible: true,
-        contextElementsId: [...selectedElements.map(e => e.id)]
-      })
-    ];
+    return undefined;
+  }
+
+  protected getMovableElementIds(): string[] {
+    // Check for sizeable and only move top-level elements
+    const selectedElements = this.selectionService.getSelectedElements().filter(element => isMoveable(element) && isSizeable(element));
+    return selectedElements.filter(element => !this.isChildOfSelected(selectedElements, element)).map(element => element.id);
   }
 
   protected isChildOfSelected(selectedElements: GModelElement[], element: GModelElement): boolean {

@@ -3,13 +3,11 @@ import {
   configureActionHandler,
   DefaultResizeKeyListener,
   DefaultResizeKeyTool,
+  DeselectKeyTool,
   elementNavigationModule,
-  EnableKeyboardGridAction,
   FeatureModule,
   FocusDomAction,
   HideToastAction,
-  keyboardControlModule,
-  KeyboardGrid,
   type ModuleConfiguration,
   ResizeElementAction,
   ResizeKeyListener,
@@ -63,19 +61,6 @@ export const ivySearchPaletteModule = new FeatureModule(
   { featureId: searchPaletteModule.featureId }
 );
 
-export const ivyKeyboardControlModule = new FeatureModule(
-  (bind, unbind, isBound, rebind) => {
-    const context = { bind, unbind, isBound, rebind };
-    // custom GlobalKeyListenerTool
-    bindAsService(context, TYPES.IDefaultTool, IvyGlobalKeyListenerTool);
-
-    // only use keyboard grid but skip other extensions and tools
-    bindAsService(context, TYPES.IUIExtension, KeyboardGrid);
-    configureActionHandler(context, EnableKeyboardGridAction.KIND, KeyboardGrid);
-  },
-  { featureId: keyboardControlModule.featureId }
-);
-
 export const ivyToastModule = new FeatureModule(
   (bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
@@ -84,6 +69,23 @@ export const ivyToastModule = new FeatureModule(
     configureActionHandler(context, HideToastAction.KIND, IvyToast);
   },
   { featureId: toastModule.featureId }
+);
+
+export const ivyViewKeyToolsModule = new FeatureModule(
+  (bind, unbind, isBound, rebind) => {
+    const context = { bind, unbind, isBound, rebind };
+    // no grid support
+    bindAsService(context, TYPES.IDefaultTool, DeselectKeyTool);
+  },
+  { featureId: viewKeyToolsModule.featureId }
+);
+
+export const ivyGlobalListenerModule = new FeatureModule(
+  (bind, unbind, isBound, rebind) => {
+    const context = { bind, unbind, isBound, rebind };
+    bindAsService(context, TYPES.IDefaultTool, IvyGlobalKeyListenerTool);
+  },
+  { featureId: Symbol('ivy-global-key-listener') }
 );
 
 export const ivyKeyListenerModule = new FeatureModule(
@@ -106,13 +108,15 @@ export const ivyDomFocusModule = new FeatureModule(
 export const IVY_ACCESSIBILITY_MODULES: ModuleConfiguration[] = [
   { replace: ivyResizeModule }, // instead of: resizeModule
   { add: ivySearchPaletteModule }, // instead of: searchPaletteModule
-  { add: ivyKeyboardControlModule }, // instead of: keyboardControlModule
   { add: ivyToastModule }, // instead of: toastModule
-  { add: viewKeyToolsModule }, // standard accessibility module
+  { add: ivyViewKeyToolsModule }, // instead of: viewKeyToolsModule
   { add: elementNavigationModule }, // standard accessibility module
   { add: standaloneShortcutsModule }, // standard accessibility module
   { add: ivyKeyListenerModule }, // custom extension
-  { add: ivyDomFocusModule } // custom extension
+  { add: ivyDomFocusModule }, // custom extension
+  { add: ivyGlobalListenerModule } // custom extension
+  // unused: { add: viewKeyToolsModule } // we do not want any Grid view
+  // unused: { add: keyboardControlModule } // we do not want any keyboard or Grid control
   // unused: { add: focusTrackerModule }
   // unused: { add: keyboardToolPaletteModule }
 ];

@@ -7,7 +7,6 @@ import {
   isViewport,
   matchesKeystroke,
   OriginViewportAction,
-  SetUIExtensionVisibilityAction,
   SetViewportAction,
   ZoomKeyListener
 } from '@eclipse-glsp/client';
@@ -41,13 +40,7 @@ export class IvyZoomKeyListener extends ZoomKeyListener {
     }
     const model = this.editorContext.modelRoot;
     if (isViewport(model)) {
-      actions.push(
-        SetUIExtensionVisibilityAction.create({
-          extensionId: QuickActionUI.ID,
-          visible: true,
-          contextElementsId: [...this.selectionService.getSelectedElementIDs()]
-        })
-      );
+      actions.push(QuickActionUI.show([...this.selectionService.getSelectedElementIDs()]));
       if (setViewport) {
         actions.push(SetViewportAction.create(model.id, model));
       }

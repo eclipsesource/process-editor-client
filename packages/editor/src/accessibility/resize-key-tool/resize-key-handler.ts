@@ -5,8 +5,7 @@ import {
   isSelectableAndBoundsAware,
   ResizeElementAction,
   ResizeElementHandler,
-  SelectionService,
-  SetUIExtensionVisibilityAction
+  SelectionService
 } from '@eclipse-glsp/client';
 import { QuickActionUI } from '../../ui-tools/quick-action/quick-action-ui';
 import { inject } from 'inversify';
@@ -21,11 +20,7 @@ export class IvyResizeElementHandler extends ResizeElementHandler {
       const elements = getElements(this.editorContextService.modelRoot.index, action.elementIds, isSelectableAndBoundsAware);
       if (elements.length === 1 && isResizable(elements[0])) {
         this.handleResizeElement(action);
-        return SetUIExtensionVisibilityAction.create({
-          extensionId: QuickActionUI.ID,
-          visible: true,
-          contextElementsId: [...this.selectionService.getSelectedElementIDs()]
-        });
+        return QuickActionUI.show([...this.selectionService.getSelectedElementIDs()]);
       }
     }
     return;
