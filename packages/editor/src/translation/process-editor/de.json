@@ -12,8 +12,7 @@
       "focusGraph": "Fokus auf den Graph",
       "focusInscription": "Fokus auf die Inscription",
       "focusToolbar": "Fokus auf die Toolbar",
-      "moveElement": "Ausgewähltes Element verschieben",
-      "moveViewport": "Ansicht verschieben",
+      "move": "Element oder Ansicht verschieben",
       "navigationActivate": "Standardnavigation aktivieren",
       "navigationActivatePosition": "Positionsbasierte Navigation aktivieren",
       "origin": "Ursprungsansicht",
@@ -23,8 +22,7 @@
       "resizeDefault": "Elementgrösse auf Standard setzen",
       "resizeIncrease": "Element vergrößern",
       "searchPalette": "Suche nach Elementen aktivieren",
-      "zoomInElement": "In ausgewähltes Element hineinzoomen",
-      "zoomInViewport": "In Ansicht hineinzoomen"
+      "zoom": "In Element oder Ansicht hineinzoomen"
     },
     "hotkeyGroup": {
       "graph": "Graph",

@@ -6,10 +6,20 @@ import { injectable } from 'inversify';
 @injectable()
 export class IvyViewportKeyTool extends ViewportKeyTool {
   override enable(): void {
-    super.enable();
     this.toDisposeOnDisable.push(
+      this.keyTool.registerListener(this.moveKeyListener),
+      this.keyTool.registerListener(this.zoomKeyListener),
+
       repeatOnMessagesUpdated(() =>
         this.shortcutManager.register(TOKEN, [
+          // We unify the shortcuts for zooming (+ -) and moving (⬅ ⬆ ➡ ⬇) the viewport or element
+          // Move shortcut (⬅ ⬆ ➡ ⬇) is already registered by the change bounds tool
+          {
+            shortcuts: ['+ -'],
+            description: messages.viewport.shortcut_zoom_element,
+            group: messages.shortcut.group_zoom,
+            position: 0
+          },
           {
             shortcuts: ['M'],
             description: t('a11y.hotkeyDesc.center'),
